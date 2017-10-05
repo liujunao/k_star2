@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config xmlns="http://example.org">
+    <item type="zhongtong" class="com.springmvc.kdHelper.DataList"/>
+    <item type="yunda" class="com.springmvc.kdHelper.DataList"/>
+    <item type="yuantong" class="com.springmvc.kdHelper.DataList"/>
+</config>
