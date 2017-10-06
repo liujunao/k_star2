@@ -18,5 +18,15 @@
 
   <br><br>
   <a href="${pageContext.request.contextPath}/views/login.jsp">登录页面</a>
+  <br><br>
+  <a href="${pageContext.request.contextPath}/kuaidi/chaxunGd2?orderNumber2=71092966476706">测试</a>
+  <br><br>
+  <a href="javascript:void(0)" onclick="c()">点击</a>
   </body>
+
+<script>
+    function c() {
+        window.location = "http://www.baidu.com";
+    }
+</script>
 </html>

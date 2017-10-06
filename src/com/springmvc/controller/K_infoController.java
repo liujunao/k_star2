@@ -29,7 +29,7 @@ public class K_infoController {
     String UUID = uuidUtils.getUUID();
 
     @RequestMapping("/register")
-    public String register(K_info k_info, HttpServletRequest request,HttpServletResponse response) throws Exception {
+    public String register(K_info k_info, HttpServletRequest request) throws Exception {
         String action = request.getParameter("action");
 
         if (action.equalsIgnoreCase("register")) {
@@ -132,7 +132,7 @@ public class K_infoController {
             Map<String, Object> map = k_infoService.queryByLoginName(k_info);
             HttpSession session = htmlCommon.getSession();
             session.setAttribute("k_info", map);
-            return "redirect:/kuaidi/showMine";
+            return "index";
         }else {
             request.setAttribute("msg","登录失败，请重新登录！");
             return "login";

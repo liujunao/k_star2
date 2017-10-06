@@ -9,6 +9,16 @@
 <html>
 <head>
     <title>信息变更</title>
+
+    <script>
+        function mine() {
+            var msg = "<%=request.getAttribute("msg")%>";
+            if (msg != null && msg != "null"){
+                alert(msg);
+            }
+        }
+        window.onload = mine;
+    </script>
 </head>
 <body>
 

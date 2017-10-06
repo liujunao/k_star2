@@ -1,0 +1,49 @@
+package com.springmvc.dao;
+
+import com.springmvc.db.JdbcUtils;
+import com.springmvc.model.K_re;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by lenovo on 2017/10/5.
+ */
+public class K_reDAO {
+
+    JdbcUtils jdbcUtils = new JdbcUtils();
+
+    public int add(K_re k_re){
+        String sql = "INSERT INTO k_re(k_reNumber,k_reName,k_rePhone,k_reText,k_re_infoId,k_infoName,k_reStatus)" +
+                "VALUES(?,?,?,?,?,?,?)";
+        int result = -1;
+        Object[] objects = new Object[7];
+        objects[0] = k_re.getK_reNumber();
+        objects[1] = k_re.getK_reName();
+        objects[2] = k_re.getK_rePhone();
+        objects[3] = k_re.getK_reText();
+        objects[4] = k_re.getK_re_infoId();
+        objects[5] = k_re.getK_infoName();
+        objects[6] = k_re.getK_reStatus();
+        result = jdbcUtils.update(sql,objects);
+
+        return result;
+    }
+
+    public List<Map<String,Object>>queryAll(){
+        String sql = "SELECT * FROM k_re WHERE k_reStatus = 0";
+        List<Map<String,Object>> list = jdbcUtils.query(sql,null);
+
+        return list;
+    }
+
+    public Map<String,Object> queryDetail(K_re k_re){
+        String sql = "SELECT * FROM k_re WHERE k_reNumber = ?";
+        Object[] objects = new Object[1];
+        objects[0] = k_re.getK_reNumber();
+        List<Map<String,Object>> list = jdbcUtils.query(sql,objects);
+        Map<String,Object> map1 = list.get(0);
+
+        return map1;
+    }
+}

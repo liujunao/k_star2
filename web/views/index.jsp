@@ -1,13 +1,7 @@
 <%--suppress ALL --%>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.springmvc.kdHelper.KDModel" %><%--
-  Created by IntelliJ IDEA.
-  User: lenovo
-  Date: 2017/9/26
-  Time: 19:55
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -22,15 +16,14 @@
                 $.post(
                     "/kuaidi/chaxunGd",
                     {
-                        "orderNumber": $("#orderNumber").val(),
-                        "type": $("#type").val()
+                        "orderNumber": $("#orderNumber").val()
                     }, function (data) {
                         var list = "";
                         $.each($.parseJSON(data), function (name, content) {
                             list += "<li>";
-                            list += "time: " + content.time + " --> context:" + content.context;
+                            list += "time: " + content.k_time + " --> context:" + content.k_context;
                             list += "</li>";
-                            $("#main").html(list);
+                            $("#mineGd").html(list);
                         })
                     }
                 );
@@ -39,7 +32,26 @@
                 } else {
                     $("#first").hide();
                 }
+                if ($("#mineGd").css("display") == "none") {
+                    $("#mineGd").show();
+                } else {
+                    $("#mineGd").hide();
+                }
             });
+            var gdHIndex = 0;
+            $.post(
+                "/kuaidi/showMine",
+                function (data) {
+                    var mapList = "";
+                    $.each($.parseJSON(data), function (name, content) {
+                        mapList += "<li>";
+                        mapList += content.k_time + "-->" + "<a href='/kuaidi/chaxunGd2?orderNumber2=" + content.k_number + "'>"
+                            + content.k_context + "</a>" + "-->" + content.k_type;
+                        mapList += "</li>";
+                        $("#mineOne").html(mapList);
+                        gdHIndex++;
+                    })
+                })
         })
     </script>
     <style>
@@ -48,7 +60,47 @@
             list-style: none;
             width: 20%
         }
+
+        #mineGd {
+            display: none;
+        }
     </style>
+    <script>
+        function typeToString(type) {
+            var result = "";
+            if (type == "中通") {
+                result = "zhongtong";
+            }
+            if (type == "韵达") {
+                result = "yunda";
+            }
+            if (type == "圆通") {
+                result = "yuantong";
+            }
+            if (type == "百世快递") {
+                result = "huitongkuaidi";
+            }
+            if (type == "申通") {
+                result = "shentong";
+            }
+            if (type == "万象物流") {
+                result = "wanxiangwuliu";
+            }
+            if (type == "EMS物流") {
+                result = "ems";
+            }
+            return result;
+        }
+
+        function mine() {
+            var msg = "<%=request.getAttribute("msg")%>";
+            if (msg != null && msg != "null") {
+                alert(msg);
+            }
+        }
+        window.onload = mine;
+    </script>
+
 </head>
 <body>
 
@@ -66,7 +118,7 @@ QQ:<%=map.get("k_qq")%>
     <ul id="title">
         <li id="one">我的快递</li>
         <li id="two">我的消息</li>
-        <li id="three">我的动态</li>
+        <li id="three"><a href="/views/forum.jsp"> 我的论坛</a></li>
         <li id="four"><a href="/views/release.jsp">发布任务</a></li>
     </ul>
 </div>
@@ -87,46 +139,40 @@ QQ:<%=map.get("k_qq")%>
             <option value="wanxiangwuliu" <c:if test="${type eq 'wanxiangwuliu'}">selected</c:if>>万象物流</option>
             <option value="ems" <c:if test="${type eq 'ems'}">selected</c:if>>EMS物流</option>
         </select>
-        <c:if test="${time != null}">
+        <c:if test="${time != null && context != null}">
             <ul id="main">
                 <li id="first">time: ${time} --> context: ${context}</li>
+                <ul id="mineGd"></ul>
                 <a href="javascript:void(0)" id="gd">获取更多</a>
             </ul>
         </c:if>
     </form>
-
-    <form action="/kuaidi/showMine" method="post">
-        <h3>我的快递</h3>
+    <ul id="mineOne">
+        <li>我的快递</li>
+    </ul>
+    <c:if test="${gd2List != null}">
         <ul>
             <%
-                List<Map<String, Object>> list = (List<Map<String, Object>>) request.getSession().getAttribute("list1");
-                Map<String, Object> map1 = null;
-                if (list.size() > 0 && list != null) {
-                    for (int i = 0; i < list.size(); i++) {
-                        map1 = list.get(i);
+                List<Map<String, Object>> list = (List<Map<String, Object>>) request.getAttribute("gd2List");
+                if (list != null) {
+                    Map<String, Object> map1 = new HashMap<>();
+                    map1 = list.get(0);
             %>
-            <li><%=map1.get("k_time")%> --> <%=map1.get("k_context")%> --> <%=map1.get("k_type")%> -->
-                <%
-                    int status = Integer.parseInt(map1.get("k_status").toString());
-                    if (status == 0) {
-                %>
-                未签收
-                <%
-                } else if (status == 1) {
-                %>
-                已签收
-                <%
-                    }
-                %>
-
+            <li><%=map1.get("k_type")%>--><%=map1.get("k_number")%>
             </li>
-            <br>
+            <%
+                for (int i = 0; i < list.size(); i++) {
+                    map1 = new HashMap<>();
+                    map1 = list.get(i);
+            %>
+            <li><%=map1.get("k_time")%>--><%=map1.get("k_context")%>
+            </li>
             <%
                     }
                 }
             %>
         </ul>
-    </form>
+    </c:if>
 </div>
 
 <div id="myTwo">
@@ -134,6 +180,7 @@ QQ:<%=map.get("k_qq")%>
 </div>
 
 <div id="myThree">
+
 
 </div>
 

@@ -2,7 +2,6 @@ package com.springmvc.controller;
 
 import com.springmvc.common.HtmlCommon;
 import com.springmvc.common.JsonCommon;
-import com.springmvc.common.ListComparator;
 import com.springmvc.common.TypeCommon;
 import com.springmvc.kdHelper.DataList;
 import com.springmvc.kdHelper.KDModel;
@@ -11,6 +10,7 @@ import com.springmvc.model.K_info;
 import com.springmvc.model.K_re;
 import com.springmvc.service.K_exService;
 import com.springmvc.service.K_infoService;
+import com.springmvc.service.K_reService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -19,9 +19,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lenovo on 2017/9/26.
@@ -100,23 +103,49 @@ public class DataController {
 
     @RequestMapping("/chaxunGd")
     public void queryDataGd(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        queryDataCommon(request, response);
+    }
 
+    @RequestMapping("/chaxunGd2")
+    public String queryDataGd2(HttpServletRequest request) throws Exception {
+        String num = request.getParameter("orderNumber2");
+        System.out.println(num);
+        if (num != null) {
+            K_ex k_ex = new K_ex();
+            k_ex.setK_number(num);
+            K_exService k_exService = new K_exService();
+            List<Map<String, Object>> list = k_exService.queryByNumber(k_ex);
+            request.setAttribute("gd2List", list);
+            return "index";
+        } else {
+            request.setAttribute("msg", "获取失败，请重试！");
+            return "index";
+        }
+
+    }
+
+    public void queryDataCommon(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String num = request.getParameter("orderNumber");
-        String type = request.getParameter("type");
-        request.setAttribute("orderNumber", num);
-        request.setAttribute("type", type);
-        DataList dataList = new DataList();
-        List<KDModel> data = dataList.getData(num, type);
-        ListComparator listComparator = new ListComparator();
-        Collections.sort(data,listComparator);
-        JsonCommon jsonCommon = new JsonCommon();
-        String result = jsonCommon.getJsonString(data);
-        response.setContentType("text/html;charset=utf-8");
-        PrintWriter out = response.getWriter();
-        out.flush();
-        out.write(result);
-        out.flush();
-        out.close();
+        System.out.println(num);
+        K_ex k_ex = new K_ex();
+        k_ex.setK_number(num);
+        K_exService k_exService = new K_exService();
+        List<Map<String, Object>> list = k_exService.queryByNumber(k_ex);
+        if (list != null) {
+            JsonCommon jsonCommon = new JsonCommon();
+            String result = jsonCommon.getJsonString(list);
+            response.setContentType("text/html;charset=utf-8");
+            PrintWriter out = response.getWriter();
+            out.flush();
+            out.write(result);
+            out.flush();
+            out.close();
+        } else {
+            HtmlCommon htmlCommon = new HtmlCommon();
+            htmlCommon.showMsg(response, "获取失败，请重试！", "/views/index.jsp");
+            return;
+        }
+
     }
 
     @RequestMapping("/supplement")
@@ -145,17 +174,16 @@ public class DataController {
     }
 
     @RequestMapping("/showMine")
-    public String showMine(HttpServletRequest request) throws ParseException, IOException {
+    public void showMine(HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
         Map<String, Object> map = (Map<String, Object>) request.getSession().getAttribute("k_info");
         K_ex k_ex = new K_ex();
         K_exService k_exService = new K_exService();
         k_ex.setK_infoId(Integer.parseInt(map.get("k_id").toString()));
         List<Map<String, Object>> list = k_exService.queryAllByInfoId(k_ex);
         Map<String, Object> map1 = null;
-        Map<String, Object> map2 = new HashMap<>();
         List<Map<String, Object>> list1 = new ArrayList<>();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        List<Map<String,Object>> tempList = null;
+        List<Map<String, Object>> tempList = null;
         while (list.size() > 0) {
             tempList = new ArrayList<>();
             map1 = list.get(0);
@@ -167,24 +195,75 @@ public class DataController {
                     tempList.add(list.get(i));
                 }
             }
-            if (tempList.size() > 0){
-                for (int j = 0;j < tempList.size();j++){
+            if (tempList.size() > 0) {
+                for (int j = 0; j < tempList.size(); j++) {
                     list.remove(tempList.get(j));
                 }
             }
             list1.add(map1);
         }
-        HtmlCommon htmlCommon = new HtmlCommon();
-        HttpSession session = htmlCommon.getSession();
-        session.setAttribute("list1", list1);
-
-        return "index";
+        JsonCommon jsonCommon = new JsonCommon();
+        String data = jsonCommon.getJsonString(list1);
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        out.write(data);
+        out.flush();
+        out.close();
     }
 
     @RequestMapping("/release")
-    public String release(K_re k_re){
+    public String release(K_re k_re, HttpServletRequest request) throws UnsupportedEncodingException {
 
-        return "";
+        request.setCharacterEncoding("utf-8");
+        K_reService k_reService = new K_reService();
+        int result = -1;
+        result = k_reService.add(k_re);
+        if (result > 0) {
+            request.setAttribute("message", "任务发布成功！");
+            request.setAttribute("k_re", k_re);
+            return "release";
+        } else {
+            request.setAttribute("msg", "任务发布失败，请重新发布！");
+            return "release";
+        }
     }
 
+    @RequestMapping("/fail")
+    public String toFail(HttpServletRequest request){
+        String message = request.getParameter("msg");
+        request.setAttribute("msg",message);
+        return "fail";
+    }
+
+    @RequestMapping("/forumAll")
+    public void forumAll(HttpServletResponse response) throws IOException {
+        K_reService k_reService = new K_reService();
+        List<Map<String,Object>> list = k_reService.queryAll();
+        System.out.println(list);
+        JsonCommon jsonCommon = new JsonCommon();
+        String data = jsonCommon.getJsonString(list);
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        out.flush();
+        out.write(data);
+        out.flush();
+        out.close();
+    }
+
+    @RequestMapping("/forumDetail")
+    public String forumDetail(HttpServletRequest request){
+        String number = request.getParameter("number");
+        K_reService k_reService = new K_reService();
+        K_re k_re = new K_re();
+        k_re.setK_reNumber(number);
+        Map<String,Object> mapDetail = k_reService.queryDetail(k_re);
+        if (mapDetail != null){
+            request.setAttribute("mapDetail",mapDetail);
+            request.setAttribute("message","查看成功");
+            return "forum";
+        }else {
+            request.setAttribute("msg","查看失败，请重试！");
+            return "forum";
+        }
+    }
 }
