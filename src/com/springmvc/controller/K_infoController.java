@@ -266,22 +266,16 @@ public class K_infoController {
     @RequestMapping("/validateUserName")
     public void validateUserName(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HtmlCommon htmlCommon = new HtmlCommon();
-        String loginName = htmlCommon.getParameter(request,"loginName");
-        String email = htmlCommon.getParameter(request,"emailName");
+        String loginName = htmlCommon.getParameter(request,"k_username");
 
         K_infoService k_infoService = new K_infoService();
         K_info k_info = new K_info();
 
         if (loginName != null && !loginName.equals("")){
             k_info.setK_username(loginName);
-            k_info.setK_email(loginName);
-        }
-        if (email != null && !email.equals("")){
-            k_info.setK_username(email);
-            k_info.setK_email(email);
         }
         int result = -1;
-        result = k_infoService.retrieve(k_info);
+        result = k_infoService.queryUsername(k_info);
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
         if (result > 0) {

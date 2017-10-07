@@ -20,10 +20,17 @@
                     var list = "";
                     $.each($.parseJSON(data),function (num,content) {
                         list += "<li>";
-                        list += content.k_infoName + "-->" + "<a href='/kuaidi/forumDetail?number="+ content.k_reNumber +"'>" +content.k_reText + "</a>";
+                        list += content.k_infoName + "-->" + "<a href='/kuaidi/forumDetail?number="+ content.k_reNumber +"'>" +content.k_reText + "</a>"
+                        + status(content.k_reStatus);
                         list += "</li>";
                         $("#mineThree").html(list);
                     })
+                }
+            )
+            $.post(
+                "/kuaidi/examineTime",
+                {
+                    "timeout":new Date()
                 }
             )
             var message = "<%=request.getAttribute("message")%>";
@@ -32,9 +39,43 @@
                     $("#myThree").hide();
                 }
             }
+            var mapDetail = "<%=request.getAttribute("mapDetail")%>";
+            if (mapDetail != null && mapDetail != "null"){
+                if ($("#status").val() == 1){
+                    $("#a_status").html("领取任务");
+                    $("#a_status").click(function () {
+                        alert("该快递已被领取！");
+                    })
+                }
+                if ($("#status").val() == 2){
+                    $("#a_status").html("领取任务");
+                    $("#a_status").click(function () {
+                        alert("该快递任务已被接受！");
+                    })
+                }
+                if ($("#status").val() == 3){
+                    $("#a_status").html("领取任务");
+                    $("#a_status").click(function () {
+                        alert("截至时间已过，该任务失效");
+                    })
+                }
+            }
+
+
         })
         var msg = "<%=request.getAttribute("msg")%>";
         window.onload = mine(msg);
+        function status(k_status) {
+            if (k_status == 0){
+                return"未领取";
+            }else if (k_status == 1){
+                return"已领取";
+            }else if (k_status == 2){
+                return"任务已接受";
+            }else if (k_status == 3){
+                return"截至时间已过";
+            }
+        }
     </script>
 </head>
 <body>
@@ -66,7 +107,11 @@
                 <td>${mapDetail.k_reText}</td>
             </tr>
             <tr>
+                <td><input type="hidden" value="${mapDetail.k_reStatus }" id="status"/></td>
+            </tr>
+            <tr>
                 <td><a href="/views/forum.jsp">确认</a></td>
+                <td id="a_status"><a href="/kuaidi/forumTask?k_reStatus=2&k_reId=${mapDetail.k_reId }">领取任务</a> </td>
             </tr>
         </table>
     </div>

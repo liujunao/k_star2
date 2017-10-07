@@ -138,4 +138,15 @@ public class K_infoDAO {
         result = list.size();
         return result;
     }
+
+    public int queryUsername(K_info k_info){
+        String sql = "SELECT * FROM k_info WHERE k_username = ?";
+        int result = -1;
+        Object[] objects = new Object[1];
+        objects[0] = k_info.getK_username();
+        List<Map<String,Object>> list = jdbcUtils.query(sql,objects);
+        result = list.size();
+
+        return result;
+    }
 }

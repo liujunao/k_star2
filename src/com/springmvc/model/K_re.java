@@ -1,7 +1,5 @@
 package com.springmvc.model;
 
-import java.util.Date;
-
 /**
  * Created by lenovo on 2017/10/5.
  */
@@ -15,13 +13,13 @@ public class K_re {
     private int k_re_infoId;
     private String k_infoName;
     private int k_reStatus;
-    private Date k_reTime;
+    private String k_reTime;
 
-    public Date getK_reTime() {
+    public String getK_reTime() {
         return k_reTime;
     }
 
-    public void setK_reTime(Date k_reTime) {
+    public void setK_reTime(String k_reTime) {
         this.k_reTime = k_reTime;
     }
 

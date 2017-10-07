@@ -23,6 +23,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -212,34 +213,41 @@ public class DataController {
     }
 
     @RequestMapping("/release")
-    public String release(K_re k_re, HttpServletRequest request) throws UnsupportedEncodingException {
+    public String release(K_re k_re, HttpServletRequest request) throws UnsupportedEncodingException, ParseException {
 
         request.setCharacterEncoding("utf-8");
-        K_reService k_reService = new K_reService();
-        int result = -1;
-        result = k_reService.add(k_re);
-        if (result > 0) {
-            request.setAttribute("message", "任务发布成功！");
+        String save = request.getParameter("save");
+        if (save.equals("no")) {
+            HtmlCommon htmlCommon = new HtmlCommon();
+            HttpSession session = htmlCommon.getSession();
+            session.setAttribute("yesK_re", k_re);
             request.setAttribute("k_re", k_re);
+            request.setAttribute("message", "任务填写成功，请查看！");
             return "release";
-        } else {
-            request.setAttribute("msg", "任务发布失败，请重新发布！");
-            return "release";
+        } else if (save.equals("yes")) {
+            K_reService k_reService = new K_reService();
+            int result = -1;
+            K_re sessionK_re = (K_re) request.getSession().getAttribute("yesK_re");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String ymd = sessionK_re.getK_reTime().substring(0, 10);
+            String hms = sessionK_re.getK_reTime().substring(11, 16);
+            sessionK_re.setK_reTime(ymd + " " + hms + ":00");
+            result = k_reService.add(sessionK_re);
+            if (result > 0) {
+                request.setAttribute("msg", "任务发布成功！");
+                return "fail";
+            } else {
+                request.setAttribute("msg", "任务发布失败，请重新发布！");
+                return "fail";
+            }
         }
-    }
-
-    @RequestMapping("/fail")
-    public String toFail(HttpServletRequest request){
-        String message = request.getParameter("msg");
-        request.setAttribute("msg",message);
-        return "fail";
+        return "release";
     }
 
     @RequestMapping("/forumAll")
     public void forumAll(HttpServletResponse response) throws IOException {
         K_reService k_reService = new K_reService();
-        List<Map<String,Object>> list = k_reService.queryAll();
-        System.out.println(list);
+        List<Map<String, Object>> list = k_reService.queryAll();
         JsonCommon jsonCommon = new JsonCommon();
         String data = jsonCommon.getJsonString(list);
         response.setContentType("text/html;charset=utf-8");
@@ -251,19 +259,93 @@ public class DataController {
     }
 
     @RequestMapping("/forumDetail")
-    public String forumDetail(HttpServletRequest request){
+    public String forumDetail(HttpServletRequest request) {
         String number = request.getParameter("number");
         K_reService k_reService = new K_reService();
         K_re k_re = new K_re();
         k_re.setK_reNumber(number);
-        Map<String,Object> mapDetail = k_reService.queryDetail(k_re);
-        if (mapDetail != null){
-            request.setAttribute("mapDetail",mapDetail);
-            request.setAttribute("message","查看成功");
+        Map<String, Object> mapDetail = k_reService.queryDetail(k_re);
+        if (mapDetail != null) {
+            request.setAttribute("mapDetail", mapDetail);
+            request.setAttribute("message", "查看成功");
             return "forum";
-        }else {
-            request.setAttribute("msg","查看失败，请重试！");
+        } else {
+            request.setAttribute("msg", "查看失败，请重试！");
             return "forum";
         }
     }
+
+    @RequestMapping("/releaseDetail")
+    public void releaseDetail(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String number = request.getParameter("releaseNumber");
+        System.out.println(number);
+        if (number != null) {
+            K_reService k_reService = new K_reService();
+            K_re k_re = new K_re();
+            k_re.setK_reNumber(number);
+            Map<String, Object> mapDetail = k_reService.queryDetail(k_re);
+            if (mapDetail != null) {
+                response.setContentType("text/html");
+                PrintWriter out = response.getWriter();
+                out.flush();
+                out.write("1");
+                out.flush();
+                out.close();
+            }
+        }
+    }
+
+    @RequestMapping("/forumTask")
+    public String getTask(HttpServletRequest request) {
+        String k_reId = request.getParameter("k_reId");
+        String k_reStatus = request.getParameter("k_reStatus");
+        if (k_reId != null && k_reStatus != null) {
+            K_reService k_reService = new K_reService();
+            K_re k_re = new K_re();
+            k_re.setK_reStatus(Integer.parseInt(k_reStatus));
+            k_re.setK_reId(Integer.parseInt(k_reId));
+            int result = -1;
+            result = k_reService.updateStatusById(k_re);
+            if (result > 0) {
+                request.setAttribute("msg", "任务领取成功，请注意查收！");
+                return "fail";
+            } else {
+                request.setAttribute("msg", "任务领取失败，请重试！");
+                return "fail";
+            }
+        } else {
+            request.setAttribute("msg", "操作有误，请重试！");
+            return "forum";
+        }
+    }
+
+    @RequestMapping("/examineTime")
+    public void examineTime(HttpServletRequest request) throws ParseException {
+        String timeout = request.getParameter("timeout");
+        K_reService k_reService = new K_reService();
+        List<Map<String, Object>> list = k_reService.queryAll();
+        Map<String, Object> mapTime = null;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        int result = -1;
+        if (list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                mapTime = list.get(i);
+                if (simpleDateFormat.parse(simpleDateFormat.format(new Date(timeout))).getTime() >
+                        simpleDateFormat.parse(mapTime.get("k_reTime").toString()).getTime()) {
+                    K_re k_re = new K_re();
+                    k_re.setK_reStatus(3);
+                    k_re.setK_reId(Integer.parseInt(mapTime.get("k_reId").toString()));
+                    result = k_reService.updateStatusById(k_re);
+                    if (result > 0) {
+                        System.out.println("时间过期后修改信息成功！");
+                    } else {
+                        System.out.println("时间过期后修改信息失败！");
+                    }
+                }
+            }
+        }
+
+    }
+
+
 }

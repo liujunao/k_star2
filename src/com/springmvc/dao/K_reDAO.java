@@ -13,11 +13,11 @@ public class K_reDAO {
 
     JdbcUtils jdbcUtils = new JdbcUtils();
 
-    public int add(K_re k_re){
-        String sql = "INSERT INTO k_re(k_reNumber,k_reName,k_rePhone,k_reText,k_re_infoId,k_infoName,k_reStatus)" +
-                "VALUES(?,?,?,?,?,?,?)";
+    public int add2(K_re k_re){
+        String sql = "INSERT INTO k_re(k_reNumber,k_reName,k_rePhone,k_reText,k_re_infoId,k_infoName,k_reStatus,k_reTime)" +
+                "VALUES(?,?,?,?,?,?,?,?)";
         int result = -1;
-        Object[] objects = new Object[7];
+        Object[] objects = new Object[8];
         objects[0] = k_re.getK_reNumber();
         objects[1] = k_re.getK_reName();
         objects[2] = k_re.getK_rePhone();
@@ -25,13 +25,15 @@ public class K_reDAO {
         objects[4] = k_re.getK_re_infoId();
         objects[5] = k_re.getK_infoName();
         objects[6] = k_re.getK_reStatus();
+        objects[7] = k_re.getK_reTime();
+
         result = jdbcUtils.update(sql,objects);
 
         return result;
     }
 
     public List<Map<String,Object>>queryAll(){
-        String sql = "SELECT * FROM k_re WHERE k_reStatus = 0";
+        String sql = "SELECT * FROM k_re";
         List<Map<String,Object>> list = jdbcUtils.query(sql,null);
 
         return list;
@@ -46,4 +48,16 @@ public class K_reDAO {
 
         return map1;
     }
+
+    public int updateStatusById(K_re k_re){
+        String sql = "UPDATE k_re SET k_reStatus = ? WHERE k_reId = ?";
+        int result = -1;
+        Object[] objects = new Object[2];
+        objects[0] = k_re.getK_reStatus();
+        objects[1] = k_re.getK_reId();
+        result = jdbcUtils.update(sql,objects);
+
+        return result;
+    }
+
 }

@@ -15,7 +15,7 @@ public class K_reService {
 
     public int add(K_re k_re){
         int result = -1;
-        result = k_reDAO.add(k_re);
+        result = k_reDAO.add2(k_re);
 
         return result;
     }
@@ -29,5 +29,12 @@ public class K_reService {
         Map<String,Object> map1 = k_reDAO.queryDetail(k_re);
 
         return map1;
+    }
+
+    public int updateStatusById(K_re k_re){
+        int result = -1;
+        result = k_reDAO.updateStatusById(k_re);
+
+        return result;
     }
 }

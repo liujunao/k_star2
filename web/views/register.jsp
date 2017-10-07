@@ -14,24 +14,6 @@
     <script src="/statics/js/jquery-3.2.1.js"></script>
 
     <script>
-        function CheckUserName() {
-            var username = document.getElementById("username").value;
-            if (CheckString("username")) {
-                document.getElementById("m_username").innerHTML = "<font color='red'>用户名不能包含空格</font>";
-                return;
-            }
-            if (username == "") {
-                document.getElementById("m_username").innerHTML = "<font color='red'>用户名不能为空</font>";
-                return;
-            }
-            if (username.length < 4 || username.length > 20) {
-                document.getElementById("m_username").innerHTML = "<font color='red'>用户名必须为4-18个字符</font>";
-                return;
-            }
-            document.getElementById("username").value = username;
-            document.getElementById("m_username").innerHTML = "<font color='green'>√</font>";
-            return true;
-        }
 
         function CheckString(string) {
             if (string.indexOf(" ") > -1) {
@@ -85,11 +67,30 @@
             $("#username").blur(function () {
                 $.post("/user/validateUserName?dt=" + new Date(),
                     {
-                        k_username: $(this).val()
+                        "k_username": $("#username").val()
                     }, function (data) {
                         if (data == "1") {
                             alert("该用户名已存在，请重新输入！");
-                            $(this).focus();
+                            $("input[name=k_username]").focus();
+                        }else if (data == "0"){
+                            function CheckUserName() {
+                                var username = document.getElementById("username").value;
+                                if (CheckString("username")) {
+                                    document.getElementById("m_username").innerHTML = "<font color='red'>用户名不能包含空格</font>";
+                                    return;
+                                }
+                                if (username == "") {
+                                    document.getElementById("m_username").innerHTML = "<font color='red'>用户名不能为空</font>";
+                                    return;
+                                }
+                                if (username.length < 4 || username.length > 20) {
+                                    document.getElementById("m_username").innerHTML = "<font color='red'>用户名必须为4-18个字符</font>";
+                                    return;
+                                }
+                                document.getElementById("username").value = username;
+                                document.getElementById("m_username").innerHTML = "<font color='green'>√</font>";
+                                return true;
+                            }
                         }
                     }
                 )

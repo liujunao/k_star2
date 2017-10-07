@@ -79,4 +79,11 @@ public class K_infoService {
 
         return result;
     }
+
+    public int queryUsername(K_info k_info){
+        int result = -1;
+        result = k_infoDAO.queryUsername(k_info);
+
+        return result;
+    }
 }
