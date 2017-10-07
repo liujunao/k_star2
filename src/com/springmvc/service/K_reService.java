@@ -37,4 +37,15 @@ public class K_reService {
 
         return result;
     }
+
+    public Map<String,Object> queryById(K_re k_re){
+        Map<String,Object> map1 = k_reDAO.queryById(k_re);
+
+        return map1;
+    }
+
+    public List<Map<String,Object>> queryByInfoId(K_re k_re){
+        List<Map<String,Object>> list = k_reDAO.queryByInfoId(k_re);
+        return list;
+    }
 }

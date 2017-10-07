@@ -14,6 +14,15 @@ public class K_re {
     private String k_infoName;
     private int k_reStatus;
     private String k_reTime;
+    private String k_re_puTime;
+
+    public String getK_re_puTime() {
+        return k_re_puTime;
+    }
+
+    public void setK_re_puTime(String k_re_puTime) {
+        this.k_re_puTime = k_re_puTime;
+    }
 
     public String getK_reTime() {
         return k_reTime;

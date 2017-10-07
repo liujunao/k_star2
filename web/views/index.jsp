@@ -117,7 +117,7 @@ QQ:<%=map.get("k_qq")%>
 <div>
     <ul id="title">
         <li id="one">我的快递</li>
-        <li id="two">我的消息</li>
+        <li id="two"><a href="/views/message.jsp">我的消息</a></li>
         <li id="three"><a href="/views/forum.jsp"> 我的论坛</a></li>
         <li id="four"><a href="/views/release.jsp">发布任务</a></li>
     </ul>

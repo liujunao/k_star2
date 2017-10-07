@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %><%--
   Created by IntelliJ IDEA.
   User: lenovo
   Date: 2017/10/6
@@ -7,6 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="reCommon.jsp"%>
 <html>
 <head>
     <title>我的论坛</title>
@@ -39,43 +41,10 @@
                     $("#myThree").hide();
                 }
             }
-            var mapDetail = "<%=request.getAttribute("mapDetail")%>";
-            if (mapDetail != null && mapDetail != "null"){
-                if ($("#status").val() == 1){
-                    $("#a_status").html("领取任务");
-                    $("#a_status").click(function () {
-                        alert("该快递已被领取！");
-                    })
-                }
-                if ($("#status").val() == 2){
-                    $("#a_status").html("领取任务");
-                    $("#a_status").click(function () {
-                        alert("该快递任务已被接受！");
-                    })
-                }
-                if ($("#status").val() == 3){
-                    $("#a_status").html("领取任务");
-                    $("#a_status").click(function () {
-                        alert("截至时间已过，该任务失效");
-                    })
-                }
-            }
-
-
         })
         var msg = "<%=request.getAttribute("msg")%>";
         window.onload = mine(msg);
-        function status(k_status) {
-            if (k_status == 0){
-                return"未领取";
-            }else if (k_status == 1){
-                return"已领取";
-            }else if (k_status == 2){
-                return"任务已接受";
-            }else if (k_status == 3){
-                return"截至时间已过";
-            }
-        }
+
     </script>
 </head>
 <body>
@@ -83,38 +52,6 @@
 <div id="myThree">
     <ul id="mineThree"></ul>
 </div>
-<c:if test="${mapDetail != null}">
-    <div id="show">
-        <table>
-            <tr>
-                <td>快递单号</td>
-                <td>${mapDetail.k_reNumber}</td>
-            </tr>
-            <tr>
-                <td>取件人姓名</td>
-                <td>${mapDetail.k_reName}</td>
-            </tr>
-            <tr>
-                <td>取件人手机号码</td>
-                <td>${mapDetail.k_rePhone}</td>
-            </tr>
-            <tr>
-                <td>领取截至时间</td>
-                <td>${mapDetail.k_reTime}</td>
-            </tr>
-            <tr>
-                <td>取件详细信息</td>
-                <td>${mapDetail.k_reText}</td>
-            </tr>
-            <tr>
-                <td><input type="hidden" value="${mapDetail.k_reStatus }" id="status"/></td>
-            </tr>
-            <tr>
-                <td><a href="/views/forum.jsp">确认</a></td>
-                <td id="a_status"><a href="/kuaidi/forumTask?k_reStatus=2&k_reId=${mapDetail.k_reId }">领取任务</a> </td>
-            </tr>
-        </table>
-    </div>
-</c:if>
+
 </body>
 </html>

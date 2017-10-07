@@ -14,10 +14,10 @@ public class K_reDAO {
     JdbcUtils jdbcUtils = new JdbcUtils();
 
     public int add2(K_re k_re){
-        String sql = "INSERT INTO k_re(k_reNumber,k_reName,k_rePhone,k_reText,k_re_infoId,k_infoName,k_reStatus,k_reTime)" +
-                "VALUES(?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO k_re(k_reNumber,k_reName,k_rePhone,k_reText,k_re_infoId,k_infoName,k_reStatus,k_reTime,k_re_puTime)" +
+                "VALUES(?,?,?,?,?,?,?,?,?)";
         int result = -1;
-        Object[] objects = new Object[8];
+        Object[] objects = new Object[9];
         objects[0] = k_re.getK_reNumber();
         objects[1] = k_re.getK_reName();
         objects[2] = k_re.getK_rePhone();
@@ -26,6 +26,7 @@ public class K_reDAO {
         objects[5] = k_re.getK_infoName();
         objects[6] = k_re.getK_reStatus();
         objects[7] = k_re.getK_reTime();
+        objects[8] = k_re.getK_re_puTime();
 
         result = jdbcUtils.update(sql,objects);
 
@@ -58,6 +59,25 @@ public class K_reDAO {
         result = jdbcUtils.update(sql,objects);
 
         return result;
+    }
+
+    public Map<String,Object> queryById(K_re k_re){
+        String sql = "SELECT * FROM k_re WHERE k_reId=?";
+        Object[] objects = new Object[1];
+        objects[0] = k_re.getK_reId();
+        List<Map<String,Object>> list = jdbcUtils.query(sql,objects);
+        Map<String,Object> map1 = list.get(0);
+
+        return map1;
+    }
+
+    public List<Map<String,Object>> queryByInfoId(K_re k_re){
+        String sql = "SELECT * FROM k_re WHERE k_re_infoId = ?";
+        Object[] objects = new Object[1];
+        objects[0] = k_re.getK_re_infoId();
+        List<Map<String,Object>> list = jdbcUtils.query(sql,objects);
+
+        return list;
     }
 
 }

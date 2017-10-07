@@ -91,6 +91,13 @@
                 </script>
             </tr>
             <tr>
+                <%
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String date = simpleDateFormat.format(new Date());
+                %>
+                <td><input type="hidden" name="k_re_puTime"value="<%=date%>"/></td>
+            </tr>
+            <tr>
                 <td><input type="hidden" name="k_re_infoId" value="<%=map.get("k_id")%>"/></td>
             </tr>
             <tr>
@@ -120,6 +127,10 @@
             <tr>
                 <td>本人手机号码</td>
                 <td>${k_re.k_rePhone}</td>
+            </tr>
+            <tr>
+                <td>任务发布时间</td>
+                <td>${k_re.k_re_puTime}</td>
             </tr>
             <tr>
                 <td>领取截至时间</td>

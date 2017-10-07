@@ -7,9 +7,11 @@ import com.springmvc.kdHelper.DataList;
 import com.springmvc.kdHelper.KDModel;
 import com.springmvc.model.K_ex;
 import com.springmvc.model.K_info;
+import com.springmvc.model.K_me;
 import com.springmvc.model.K_re;
 import com.springmvc.service.K_exService;
 import com.springmvc.service.K_infoService;
+import com.springmvc.service.K_meService;
 import com.springmvc.service.K_reService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -133,14 +135,7 @@ public class DataController {
         K_exService k_exService = new K_exService();
         List<Map<String, Object>> list = k_exService.queryByNumber(k_ex);
         if (list != null) {
-            JsonCommon jsonCommon = new JsonCommon();
-            String result = jsonCommon.getJsonString(list);
-            response.setContentType("text/html;charset=utf-8");
-            PrintWriter out = response.getWriter();
-            out.flush();
-            out.write(result);
-            out.flush();
-            out.close();
+            listToJson(list,response);
         } else {
             HtmlCommon htmlCommon = new HtmlCommon();
             htmlCommon.showMsg(response, "获取失败，请重试！", "/views/index.jsp");
@@ -203,13 +198,7 @@ public class DataController {
             }
             list1.add(map1);
         }
-        JsonCommon jsonCommon = new JsonCommon();
-        String data = jsonCommon.getJsonString(list1);
-        response.setContentType("text/html;charset=utf-8");
-        PrintWriter out = response.getWriter();
-        out.write(data);
-        out.flush();
-        out.close();
+        listToJson(list1,response);
     }
 
     @RequestMapping("/release")
@@ -248,14 +237,7 @@ public class DataController {
     public void forumAll(HttpServletResponse response) throws IOException {
         K_reService k_reService = new K_reService();
         List<Map<String, Object>> list = k_reService.queryAll();
-        JsonCommon jsonCommon = new JsonCommon();
-        String data = jsonCommon.getJsonString(list);
-        response.setContentType("text/html;charset=utf-8");
-        PrintWriter out = response.getWriter();
-        out.flush();
-        out.write(data);
-        out.flush();
-        out.close();
+        listToJson(list,response);
     }
 
     @RequestMapping("/forumDetail")
@@ -307,6 +289,26 @@ public class DataController {
             int result = -1;
             result = k_reService.updateStatusById(k_re);
             if (result > 0) {
+                k_re = new K_re();
+                k_re.setK_reId(Integer.parseInt(k_reId));
+                Map<String, Object> map1 = k_reService.queryById(k_re);
+                HtmlCommon htmlCommon = new HtmlCommon();
+                HttpSession session = htmlCommon.getSession();
+                Map<String, Object> map = (Map<String, Object>) session.getAttribute("k_info");
+                K_me k_me = new K_me();
+                K_meService k_meService = new K_meService();
+                k_me.setK_me_myId(Integer.parseInt(map1.get("k_re_infoId").toString()));
+                k_me.setK_me_otherId(Integer.parseInt(map.get("k_id").toString()));
+                k_me.setK_meTime(request.getParameter("meTime"));
+                k_me.setK_meStatus(1);
+                k_me.setK_me_reId(Integer.parseInt(map1.get("k_reId").toString()));
+                k_me.setK_meWarn("您于" + map1.get("k_reTime") + "发布的快递单号为" + map1.get("k_reNumber") + "的任务已被" + map.get("k_username") + "领取");//xxx领取
+                k_me.setK_meOtherWarn("您已成功领取" + map1.get("k_re_infoId") + "发布的任务");
+                int meResult = -1;
+                meResult = k_meService.add(k_me);
+                if (meResult > 0){
+                    System.out.println("任务领取成功消息添加成功！");
+                }
                 request.setAttribute("msg", "任务领取成功，请注意查收！");
                 return "fail";
             } else {
@@ -337,6 +339,18 @@ public class DataController {
                     k_re.setK_reId(Integer.parseInt(mapTime.get("k_reId").toString()));
                     result = k_reService.updateStatusById(k_re);
                     if (result > 0) {
+                        K_me k_me = new K_me();
+                        k_me.setK_me_myId(Integer.parseInt(mapTime.get("k_re_infoId").toString()));
+                        k_me.setK_me_reId(Integer.parseInt(mapTime.get("k_reId").toString()));
+                        k_me.setK_meStatus(0);
+                        k_me.setK_meTime(simpleDateFormat.format(new Date(timeout)));
+                        k_me.setK_meWarn("您于" + mapTime.get("k_re_puTime") + "发布的快递单号为" + mapTime.get("k_reNumber") + "的任务已过期！");
+                        K_meService k_meService = new K_meService();
+                        int reResult = -1;
+                        reResult = k_meService.add(k_me);
+                        if (reResult > 0){
+                            System.out.println("时间过期消息添加成功！");
+                        }
                         System.out.println("时间过期后修改信息成功！");
                     } else {
                         System.out.println("时间过期后修改信息失败！");
@@ -347,5 +361,29 @@ public class DataController {
 
     }
 
+    @RequestMapping("/puMessage")
+    public void puMessage(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        String k_re_infoId = request.getParameter("k_re_infoId");
+        if (k_re_infoId != null){
+            K_re k_re = new K_re();
+            k_re.setK_re_infoId(Integer.parseInt(k_re_infoId));
+            K_reService k_reService = new K_reService();
+            List<Map<String,Object>> list = k_reService.queryByInfoId(k_re);
+            if (list != null){
+                listToJson(list,response);
+            }
+        }
 
+    }
+
+     public void listToJson(List<Map<String,Object>> list,HttpServletResponse response) throws IOException {
+         JsonCommon jsonCommon = new JsonCommon();
+         String data = jsonCommon.getJsonString(list);
+         response.setContentType("text/html;charset=utf-8");
+         PrintWriter out = response.getWriter();
+         out.flush();
+         out.write(data);
+         out.flush();
+         out.close();
+     }
 }
