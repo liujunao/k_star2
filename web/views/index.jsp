@@ -4,6 +4,7 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="reCommon.jsp"%>
 <html>
 <head>
     <title>我的主页</title>
@@ -38,7 +39,6 @@
                     $("#mineGd").hide();
                 }
             });
-            var gdHIndex = 0;
             $.post(
                 "/kuaidi/showMine",
                 function (data) {
@@ -49,7 +49,6 @@
                             + content.k_context + "</a>" + "-->" + content.k_type;
                         mapList += "</li>";
                         $("#mineOne").html(mapList);
-                        gdHIndex++;
                     })
                 })
         })
@@ -103,16 +102,6 @@
 
 </head>
 <body>
-
-<%
-    Map<String, Object> map = (Map<String, Object>) session.getAttribute("k_info");
-%>
-用户名：<%=map.get("k_username")%>
-电话号码：<%=map.get("k_phone")%>
-QQ:<%=map.get("k_qq")%>
-微信:<%=map.get("k_weChat")%>
-<a href="/kuaidi/supplement">信息变更</a>
-<br><br><br><br>
 
 <div>
     <ul id="title">

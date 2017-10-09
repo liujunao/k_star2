@@ -13,6 +13,15 @@ public class K_me {
     private int k_me_otherId;
     private int k_meStatus;
     private int k_me_reId;
+    private String k_me_number;
+
+    public String getK_me_number() {
+        return k_me_number;
+    }
+
+    public void setK_me_number(String k_me_number) {
+        this.k_me_number = k_me_number;
+    }
 
     public String getK_meOtherWarn() {
         return k_meOtherWarn;

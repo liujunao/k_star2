@@ -106,7 +106,7 @@ public class K_infoController {
     }
 
     @RequestMapping("/login")
-    public String login1(HttpServletRequest request,HttpServletResponse response) throws Exception {
+    public String login(HttpServletRequest request,HttpServletResponse response) throws Exception {
         String loginName = request.getParameter("username");
         String password = request.getParameter("password");
         String validation = request.getParameter("validation");

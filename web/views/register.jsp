@@ -185,7 +185,7 @@
                 </tr>
             </table>
         </form>
-        <a href="/user/login"><font color="green" size="2"><i>已有账号？现在登录</i></font></a>
+        <a href="/views/login.jsp"><font color="green" size="2"><i>已有账号？现在登录</i></font></a>
     </div>
 </center>
 </body>

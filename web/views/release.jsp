@@ -9,9 +9,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="reCommon.jsp"%>
 <html>
 <head>
     <title>消息页面</title>
+    <link type="text/css" rel="stylesheet" href="/statics/css/styleCommon.css"/>
     <script type="text/javascript" src="/statics/utf8-jsp/ueditor.config.js"></script>
     <script type="text/javascript" src="/statics/utf8-jsp/ueditor.all.js"></script>
     <script type="text/javascript" src="/statics/js/jquery-3.2.1.js"></script>
@@ -54,9 +56,14 @@
 </head>
 <body>
 
-<%
-    Map<String, Object> map = (Map<String, Object>) session.getAttribute("k_info");
-%>
+<div>
+    <ul id="title">
+        <li id="one"><a href="/views/index.jsp">我的快递</a></li>
+        <li id="two"><a href="/views/message.jsp">我的消息</a></li>
+        <li id="three"><a href="/views/forum.jsp"> 我的论坛</a></li>
+        <li id="four"><a href="#">发布任务</a></li>
+    </ul>
+</div>
 
 <div id="myFour">
     <form action="/kuaidi/release?save=no" method="post">
@@ -78,7 +85,14 @@
             </tr>
             <tr>
                 <td>领取截至时间</td>
-                <td><input type="datetime-local" name="k_reTime" id="k_reTime" width="50%"/></td>
+                <%
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String date = simpleDateFormat.format(new Date());
+                    String ymd = date.substring(0, 10);
+                    String hm = date.substring(11, 16);
+                    String minTime = ymd + "T" + hm;
+                %>
+                <td><input type="datetime-local" name="k_reTime" id="k_reTime" width="50%" min="<%=minTime%>"/></td>
                 <td><em id="m_k_reTime"></em></td>
             </tr>
             <tr>
@@ -91,11 +105,7 @@
                 </script>
             </tr>
             <tr>
-                <%
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    String date = simpleDateFormat.format(new Date());
-                %>
-                <td><input type="hidden" name="k_re_puTime"value="<%=date%>"/></td>
+                <td><input type="hidden" name="k_re_puTime" value="<%=date%>"/></td>
             </tr>
             <tr>
                 <td><input type="hidden" name="k_re_infoId" value="<%=map.get("k_id")%>"/></td>

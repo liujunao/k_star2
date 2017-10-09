@@ -112,7 +112,6 @@ public class DataController {
     @RequestMapping("/chaxunGd2")
     public String queryDataGd2(HttpServletRequest request) throws Exception {
         String num = request.getParameter("orderNumber2");
-        System.out.println(num);
         if (num != null) {
             K_ex k_ex = new K_ex();
             k_ex.setK_number(num);
@@ -129,13 +128,12 @@ public class DataController {
 
     public void queryDataCommon(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String num = request.getParameter("orderNumber");
-        System.out.println(num);
         K_ex k_ex = new K_ex();
         k_ex.setK_number(num);
         K_exService k_exService = new K_exService();
         List<Map<String, Object>> list = k_exService.queryByNumber(k_ex);
         if (list != null) {
-            listToJson(list,response);
+            listToJson(list, response);
         } else {
             HtmlCommon htmlCommon = new HtmlCommon();
             htmlCommon.showMsg(response, "获取失败，请重试！", "/views/index.jsp");
@@ -198,12 +196,11 @@ public class DataController {
             }
             list1.add(map1);
         }
-        listToJson(list1,response);
+        listToJson(list1, response);
     }
 
     @RequestMapping("/release")
     public String release(K_re k_re, HttpServletRequest request) throws UnsupportedEncodingException, ParseException {
-
         request.setCharacterEncoding("utf-8");
         String save = request.getParameter("save");
         if (save.equals("no")) {
@@ -217,12 +214,24 @@ public class DataController {
             K_reService k_reService = new K_reService();
             int result = -1;
             K_re sessionK_re = (K_re) request.getSession().getAttribute("yesK_re");
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String ymd = sessionK_re.getK_reTime().substring(0, 10);
             String hms = sessionK_re.getK_reTime().substring(11, 16);
             sessionK_re.setK_reTime(ymd + " " + hms + ":00");
             result = k_reService.add(sessionK_re);
             if (result > 0) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                K_me k_me = new K_me();
+                k_me.setK_me_myId(Integer.parseInt(String.valueOf(sessionK_re.getK_re_infoId())));
+                k_me.setK_meTime(simpleDateFormat.format(new Date()));
+                k_me.setK_me_number(sessionK_re.getK_reNumber());
+                k_me.setK_meStatus(0);
+                k_me.setK_meWarn("您成功发布了快递单号为" + sessionK_re.getK_reNumber() + "的快递领取任务！");
+                K_meService k_meService = new K_meService();
+                int meResult = -1;
+                meResult = k_meService.add(k_me);
+                if (meResult > 0) {
+                    System.out.println("任务发布成功消息添加成功！");
+                }
                 request.setAttribute("msg", "任务发布成功！");
                 return "fail";
             } else {
@@ -237,16 +246,13 @@ public class DataController {
     public void forumAll(HttpServletResponse response) throws IOException {
         K_reService k_reService = new K_reService();
         List<Map<String, Object>> list = k_reService.queryAll();
-        listToJson(list,response);
+        listToJson(list, response);
     }
 
     @RequestMapping("/forumDetail")
     public String forumDetail(HttpServletRequest request) {
         String number = request.getParameter("number");
-        K_reService k_reService = new K_reService();
-        K_re k_re = new K_re();
-        k_re.setK_reNumber(number);
-        Map<String, Object> mapDetail = k_reService.queryDetail(k_re);
+        Map<String, Object> mapDetail = reDetailCommon(number);
         if (mapDetail != null) {
             request.setAttribute("mapDetail", mapDetail);
             request.setAttribute("message", "查看成功");
@@ -257,10 +263,54 @@ public class DataController {
         }
     }
 
+    @RequestMapping("/messageDetail")
+    public String messageDetail(HttpServletRequest request) {
+        String number = request.getParameter("number");
+        String type = request.getParameter("type");
+        Map<String, Object> mapDetail = null;
+        if (type.equalsIgnoreCase("mine")) {
+            mapDetail = reDetailCommon(number);
+        } else if (type.equalsIgnoreCase("other")) {
+            mapDetail = meDetailCommon(number);
+        }
+        if (mapDetail != null) {
+            if (type.equalsIgnoreCase("mine")){
+                request.setAttribute("moType","myMine");
+            }else if (type.equalsIgnoreCase("other")){
+                request.setAttribute("moType","myOther");
+            }
+            HtmlCommon htmlCommon = new HtmlCommon();
+            HttpSession session = htmlCommon.getSession();
+            Map<String,Object> map1 = (Map<String, Object>) session.getAttribute("k_info");
+            request.setAttribute("id",map1.get("k_id"));
+            request.setAttribute("mapDetail", mapDetail);
+            request.setAttribute("message", "查看成功");
+            return "message";
+        } else {
+            request.setAttribute("msg", "查看失败，请重试！");
+            return "message";
+        }
+    }
+
+    public Map<String, Object> reDetailCommon(String number) {
+        K_reService k_reService = new K_reService();
+        K_re k_re = new K_re();
+        k_re.setK_reNumber(number);
+        Map<String, Object> mapDetail = k_reService.queryDetail(k_re);
+        return mapDetail;
+    }
+
+    public Map<String, Object> meDetailCommon(String number) {
+        K_meService k_meService = new K_meService();
+        K_me k_me = new K_me();
+        k_me.setK_me_number(number);
+        Map<String, Object> mapDetail = k_meService.queryByNumber(k_me);
+        return mapDetail;
+    }
+
     @RequestMapping("/releaseDetail")
     public void releaseDetail(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String number = request.getParameter("releaseNumber");
-        System.out.println(number);
         if (number != null) {
             K_reService k_reService = new K_reService();
             K_re k_re = new K_re();
@@ -297,16 +347,16 @@ public class DataController {
                 Map<String, Object> map = (Map<String, Object>) session.getAttribute("k_info");
                 K_me k_me = new K_me();
                 K_meService k_meService = new K_meService();
-                k_me.setK_me_myId(Integer.parseInt(map1.get("k_re_infoId").toString()));
                 k_me.setK_me_otherId(Integer.parseInt(map.get("k_id").toString()));
                 k_me.setK_meTime(request.getParameter("meTime"));
-                k_me.setK_meStatus(1);
+                k_me.setK_meStatus(2);
                 k_me.setK_me_reId(Integer.parseInt(map1.get("k_reId").toString()));
-                k_me.setK_meWarn("您于" + map1.get("k_reTime") + "发布的快递单号为" + map1.get("k_reNumber") + "的任务已被" + map.get("k_username") + "领取");//xxx领取
-                k_me.setK_meOtherWarn("您已成功领取" + map1.get("k_re_infoId") + "发布的任务");
+                k_me.setK_meWarn("您于" + map1.get("k_puTime") + "发布的快递单号为" + map1.get("k_reNumber") + "的任务已被" + map.get("k_username") + "领取");//xxx领取
+                k_me.setK_meOtherWarn("您已成功领取" + map1.get("k_re_infoName") + "发布的任务");
+                k_me.setK_me_number(map1.get("k_reNumber").toString());
                 int meResult = -1;
-                meResult = k_meService.add(k_me);
-                if (meResult > 0){
+                meResult = k_meService.updateGet(k_me);
+                if (meResult > 0) {
                     System.out.println("任务领取成功消息添加成功！");
                 }
                 request.setAttribute("msg", "任务领取成功，请注意查收！");
@@ -328,9 +378,9 @@ public class DataController {
         List<Map<String, Object>> list = k_reService.queryAll();
         Map<String, Object> mapTime = null;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        int result = -1;
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
+                int result = -1;
                 mapTime = list.get(i);
                 if (simpleDateFormat.parse(simpleDateFormat.format(new Date(timeout))).getTime() >
                         simpleDateFormat.parse(mapTime.get("k_reTime").toString()).getTime()) {
@@ -339,17 +389,20 @@ public class DataController {
                     k_re.setK_reId(Integer.parseInt(mapTime.get("k_reId").toString()));
                     result = k_reService.updateStatusById(k_re);
                     if (result > 0) {
-                        K_me k_me = new K_me();
-                        k_me.setK_me_myId(Integer.parseInt(mapTime.get("k_re_infoId").toString()));
-                        k_me.setK_me_reId(Integer.parseInt(mapTime.get("k_reId").toString()));
-                        k_me.setK_meStatus(0);
-                        k_me.setK_meTime(simpleDateFormat.format(new Date(timeout)));
-                        k_me.setK_meWarn("您于" + mapTime.get("k_re_puTime") + "发布的快递单号为" + mapTime.get("k_reNumber") + "的任务已过期！");
                         K_meService k_meService = new K_meService();
-                        int reResult = -1;
-                        reResult = k_meService.add(k_me);
-                        if (reResult > 0){
-                            System.out.println("时间过期消息添加成功！");
+                        K_me k_me = new K_me();
+                        k_me.setK_me_number(mapTime.get("k_reNumber").toString());
+                        Map<String, Object> mapStatus = k_meService.queryByNumber(k_me);
+                        if (mapStatus.get("k_meStatus").toString().equals("0")) {
+                            k_me = new K_me();
+                            k_me.setK_me_number(mapTime.get("k_reNumber").toString());
+                            k_me.setK_meStatus(3);
+                            k_me.setK_meWarn("您于" + mapTime.get("k_re_puTime") + "发布的快递单号为" + mapTime.get("k_reNumber") + "的任务已过期！");
+                            int reResult = -1;
+                            reResult = k_meService.updatePast(k_me);
+                            if (reResult > 0) {
+                                System.out.println("时间过期消息添加成功！");
+                            }
                         }
                         System.out.println("时间过期后修改信息成功！");
                     } else {
@@ -362,28 +415,42 @@ public class DataController {
     }
 
     @RequestMapping("/puMessage")
-    public void puMessage(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public void puMessage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String k_re_infoId = request.getParameter("k_re_infoId");
-        if (k_re_infoId != null){
+        if (k_re_infoId != null) {
             K_re k_re = new K_re();
             k_re.setK_re_infoId(Integer.parseInt(k_re_infoId));
             K_reService k_reService = new K_reService();
-            List<Map<String,Object>> list = k_reService.queryByInfoId(k_re);
-            if (list != null){
-                listToJson(list,response);
+            List<Map<String, Object>> list = k_reService.queryByInfoId(k_re);
+            if (list != null) {
+                listToJson(list, response);
             }
         }
 
     }
 
-     public void listToJson(List<Map<String,Object>> list,HttpServletResponse response) throws IOException {
-         JsonCommon jsonCommon = new JsonCommon();
-         String data = jsonCommon.getJsonString(list);
-         response.setContentType("text/html;charset=utf-8");
-         PrintWriter out = response.getWriter();
-         out.flush();
-         out.write(data);
-         out.flush();
-         out.close();
-     }
+    @RequestMapping("/messageMine")
+    public void messageMine(HttpServletResponse response,HttpServletRequest request) throws IOException {
+        String k_me_myId = request.getParameter("k_me_myId");
+        if (k_me_myId != null){
+            K_meService k_meService = new K_meService();
+            K_me k_me = new K_me();
+            k_me.setK_me_myId(Integer.parseInt(k_me_myId));
+            k_me.setK_me_otherId(Integer.parseInt(k_me_myId));
+            List<Map<String, Object>> list = k_meService.queryMine(k_me);
+            listToJson(list, response);
+        }
+    }
+
+    public void listToJson(List<Map<String, Object>> list, HttpServletResponse response) throws IOException {
+        JsonCommon jsonCommon = new JsonCommon();
+        String data = jsonCommon.getJsonString(list);
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        out.flush();
+        out.write(data);
+        out.flush();
+        out.close();
+    }
+
 }

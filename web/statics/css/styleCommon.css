@@ -1,0 +1,5 @@
+#title li {
+    display: inline-block;
+    list-style: none;
+    width: 20%
+}
