@@ -14,15 +14,16 @@ public class K_meDAO {
     JdbcUtils jdbcUtils = new JdbcUtils();
 
     public int add(K_me k_me){
-        String sql = "INSERT INTO k_me(k_meWarn,k_me_myId,k_meTime,k_meStatus,k_me_number)" +
-                "VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO k_me(k_meWarn,k_me_myId,k_me_myUsername,k_meTime,k_meStatus,k_me_number)" +
+                "VALUES(?,?,?,?,?,?)";
         int result = -1;
-        Object[] objects = new Object[5];
+        Object[] objects = new Object[6];
         objects[0] = k_me.getK_meWarn();
         objects[1] = k_me.getK_me_myId();
-        objects[2] = k_me.getK_meTime();
-        objects[3] = k_me.getK_meStatus();
-        objects[4] = k_me.getK_me_number();
+        objects[2] = k_me.getK_me_myUsername();
+        objects[3] = k_me.getK_meTime();
+        objects[4] = k_me.getK_meStatus();
+        objects[5] = k_me.getK_me_number();
         result = jdbcUtils.update(sql,objects);
 
         return result;
@@ -30,16 +31,28 @@ public class K_meDAO {
 
     public int updateGet(K_me k_me){
         String sql = "UPDATE k_me SET k_me_otherId=?,k_meTime=?,k_meStatus=?,k_me_reId=?," +
-                "k_meWarn=?,k_meOtherWarn=? WHERE k_me_number=?";
-        Object[] objects = new Object[7];
+                "k_meWarn=?,k_meOtherWarn=?,k_me_otherUsername WHERE k_me_number=?";
+        Object[] objects = new Object[8];
         objects[0] = k_me.getK_me_otherId();
         objects[1] = k_me.getK_meTime();
         objects[2] = k_me.getK_meStatus();
         objects[3] = k_me.getK_me_reId();
         objects[4] = k_me.getK_meWarn();
         objects[5] = k_me.getK_meOtherWarn();
-        objects[6] = k_me.getK_me_number();
+        objects[6] = k_me.getK_me_otherUsername();
+        objects[7] = k_me.getK_me_number();
         int result = -1;
+        result = jdbcUtils.update(sql,objects);
+
+        return result;
+    }
+
+    public int updateStatus(K_me k_me){
+        String sql = "UPDATE k_me SET k_meStatus=? WHERE k_me_number=?";
+        int result = -1;
+        Object[] objects = new Object[2];
+        objects[0] = k_me.getK_meStatus();
+        objects[1] = k_me.getK_me_number();
         result = jdbcUtils.update(sql,objects);
 
         return result;

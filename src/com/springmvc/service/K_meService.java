@@ -45,4 +45,11 @@ public class K_meService {
         return list;
     }
 
+    public int updateStatus(K_me k_me){
+        int result = -1;
+        result = k_meDAO.updateStatus(k_me);
+
+        return result;
+    }
+
 }

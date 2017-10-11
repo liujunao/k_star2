@@ -222,6 +222,7 @@ public class DataController {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 K_me k_me = new K_me();
                 k_me.setK_me_myId(Integer.parseInt(String.valueOf(sessionK_re.getK_re_infoId())));
+                k_me.setK_me_myUsername(sessionK_re.getK_infoName());
                 k_me.setK_meTime(simpleDateFormat.format(new Date()));
                 k_me.setK_me_number(sessionK_re.getK_reNumber());
                 k_me.setK_meStatus(0);
@@ -331,6 +332,7 @@ public class DataController {
     public String getTask(HttpServletRequest request) {
         String k_reId = request.getParameter("k_reId");
         String k_reStatus = request.getParameter("k_reStatus");
+        String infoName = request.getParameter("username");
         if (k_reId != null && k_reStatus != null) {
             K_reService k_reService = new K_reService();
             K_re k_re = new K_re();
@@ -354,6 +356,7 @@ public class DataController {
                 k_me.setK_meWarn("您于" + map1.get("k_puTime") + "发布的快递单号为" + map1.get("k_reNumber") + "的任务已被" + map.get("k_username") + "领取");//xxx领取
                 k_me.setK_meOtherWarn("您已成功领取" + map1.get("k_re_infoName") + "发布的任务");
                 k_me.setK_me_number(map1.get("k_reNumber").toString());
+                k_me.setK_me_otherUsername(infoName);
                 int meResult = -1;
                 meResult = k_meService.updateGet(k_me);
                 if (meResult > 0) {
@@ -439,6 +442,46 @@ public class DataController {
             k_me.setK_me_otherId(Integer.parseInt(k_me_myId));
             List<Map<String, Object>> list = k_meService.queryMine(k_me);
             listToJson(list, response);
+        }
+    }
+
+    @RequestMapping("/messageDone")
+    public String messageDone(HttpServletRequest request){
+        String number = request.getParameter("number");
+        String k_infoId = request.getParameter("k_infoId");
+        String type = request.getParameter("type");
+        K_me k_me = new K_me();
+        k_me.setK_me_number(number);
+        k_me.setK_meStatus(1);
+        K_meService k_meService = new K_meService();
+        int result = k_meService.updateStatus(k_me);
+        if (result > 0){
+            K_re k_re = new K_re();
+            k_re.setK_reId(0);
+            k_re.setK_reNumber(number);
+            k_re.setK_reStatus(1);
+            K_reService k_reService = new K_reService();
+            int reResult = k_reService.updateStatusById(k_re);
+            if (reResult > 0){
+                K_info k_info = new K_info();
+                k_info.setK_id(Integer.parseInt(k_infoId));
+                K_infoService k_infoService = new K_infoService();
+                Map<String,Object> map1 = k_infoService.query(k_info);
+                if (type.equalsIgnoreCase("release")){
+                    request.setAttribute("evaluate","evRelease");
+                }else if (type.equalsIgnoreCase("accept")){
+                    request.setAttribute("evaluate","evAccept");
+                }
+                request.setAttribute("mapInfo",map1);
+                request.setAttribute("done","操作成功！");
+                return "message";
+            }else {
+                request.setAttribute("msg","操作失败，请重试！");
+                return "message";
+            }
+        }else {
+            request.setAttribute("msg","操作失败，请重试！");
+            return "message";
         }
     }
 

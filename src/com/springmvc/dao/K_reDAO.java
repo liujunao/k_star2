@@ -51,11 +51,12 @@ public class K_reDAO {
     }
 
     public int updateStatusById(K_re k_re){
-        String sql = "UPDATE k_re SET k_reStatus = ? WHERE k_reId = ?";
+        String sql = "UPDATE k_re SET k_reStatus = ? WHERE k_reId = ? OR k_reNumber=?";
         int result = -1;
-        Object[] objects = new Object[2];
+        Object[] objects = new Object[3];
         objects[0] = k_re.getK_reStatus();
         objects[1] = k_re.getK_reId();
+        objects[2] = k_re.getK_reNumber();
         result = jdbcUtils.update(sql,objects);
 
         return result;

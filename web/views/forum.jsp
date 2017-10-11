@@ -121,7 +121,7 @@
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String date = simpleDateFormat.format(new Date());
                 %>
-                <td id="a_status"><a href="/kuaidi/forumTask?k_reStatus=2&k_reId=${mapDetail.k_reId }&meTime=<%=date%>">领取任务</a>
+                <td id="a_status"><a href="/kuaidi/forumTask?k_reStatus=2&k_reId=${mapDetail.k_reId }&username=${mapDetail.k_infoName}&meTime=<%=date%>">领取任务</a>
                 </td>
             </tr>
         </table>

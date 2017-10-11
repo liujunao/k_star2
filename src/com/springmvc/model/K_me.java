@@ -14,6 +14,24 @@ public class K_me {
     private int k_meStatus;
     private int k_me_reId;
     private String k_me_number;
+    private String k_me_myUsername;
+    private String k_me_otherUsername;
+
+    public String getK_me_myUsername() {
+        return k_me_myUsername;
+    }
+
+    public void setK_me_myUsername(String k_me_myUsername) {
+        this.k_me_myUsername = k_me_myUsername;
+    }
+
+    public String getK_me_otherUsername() {
+        return k_me_otherUsername;
+    }
+
+    public void setK_me_otherUsername(String k_me_otherUsername) {
+        this.k_me_otherUsername = k_me_otherUsername;
+    }
 
     public String getK_me_number() {
         return k_me_number;

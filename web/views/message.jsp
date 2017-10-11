@@ -43,14 +43,20 @@
                     var list = "";
                     $.each($.parseJSON(data), function (num, content) {
                         list += "<li>";
+                        var context = "";
                         var name = "";
+                        var k_id = "";
                         if (content.k_me_myId == id) {
-                            name = content.k_meWarn;
+                            context = content.k_meWarn;
+                            name = content.k_me_myUsername;
+                            k_id = content.k_me_myId;
                         } else {
-                            name = content.k_meOtherWarn;
+                            context = content.k_meOtherWarn;
+                            name = content.k_me_otherUsername;
+                            k_id = content.k_me_otherId;
                         }
-                        list += "<a href='/kuaidi/messageDetail?&type=other&number=" + content.k_me_number + "'>" + name + "</a>"
-                            + status(content.k_meStatus);
+                        list += "<a href='/kuaidi/messageDetail?&type=other&number=" + content.k_me_number + "'>" + context + "</a>" +
+                                "<a href=''>" + name + "</a> " + status(content.k_meStatus);
                         list += "</li>";
                         $("#myOther").html(list);
                     })
@@ -100,6 +106,9 @@
                 </tr>
                 <tr>
                     <td><a href="/views/message.jsp">确认</a></td>
+                    <td>
+                        <a href="/kuaidi/messageDone?number=${mapDetail.k_me_number}&k_infoId=${mapDetail.k_me_otherId}&type=accept">任务完成</a>
+                    </td>
                 </tr>
             </table>
         </c:if>
@@ -120,11 +129,24 @@
                 </tr>
                 <tr>
                     <td><a href="/views/message.jsp">确认</a></td>
+                    <td>
+                        <a href="/kuaidi/messageDone?number=${mapDetail.k_me_number}&k_infoId=${mapDetail.k_me_myId}&type=release">任务完成</a>
+                    </td>
                 </tr>
             </table>
         </c:if>
     </div>
 </c:if>
 
+<c:if test="${done != null}">
+    <div id="evaluate">
+        <c:if test="${evaluate == 'evRelease'}">
+
+        </c:if>
+        <c:if test="${evaluate == 'evAccept'}">
+
+        </c:if>
+    </div>
+</c:if>
 </body>
 </html>
