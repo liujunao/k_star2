@@ -21,7 +21,7 @@
   <br><br>
   <a href="${pageContext.request.contextPath}/kuaidi/chaxunGd2?orderNumber2=71092966476706">测试</a>
   <br><br>
-  <a href="javascript:void(0)" onclick="c()">点击</a>
+  <a href="/views/chat.jsp">点击</a>
   </body>
 
 <script>

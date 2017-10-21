@@ -5,14 +5,8 @@ import com.springmvc.common.JsonCommon;
 import com.springmvc.common.TypeCommon;
 import com.springmvc.kdHelper.DataList;
 import com.springmvc.kdHelper.KDModel;
-import com.springmvc.model.K_ex;
-import com.springmvc.model.K_info;
-import com.springmvc.model.K_me;
-import com.springmvc.model.K_re;
-import com.springmvc.service.K_exService;
-import com.springmvc.service.K_infoService;
-import com.springmvc.service.K_meService;
-import com.springmvc.service.K_reService;
+import com.springmvc.model.*;
+import com.springmvc.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,10 +18,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by lenovo on 2017/9/26.
@@ -275,15 +266,15 @@ public class DataController {
             mapDetail = meDetailCommon(number);
         }
         if (mapDetail != null) {
-            if (type.equalsIgnoreCase("mine")){
-                request.setAttribute("moType","myMine");
-            }else if (type.equalsIgnoreCase("other")){
-                request.setAttribute("moType","myOther");
+            if (type.equalsIgnoreCase("mine")) {
+                request.setAttribute("moType", "myMine");
+            } else if (type.equalsIgnoreCase("other")) {
+                request.setAttribute("moType", "myOther");
             }
             HtmlCommon htmlCommon = new HtmlCommon();
             HttpSession session = htmlCommon.getSession();
-            Map<String,Object> map1 = (Map<String, Object>) session.getAttribute("k_info");
-            request.setAttribute("id",map1.get("k_id"));
+            Map<String, Object> map1 = (Map<String, Object>) session.getAttribute("k_info");
+            request.setAttribute("id", map1.get("k_id"));
             request.setAttribute("mapDetail", mapDetail);
             request.setAttribute("message", "查看成功");
             return "message";
@@ -433,9 +424,9 @@ public class DataController {
     }
 
     @RequestMapping("/messageMine")
-    public void messageMine(HttpServletResponse response,HttpServletRequest request) throws IOException {
+    public void messageMine(HttpServletResponse response, HttpServletRequest request) throws IOException {
         String k_me_myId = request.getParameter("k_me_myId");
-        if (k_me_myId != null){
+        if (k_me_myId != null) {
             K_meService k_meService = new K_meService();
             K_me k_me = new K_me();
             k_me.setK_me_myId(Integer.parseInt(k_me_myId));
@@ -446,7 +437,7 @@ public class DataController {
     }
 
     @RequestMapping("/messageDone")
-    public String messageDone(HttpServletRequest request){
+    public String messageDone(HttpServletRequest request) {
         String number = request.getParameter("number");
         String k_infoId = request.getParameter("k_infoId");
         String type = request.getParameter("type");
@@ -455,32 +446,32 @@ public class DataController {
         k_me.setK_meStatus(1);
         K_meService k_meService = new K_meService();
         int result = k_meService.updateStatus(k_me);
-        if (result > 0){
+        if (result > 0) {
             K_re k_re = new K_re();
             k_re.setK_reId(0);
             k_re.setK_reNumber(number);
             k_re.setK_reStatus(1);
             K_reService k_reService = new K_reService();
             int reResult = k_reService.updateStatusById(k_re);
-            if (reResult > 0){
+            if (reResult > 0) {
                 K_info k_info = new K_info();
                 k_info.setK_id(Integer.parseInt(k_infoId));
                 K_infoService k_infoService = new K_infoService();
-                Map<String,Object> map1 = k_infoService.query(k_info);
-                if (type.equalsIgnoreCase("release")){
-                    request.setAttribute("evaluate","evRelease");
-                }else if (type.equalsIgnoreCase("accept")){
-                    request.setAttribute("evaluate","evAccept");
+                Map<String, Object> map1 = k_infoService.query(k_info);
+                if (type.equalsIgnoreCase("release")) {
+                    request.setAttribute("evaluate", "evRelease");
+                } else if (type.equalsIgnoreCase("accept")) {
+                    request.setAttribute("evaluate", "evAccept");
                 }
-                request.setAttribute("mapInfo",map1);
-                request.setAttribute("done","操作成功！");
+                request.setAttribute("mapInfo", map1);
+                request.setAttribute("done", "操作成功！");
                 return "message";
-            }else {
-                request.setAttribute("msg","操作失败，请重试！");
+            } else {
+                request.setAttribute("msg", "操作失败，请重试！");
                 return "message";
             }
-        }else {
-            request.setAttribute("msg","操作失败，请重试！");
+        } else {
+            request.setAttribute("msg", "操作失败，请重试！");
             return "message";
         }
     }
@@ -494,6 +485,39 @@ public class DataController {
         out.write(data);
         out.flush();
         out.close();
+    }
+
+    @RequestMapping("/chat")
+    public String chat(HttpServletRequest request) {
+        String k_id = request.getParameter("k_id");
+        K_info k_info = new K_info();
+        k_info.setK_id(Integer.parseInt(k_id));
+        K_infoService k_infoService = new K_infoService();
+        Map<String, Object> mapInfo = k_infoService.query(k_info);
+        HtmlCommon htmlCommon = new HtmlCommon();
+        HttpSession session = htmlCommon.getSession();
+        Map<String, Object> mapMyInfo = (Map<String, Object>) session.getAttribute("k_info");
+        request.setAttribute("mapInfo", mapInfo);
+        request.setAttribute("mapMyInfo", mapMyInfo);
+        session.setAttribute("status",0);
+        return "chat";
+    }
+
+    @RequestMapping("/chatMessage")
+    public void chatMessage(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        String k_chatOtherId = request.getParameter("k_chatOtherId");
+        String k_chatMyId = request.getParameter("k_chatMyId");
+
+        K_chat k_chat = new K_chat();
+        k_chat.setK_chatOtherId(Integer.parseInt(k_chatOtherId));
+        k_chat.setK_chatMyId(Integer.parseInt(k_chatMyId));
+        K_chatService k_chatService = new K_chatService();
+        List<Map<String,Object>> listMessage = k_chatService.queryMine(k_chat);
+        List<Map<String,Object>> list = new ArrayList<>();
+        for (int i = listMessage.size() - 1;i >= 0;i--){
+            list.add(listMessage.get(i));
+        }
+        listToJson(list,response);
     }
 
 }

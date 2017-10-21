@@ -48,15 +48,15 @@
                         var k_id = "";
                         if (content.k_me_myId == id) {
                             context = content.k_meWarn;
-                            name = content.k_me_myUsername;
-                            k_id = content.k_me_myId;
-                        } else {
-                            context = content.k_meOtherWarn;
                             name = content.k_me_otherUsername;
                             k_id = content.k_me_otherId;
+                        } else {
+                            context = content.k_meOtherWarn;
+                            name = content.k_me_myUsername;
+                            k_id = content.k_me_myId;
                         }
                         list += "<a href='/kuaidi/messageDetail?&type=other&number=" + content.k_me_number + "'>" + context + "</a>" +
-                                "<a href=''>" + name + "</a> " + status(content.k_meStatus);
+                                "<a href='/kuaidi/chat?k_id=" + k_id + "'>" + name + "</a> " + status(content.k_meStatus);
                         list += "</li>";
                         $("#myOther").html(list);
                     })

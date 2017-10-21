@@ -17,6 +17,7 @@
     <mvc:resources mapping="/statics/js/**" location="/statics/js/"/>
     <mvc:resources mapping="/statics/images/**" location="/statics/images/"/>
     <mvc:resources mapping="/statics/utf8-jsp/**" location="/statics/utf8-jsp/"/>
+    <mvc:default-servlet-handler />
 
     <mvc:annotation-driven/>
 </beans>

@@ -4,7 +4,7 @@ import com.springmvc.model.K_re;
 import com.springmvc.service.K_reService;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Created by lenovo on 2017/10/6.
@@ -44,5 +44,53 @@ public class Test {
         String hm = string.substring(11,16);
         System.out.println(ymd);
         System.out.println(hm);
+    }
+
+    public class Students {
+
+        private int age;
+        private int score;
+
+        public Students(int age, int score){
+            super();
+            this.age = age;
+            this.score = score;
+        }
+
+        public int getAge() {
+            return age;
+        }
+        public void setAge(int age) {
+            this.age = age;
+        }
+        public int getScore() {
+            return score;
+        }
+        public void setScore(int score) {
+            this.score = score;
+        }
+    }
+
+    @org.junit.Test
+    public void main() {
+        List<Students> students = new ArrayList<Students>();
+        students.add(new Students(23, 100));
+        students.add(new Students(27, 98));
+        students.add(new Students(29, 99));
+        students.add(new Students(29, 98));
+        students.add(new Students(22, 89));
+        Collections.sort(students, new Comparator<Students>() {
+            @Override
+            public int compare(Students o1, Students o2) {
+                int i = o1.getScore() - o2.getScore();
+                if(i == 0){
+                    return o1.getAge() - o2.getAge();
+                }
+                return i;
+            }
+        });
+        for(Students stu : students){
+            System.out.println("score:" + stu.getScore() + ":age" + stu.getAge());
+        }
     }
 }

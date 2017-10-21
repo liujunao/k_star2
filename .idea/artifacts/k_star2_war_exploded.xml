@@ -24,6 +24,10 @@
           <element id="file-copy" path="D:/openSource/gson-2.7.jar" />
           <element id="file-copy" path="D:/openSource/mail.jar" />
           <element id="file-copy" path="D:/openSource/mysql-connector-java-6.0.2.jar" />
+          <element id="file-copy" path="D:/soft/pro/java/tomcat/lib/websocket-api.jar" />
+          <element id="file-copy" path="D:/soft/pro/java/tomcat/lib/tomcat-websocket.jar" />
+          <element id="file-copy" path="D:/openSource/utf8-jsp/jsp/lib/json.jar" />
+          <element id="file-copy" path="D:/openSource/json-jar/json-lib-2.4-jdk15.jar" />
         </element>
       </element>
     </root>
