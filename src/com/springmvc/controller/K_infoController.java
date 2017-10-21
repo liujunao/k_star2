@@ -28,6 +28,11 @@ public class K_infoController {
     UUIDUtils uuidUtils = new UUIDUtils();
     String UUID = uuidUtils.getUUID();
 
+    @RequestMapping("/indexLogin")
+    public String indexLogin(){
+        return "login";
+    }
+
     @RequestMapping("/register")
     public String register(K_info k_info, HttpServletRequest request) throws Exception {
         String action = request.getParameter("action");

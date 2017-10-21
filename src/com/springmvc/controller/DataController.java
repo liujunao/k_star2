@@ -259,6 +259,7 @@ public class DataController {
     public String messageDetail(HttpServletRequest request) {
         String number = request.getParameter("number");
         String type = request.getParameter("type");
+        String status = request.getParameter("status");
         Map<String, Object> mapDetail = null;
         if (type.equalsIgnoreCase("mine")) {
             mapDetail = reDetailCommon(number);
@@ -268,7 +269,9 @@ public class DataController {
         if (mapDetail != null) {
             if (type.equalsIgnoreCase("mine")) {
                 request.setAttribute("moType", "myMine");
+                request.setAttribute("status_m",status);
             } else if (type.equalsIgnoreCase("other")) {
+                request.setAttribute("status_o",status);
                 request.setAttribute("moType", "myOther");
             }
             HtmlCommon htmlCommon = new HtmlCommon();
@@ -440,17 +443,18 @@ public class DataController {
     public String messageDone(HttpServletRequest request) {
         String number = request.getParameter("number");
         String k_infoId = request.getParameter("k_infoId");
+        String kind = request.getParameter("kind");
         String type = request.getParameter("type");
         K_me k_me = new K_me();
         k_me.setK_me_number(number);
-        k_me.setK_meStatus(1);
+        k_me.setK_meStatus(2);
         K_meService k_meService = new K_meService();
         int result = k_meService.updateStatus(k_me);
         if (result > 0) {
             K_re k_re = new K_re();
             k_re.setK_reId(0);
             k_re.setK_reNumber(number);
-            k_re.setK_reStatus(1);
+            k_re.setK_reStatus(2);
             K_reService k_reService = new K_reService();
             int reResult = k_reService.updateStatusById(k_re);
             if (reResult > 0) {
@@ -463,9 +467,14 @@ public class DataController {
                 } else if (type.equalsIgnoreCase("accept")) {
                     request.setAttribute("evaluate", "evAccept");
                 }
+                if (kind.equalsIgnoreCase("other")){
+                    request.setAttribute("kind","other");
+                }else if (kind.equalsIgnoreCase("mine")){
+                    request.setAttribute("kind","mine");
+                }
                 request.setAttribute("mapInfo", map1);
                 request.setAttribute("done", "操作成功！");
-                return "message";
+                return "appraise";
             } else {
                 request.setAttribute("msg", "操作失败，请重试！");
                 return "message";
@@ -518,6 +527,48 @@ public class DataController {
             list.add(listMessage.get(i));
         }
         listToJson(list,response);
+    }
+
+    @RequestMapping("/appraise")
+    public void appraise(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        String grade1 = request.getParameter("grade1");
+        String grade2 = request.getParameter("grade2");
+        String grade3 = request.getParameter("grade3");
+        String infoId = request.getParameter("k_infoId");
+        String text = request.getParameter("text");
+        K_ap k_ap = new K_ap();
+        k_ap.setK_apGrade1(Integer.parseInt(grade1));
+        k_ap.setK_apGrade2(Integer.parseInt(grade2));
+        k_ap.setK_apGrade3(Integer.parseInt(grade3));
+        k_ap.setK_apInfoId(Integer.parseInt(infoId));
+        k_ap.setK_apText(text);
+        K_apService k_apService = new K_apService();
+        int result = -1;
+        result = k_apService.add(k_ap);
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        if (result > 0){
+            out.write("ok");
+            out.flush();
+            out.close();
+            System.out.println("评价信息添加成功！");
+        }else {
+            out.write("评价失败，请重新评价！");
+            out.flush();
+            out.close();
+        }
+    }
+
+    @RequestMapping("/lookAppraise")
+    public void lookAppraise(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        String id = request.getParameter("id");
+        String kindLook = request.getParameter("kindLook");
+        K_ap k_ap = new K_ap();
+        k_ap.setK_apInfoId(Integer.parseInt(id));
+        K_apService k_apService = new K_apService();
+        List<Map<String,Object>> mapList = k_apService.queryAllById(k_ap);
+        request.setAttribute("kindLook",kindLook);
+        listToJson(mapList,response);
     }
 
 }

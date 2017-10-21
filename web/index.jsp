@@ -17,9 +17,9 @@
   <a href="${pageContext.request.contextPath}/views/register.jsp">注册页面</a>
 
   <br><br>
-  <a href="${pageContext.request.contextPath}/views/login.jsp">登录页面</a>
+  <a href="/user/indexLogin">登录页面</a>
   <br><br>
-  <a href="${pageContext.request.contextPath}/kuaidi/chaxunGd2?orderNumber2=71092966476706">测试</a>
+  <a href="${pageContext.request.contextPath}/views/test.jsp">评价</a>
   <br><br>
   <a href="/views/chat.jsp">点击</a>
   </body>

@@ -27,7 +27,7 @@
                     var list = "";
                     $.each($.parseJSON(data), function (num, content) {
                         list += "<li>";
-                        list += content.k_infoName + "-->" + "<a href='/kuaidi/messageDetail?type=mine&number=" + content.k_reNumber + "'>" + content.k_reText + "</a>"
+                        list += content.k_infoName + "-->" + "<a href='/kuaidi/messageDetail?type=mine&number=" + content.k_reNumber + "&status="+ content.k_reStatus +"'>" + content.k_reText + "</a>"
                             + status(content.k_reStatus);
                         list += "</li>";
                         $("#mine").html(list);
@@ -55,8 +55,8 @@
                             name = content.k_me_myUsername;
                             k_id = content.k_me_myId;
                         }
-                        list += "<a href='/kuaidi/messageDetail?&type=other&number=" + content.k_me_number + "'>" + context + "</a>" +
-                                "<a href='/kuaidi/chat?k_id=" + k_id + "'>" + name + "</a> " + status(content.k_meStatus);
+                        list += "<a href='/kuaidi/messageDetail?type=other&number=" + content.k_me_number + "&status="+ content.k_meStatus +"'>" + context + "</a>" +
+                            "<a href='/kuaidi/chat?k_id=" + k_id + "'>" + name + "</a> " + status(content.k_meStatus);
                         list += "</li>";
                         $("#myOther").html(list);
                     })
@@ -67,6 +67,29 @@
                 if ($("#myThree").css("display") != "none") {
                     $("#myThree").hide();
                 }
+            }
+            var status_m = "<%=request.getAttribute("status_m")%>";
+            if (status_m == 2){
+                $("#a_status").html("任务已完成");
+                $("#a_status").click(function () {
+                    alert("该任务已完成！");
+                })
+            }else if (status_m == 3){
+                $("#a_status").html("任务已过期");
+                $("#a_status").click(function () {
+                    alert("该任务已过期！");
+                })
+            }
+            var status_o = "<%=request.getAttribute("status_o")%>";
+            if (status_o == 2){
+                $("#a_status1").html("任务已完成");
+                $("#a_status1").click(function () {
+                    alert("该任务已完成！");
+                });
+                $("#a_status2").html("任务已完成");
+                $("#a_status2").click(function () {
+                    alert("该任务已完成！");
+                });
             }
         })
         var msg = "<%=request.getAttribute("msg")%>";
@@ -107,7 +130,7 @@
                 <tr>
                     <td><a href="/views/message.jsp">确认</a></td>
                     <td>
-                        <a href="/kuaidi/messageDone?number=${mapDetail.k_me_number}&k_infoId=${mapDetail.k_me_otherId}&type=accept">任务完成</a>
+                        <a href="/kuaidi/messageDone?number=${mapDetail.k_me_number}&k_infoId=${mapDetail.k_me_otherId}&type=accept" id="a_status">任务完成</a>
                     </td>
                 </tr>
             </table>
@@ -118,33 +141,34 @@
                     <td>快递单号</td>
                     <td>${mapDetail.k_me_number }</td>
                 </tr>
-                <tr>
-                    <td>详细信息</td>
-                    <c:if test="${mapDetail.k_me_myId eq id }">
+
+                <c:if test="${mapDetail.k_me_myId eq id }">
+                    <tr>
+                        <td>详细信息</td>
                         <td>${mapDetail.k_meWarn }</td>
-                    </c:if>
-                    <c:if test="${mapDetail.k_me_otherId eq id }">
+                    </tr>
+                    <tr>
+                        <td><a href="/views/message.jsp">确认</a></td>
+                        <td>
+                            <a href="/kuaidi/messageDone?number=${mapDetail.k_me_number}&k_infoId=${mapDetail.k_me_otherId}&type=release
+                         &kind=other" id="a_status1">任务完成</a>
+                        </td>
+                    </tr>
+                </c:if>
+                <c:if test="${mapDetail.k_me_otherId eq id }">
+                    <tr>
+                        <td>详细信息</td>
                         <td>${mapDetail.k_meOtherWarn }</td>
-                    </c:if>
-                </tr>
-                <tr>
-                    <td><a href="/views/message.jsp">确认</a></td>
-                    <td>
-                        <a href="/kuaidi/messageDone?number=${mapDetail.k_me_number}&k_infoId=${mapDetail.k_me_myId}&type=release">任务完成</a>
-                    </td>
-                </tr>
+                    </tr>
+                    <tr>
+                        <td><a href="/views/message.jsp">确认</a></td>
+                        <td>
+                            <a href="/kuaidi/messageDone?number=${mapDetail.k_me_number}&k_infoId=${mapDetail.k_me_myId}&type=release
+                         &kind=mine" id="a_status2">任务完成</a>
+                        </td>
+                    </tr>
+                </c:if>
             </table>
-        </c:if>
-    </div>
-</c:if>
-
-<c:if test="${done != null}">
-    <div id="evaluate">
-        <c:if test="${evaluate == 'evRelease'}">
-
-        </c:if>
-        <c:if test="${evaluate == 'evAccept'}">
-
         </c:if>
     </div>
 </c:if>
