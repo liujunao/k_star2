@@ -21,27 +21,30 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * Created by lenovo on 2017/9/26.
+ *
+ * @author lenovo
+ * @date 2017/9/26
  */
 @RequestMapping("/kuaidi")
 @Controller
 public class DataController {
 
     @RequestMapping("/chaxun")
-    public String queryData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void queryData(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String num = request.getParameter("orderNumber");
         String type = request.getParameter("type");
 
         DataList dataList = new DataList();
         List<KDModel> data = dataList.getData(num, type);
-        request.setAttribute("orderNumber", num);
-        request.setAttribute("type", type);
-        request.setAttribute("time", data.get(0).getTime());
-        request.setAttribute("context", data.get(0).getContext());
+        List<Map<String,Object>> listData = toListMap(data);
+        Map<String,Object> map1 = new HashMap<>();
+        map1.put("enterprise",type);
+        listData.add(map1);
+        listToJson(listData,response);
+
         Map<String, Object> k_infoMap = (Map<String, Object>) request.getSession().getAttribute("k_info");
         int k_infoId = Integer.parseInt(k_infoMap.get("k_id").toString());
-
         TypeCommon typeCommon = new TypeCommon();
         K_exService k_exService = new K_exService();
         K_ex k_ex = new K_ex();
@@ -49,11 +52,9 @@ public class DataController {
         List<Map<String, Object>> list = k_exService.queryByNumber(k_ex);
         if (list != null && list.size() != 0) {
             for (int i = 0; i < list.size(); i++) {
-                Map<String, Object> map = null;
-                map = list.get(i);
+                Map<String, Object> map = list.get(i);
                 for (int j = 0; j < data.size(); j++) {
-                    KDModel kdModel = new KDModel();
-                    kdModel = data.get(j);
+                    KDModel kdModel = data.get(j);
                     if (kdModel.getTime().equals(map.get("k_time"))) {
                         data.remove(j);
                     }
@@ -71,8 +72,7 @@ public class DataController {
                     int result = -1;
                     result = k_exService.add(k_ex);
                     if (result > 0) {
-                        HtmlCommon htmlCommon = new HtmlCommon();
-                        htmlCommon.showMsg(response, "筛选后添加成功!!!");
+                        System.out.println("筛选后添加成功");
                     }
                 }
             }
@@ -92,12 +92,85 @@ public class DataController {
                 }
             }
         }
-        return "index";
     }
 
-    @RequestMapping("/chaxunGd")
-    public void queryDataGd(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        queryDataCommon(request, response);
+    @RequestMapping("/chaxunNo")
+    public void queryDataNo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String num = request.getParameter("orderNumber");
+        String type = request.getParameter("type");
+
+        DataList dataList = new DataList();
+        List<KDModel> data = dataList.getData(num, type);
+        List<Map<String, Object>> listData = toListMap(data);
+        Map<String,Object> map1 = new HashMap<>();
+        map1.put("enterprise",type);
+        listData.add(map1);
+        listToJson(listData, response);
+
+    }
+
+    @RequestMapping("/chaxunTitle")
+    public void queryDataTitle(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        String type = request.getParameter("type");
+        Map<String,Object> map1 = queryEnterprise(type);
+        List<Map<String,Object>> list = new ArrayList<>();
+        list.add(map1);
+        listToJson(list,response);
+    }
+    private List<Map<String, Object>> toListMap(List<KDModel> data) {
+
+        List<Map<String, Object>> list = new ArrayList<>();
+        for (int k = 0; k < data.size(); k++) {
+            Map<String, Object> map1 = new HashMap<>();
+            map1.put("k_context", data.get(k).getContext());
+            map1.put("k_time", data.get(k).getTime());
+            list.add(map1);
+        }
+
+        return list;
+    }
+
+    private Map<String,Object> queryEnterprise(String type){
+        Map<String,Object> map1 = new HashMap<>();
+
+        if (type.equalsIgnoreCase("zhongtong")){
+            map1.put("name","中通");
+            map1.put("phone","95311");
+            map1.put("office","http://www.zto.cn");
+        }
+        if (type.equalsIgnoreCase("yunda")){
+            map1.put("name","韵达");
+            map1.put("phone","95546");
+            map1.put("office","http://www.yundaex.com");
+        }
+        if (type.equalsIgnoreCase("yuantong")){
+            map1.put("name","圆通");
+            map1.put("phone","95554");
+            map1.put("office","http://www.yto.net.cn/");
+        }
+        if (type.equalsIgnoreCase("shentong")){
+            map1.put("name","申通");
+            map1.put("phone","95543");
+            map1.put("office","http://www.sto.cn");
+        }
+        if (type.equalsIgnoreCase("wanxiangwuliu")){
+            map1.put("name","万象物流");
+            map1.put("phone","400-820-8088");
+            map1.put("office","http://www.ewinshine.com");
+        }
+        if (type.equalsIgnoreCase("EMS物流")){
+            map1.put("name","ems");
+            map1.put("phone","11183");
+            map1.put("office","http://www.ems.com.cn/");
+        }
+        if (type.equalsIgnoreCase("huitongkuaidi")){
+            map1.put("name","百世快递");
+            map1.put("phone","400-956-5656");
+            map1.put("office","http://www.ewinshine.com");
+        }
+
+        return map1;
     }
 
     @RequestMapping("/chaxunGd2")
@@ -218,6 +291,10 @@ public class DataController {
                 k_me.setK_me_number(sessionK_re.getK_reNumber());
                 k_me.setK_meStatus(0);
                 k_me.setK_meWarn("您成功发布了快递单号为" + sessionK_re.getK_reNumber() + "的快递领取任务！");
+                k_me.setK_meRealName(sessionK_re.getK_reRealName());
+                k_me.setK_meCode(sessionK_re.getK_reCode());
+                k_me.setK_meAddress(sessionK_re.getK_reAddress());
+                k_me.setK_meMoney(sessionK_re.getK_reMoney());
                 K_meService k_meService = new K_meService();
                 int meResult = -1;
                 meResult = k_meService.add(k_me);
@@ -225,10 +302,10 @@ public class DataController {
                     System.out.println("任务发布成功消息添加成功！");
                 }
                 request.setAttribute("msg", "任务发布成功！");
-                return "fail";
+                return "forum";
             } else {
                 request.setAttribute("msg", "任务发布失败，请重新发布！");
-                return "fail";
+                return "release";
             }
         }
         return "release";
@@ -269,9 +346,9 @@ public class DataController {
         if (mapDetail != null) {
             if (type.equalsIgnoreCase("mine")) {
                 request.setAttribute("moType", "myMine");
-                request.setAttribute("status_m",status);
+                request.setAttribute("status_m", status);
             } else if (type.equalsIgnoreCase("other")) {
-                request.setAttribute("status_o",status);
+                request.setAttribute("status_o", status);
                 request.setAttribute("moType", "myOther");
             }
             HtmlCommon htmlCommon = new HtmlCommon();
@@ -301,25 +378,6 @@ public class DataController {
         k_me.setK_me_number(number);
         Map<String, Object> mapDetail = k_meService.queryByNumber(k_me);
         return mapDetail;
-    }
-
-    @RequestMapping("/releaseDetail")
-    public void releaseDetail(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String number = request.getParameter("releaseNumber");
-        if (number != null) {
-            K_reService k_reService = new K_reService();
-            K_re k_re = new K_re();
-            k_re.setK_reNumber(number);
-            Map<String, Object> mapDetail = k_reService.queryDetail(k_re);
-            if (mapDetail != null) {
-                response.setContentType("text/html");
-                PrintWriter out = response.getWriter();
-                out.flush();
-                out.write("1");
-                out.flush();
-                out.close();
-            }
-        }
     }
 
     @RequestMapping("/forumTask")
@@ -467,10 +525,10 @@ public class DataController {
                 } else if (type.equalsIgnoreCase("accept")) {
                     request.setAttribute("evaluate", "evAccept");
                 }
-                if (kind.equalsIgnoreCase("other")){
-                    request.setAttribute("kind","other");
-                }else if (kind.equalsIgnoreCase("mine")){
-                    request.setAttribute("kind","mine");
+                if (kind.equalsIgnoreCase("other")) {
+                    request.setAttribute("kind", "other");
+                } else if (kind.equalsIgnoreCase("mine")) {
+                    request.setAttribute("kind", "mine");
                 }
                 request.setAttribute("mapInfo", map1);
                 request.setAttribute("done", "操作成功！");
@@ -508,12 +566,12 @@ public class DataController {
         Map<String, Object> mapMyInfo = (Map<String, Object>) session.getAttribute("k_info");
         request.setAttribute("mapInfo", mapInfo);
         request.setAttribute("mapMyInfo", mapMyInfo);
-        session.setAttribute("status",0);
+        session.setAttribute("status", 0);
         return "chat";
     }
 
     @RequestMapping("/chatMessage")
-    public void chatMessage(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public void chatMessage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String k_chatOtherId = request.getParameter("k_chatOtherId");
         String k_chatMyId = request.getParameter("k_chatMyId");
 
@@ -521,16 +579,16 @@ public class DataController {
         k_chat.setK_chatOtherId(Integer.parseInt(k_chatOtherId));
         k_chat.setK_chatMyId(Integer.parseInt(k_chatMyId));
         K_chatService k_chatService = new K_chatService();
-        List<Map<String,Object>> listMessage = k_chatService.queryMine(k_chat);
-        List<Map<String,Object>> list = new ArrayList<>();
-        for (int i = listMessage.size() - 1;i >= 0;i--){
+        List<Map<String, Object>> listMessage = k_chatService.queryMine(k_chat);
+        List<Map<String, Object>> list = new ArrayList<>();
+        for (int i = listMessage.size() - 1; i >= 0; i--) {
             list.add(listMessage.get(i));
         }
-        listToJson(list,response);
+        listToJson(list, response);
     }
 
     @RequestMapping("/appraise")
-    public void appraise(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public void appraise(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String grade1 = request.getParameter("grade1");
         String grade2 = request.getParameter("grade2");
         String grade3 = request.getParameter("grade3");
@@ -547,12 +605,12 @@ public class DataController {
         result = k_apService.add(k_ap);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        if (result > 0){
+        if (result > 0) {
             out.write("ok");
             out.flush();
             out.close();
             System.out.println("评价信息添加成功！");
-        }else {
+        } else {
             out.write("评价失败，请重新评价！");
             out.flush();
             out.close();
@@ -560,15 +618,15 @@ public class DataController {
     }
 
     @RequestMapping("/lookAppraise")
-    public void lookAppraise(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public void lookAppraise(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = request.getParameter("id");
         String kindLook = request.getParameter("kindLook");
         K_ap k_ap = new K_ap();
         k_ap.setK_apInfoId(Integer.parseInt(id));
         K_apService k_apService = new K_apService();
-        List<Map<String,Object>> mapList = k_apService.queryAllById(k_ap);
-        request.setAttribute("kindLook",kindLook);
-        listToJson(mapList,response);
+        List<Map<String, Object>> mapList = k_apService.queryAllById(k_ap);
+        request.setAttribute("kindLook", kindLook);
+        listToJson(mapList, response);
     }
 
 }

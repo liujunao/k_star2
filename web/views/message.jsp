@@ -11,8 +11,6 @@
 <html>
 <head>
     <title>我的消息</title>
-    <link type="text/css" rel="stylesheet" href="/statics/css/styleCommon.css"/>
-    <script src="/statics/js/jquery-3.2.1.js"></script>
     <script src="/statics/js/alertCommon.js"></script>
     <script type="text/javascript">
 

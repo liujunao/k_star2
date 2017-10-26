@@ -8,43 +8,25 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="reCommon.jsp"%>
+<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
+<%@ include file="reCommon.jsp" %>
 <html>
 <head>
     <title>消息页面</title>
-    <link type="text/css" rel="stylesheet" href="/statics/css/styleCommon.css"/>
-    <script type="text/javascript" src="/statics/utf8-jsp/ueditor.config.js"></script>
-    <script type="text/javascript" src="/statics/utf8-jsp/ueditor.all.js"></script>
-    <script type="text/javascript" src="/statics/js/jquery-3.2.1.js"></script>
-
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript">
+        var message = "<%=request.getAttribute("message")%>";
+        console.log(message);
         $(function () {
-            var fail = "<%=request.getAttribute("message")%>";
-            if (fail != null && fail != "null") {
-                if ($("#myFour").css("display") != "none") {
-                    $("#myFour").hide();
-                }
-            }
             $("#back").click(function () {
-                history.back();
+                window.history.back();
             })
-            $("#k_reNumber").blur(function () {
-                    $.post(
-                        "/kuaidi/releaseDetail",
-                        {
-                            "releaseNumber": $("#k_reNumber").val()
-                        }, function (data) {
-                            if (data == "1") {
-                                alert("该快递单号已存在，请检查后重新输入！");
-                                $("input[name=k_reNumber]").focus();
-                            }
-                        }
-                    )
-                }
-            )
+        if (message != null && message != "null") {
+            $('#myModal').modal("show");
+        }
         })
-
         function mine() {
             var msg = "<%=request.getAttribute("msg")%>";
             if (msg != null && msg != "null") {
@@ -56,107 +38,187 @@
 </head>
 <body>
 
-<div>
-    <ul id="title">
-        <li id="one"><a href="/views/index.jsp">我的快递</a></li>
-        <li id="two"><a href="/views/message.jsp">我的消息</a></li>
-        <li id="three"><a href="/views/forum.jsp"> 我的论坛</a></li>
-        <li id="four"><a href="#">发布任务</a></li>
-    </ul>
-</div>
+<div style="width: 1349px; height: 600px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto; position: relative; z-index: 1;
+background-size: cover; background: url(../statics/images/release.jpg) no-repeat 50% 50%;">
+    <div style="position: absolute; top: 70px; left: 400px; width: 450px; height: 400px;">
+        <div style="width: 600px;height: 500px;background-color: white">
+            <center>
+                <table>
+                    <tr>
+                        <td>
+                            <div style="color: blue;font-weight: 700;font-size: 30px">发布任务</div>
+                        </td>
+                    </tr>
+                </table>
+            </center>
+            <hr>
+            <br><br>
+            <center>
+                <form action="${pageContext.request.contextPath}/kuaidi/release?save=no" method="post" role="form">
+                    <div class="form-group">
+                        <label for="k_reName" class="col-sm-3 control-label">姓名：</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="k_reRealName" id="k_reName" class="form-control"
+                                   value="<%=map.get("k_name")%>"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_rePhone" class="col-sm-3 control-label">手机号：</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="k_rePhone" id="k_rePhone" class="form-control"
+                                   value="<%=map.get("k_phone")%>"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_rePhone" class="col-sm-3 control-label">取件码：</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="k_rePhone" id="k_reCode" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="money" class="col-sm-3 control-label">默认赏金：</label>
+                        <div class="col-sm-8">
+                            <select name="k_reMoney" id="money" class="form-control">
+                                <option value="<%=map.get("k_money")%>"><%=map.get("k_money")%>元</option>
+                                <option value="2">2元</option>
+                                <option value="3">3元</option>
+                                <option value="4">4元</option>
+                                <option value="5">5元</option>
+                                <option value="6">6元</option>
+                                <option value="7">7元</option>
+                                <option value="8">8元</option>
+                                <option value="9">9元</option>
+                                <option value="10">10元</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reTime" class="col-sm-3 control-label">领取截至时间：</label>
+                        <div class="col-sm-8">
+                            <%
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                String date = simpleDateFormat.format(new Date());
+                                String ymd = date.substring(0, 10);
+                                String hm = date.substring(11, 16);
+                                String minTime = ymd + "T" + hm;
+                            %>
+                            <input type="datetime-local" name="k_reTime" id="k_reTime" min="<%=minTime%>"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reAddress" class="col-sm-3 control-label">包裹放置地：</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="k_reAddress" id="k_reAddress" class="form-control"
+                                   value="<%=map.get("k_address")%>"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reText" class="col-sm-3 control-label">取件详细信息：</label>
+                        <div class="col-sm-8" rows="3">
+                            <input type="text" name="k_reText" id="k_reText" class="form-control"/>
+                        </div>
+                    </div>
 
-<div id="myFour">
-    <form action="/kuaidi/release?save=no" method="post">
-        <table>
-            <tr>
-                <td style="width: 100px">快递单号</td>
-                <td><input type="text" name="k_reNumber" id="k_reNumber" width="50%"/></td>
-                <td><em id="m_k_reNumber"></em></td>
-            </tr>
-            <tr>
-                <td>取件人姓名</td>
-                <td><input type="text" name="k_reName" id="k_reName" width="50%"/></td>
-                <td><em id="m_k_reName"></em></td>
-            </tr>
-            <tr>
-                <td>本人手机号码</td>
-                <td><input type="text" name="k_rePhone" id="k_rePhone" width="50%"/></td>
-                <td><em id="m_k_rePhone"></em></td>
-            </tr>
-            <tr>
-                <td>领取截至时间</td>
-                <%
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    String date = simpleDateFormat.format(new Date());
-                    String ymd = date.substring(0, 10);
-                    String hm = date.substring(11, 16);
-                    String minTime = ymd + "T" + hm;
-                %>
-                <td><input type="datetime-local" name="k_reTime" id="k_reTime" width="50%" min="<%=minTime%>"/></td>
-                <td><em id="m_k_reTime"></em></td>
-            </tr>
-            <tr>
-                <td>取件详细信息</td>
-                <td><textarea name="k_reText" id="k_reText" style="width: 70%"></textarea></td>
-                <td><em id="m_k_reText"></em></td>
-                <script>
-                    var editor = UE.ui.Editor();
-                    editor.render("k_reText");
-                </script>
-            </tr>
-            <tr>
-                <td><input type="hidden" name="k_re_puTime" value="<%=date%>"/></td>
-            </tr>
-            <tr>
-                <td><input type="hidden" name="k_re_infoId" value="<%=map.get("k_id")%>"/></td>
-            </tr>
-            <tr>
-                <td><input type="hidden" name="k_infoName" value="<%=map.get("k_username")%>"/></td>
-            </tr>
-            <tr>
-                <td><input type="hidden" name="k_reStatus" value="0"/></td>
-            </tr>
-            <tr>
-                <td><input type="submit" value="提交"/></td>
-            </tr>
-        </table>
-    </form>
-</div>
-
-<c:if test="${message != null}">
-    <div id="show">
-        <table>
-            <tr>
-                <td>快递单号</td>
-                <td>${k_re.k_reNumber}</td>
-            </tr>
-            <tr>
-                <td>取件人姓名</td>
-                <td>${k_re.k_reName}</td>
-            </tr>
-            <tr>
-                <td>本人手机号码</td>
-                <td>${k_re.k_rePhone}</td>
-            </tr>
-            <tr>
-                <td>任务发布时间</td>
-                <td>${k_re.k_re_puTime}</td>
-            </tr>
-            <tr>
-                <td>领取截至时间</td>
-                <td>${k_re.k_reTime}</td>
-            </tr>
-            <tr>
-                <td>取件详细信息</td>
-                <td>${k_re.k_reText}</td>
-            </tr>
-            <tr>
-                <td><a href="/kuaidi/release?save=yes">确认</a></td>
-                <td><a href="javascript:void(0)" id="back">返回</a></td>
-            </tr>
-        </table>
+                    <div class="form-group">
+                        <div class="col-sm-8" rows="3">
+                            <input type="hidden" name="k_re_puTime" value="<%=date%>" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8" rows="3">
+                            <input type="hidden" name="k_re_infoId" value="<%=map.get("k_id")%>" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8" rows="3">
+                            <input type="hidden" name="k_infoName" value="<%=map.get("k_username")%>"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8" rows="3">
+                            <input type="hidden" name="k_reStatus" value="0" class="form-control"/>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <div class="col-sm-11">
+                            <input type="submit" value="确认发布" class="btn btn-primary"
+                                   style="width:240px;height:30px;background-color: blue;color: white"/>
+                        </div>
+                    </div>
+                </form>
+            </center>
+        </div>
     </div>
-</c:if>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">任务信息</h4>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="k_reName" class="col-sm-3 control-label">姓名：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" value="${k_re.k_reRealName}" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_rePhone" class="col-sm-3 control-label">手机号：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" value="${k_re.k_rePhone}" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_rePhone" class="col-sm-3 control-label">取件码：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" value="${k_re.k_reCode}" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reAddress" class="col-sm-3 control-label">默认赏金：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" value="${k_re.k_reMoney}" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reText" class="col-sm-3 control-label">领取截至时间：</label>
+                        <div class="col-sm-8" rows="3">
+                            <input type="text" class="form-control" value="${k_re.k_reTime}" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reAddress" class="col-sm-3 control-label">包裹放置地：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" value="${k_re.k_reAddress}" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reText" class="col-sm-3 control-label">取件详细信息：</label>
+                        <div class="col-sm-8" rows="3">
+                            <input type="text" class="form-control" value="${k_re.k_reText}" readonly="readonly"/>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0)" id="back">
+                    <button type="button" class="btn btn-default">返回</button>
+                </a>
+                <a href="/kuaidi/release?save=yes">
+                    <button type="button" class="btn btn-primary">确认</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

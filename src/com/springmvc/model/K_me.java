@@ -16,6 +16,42 @@ public class K_me {
     private String k_me_number;
     private String k_me_myUsername;
     private String k_me_otherUsername;
+    private String k_meRealName;
+    private String k_meCode;
+    private int k_meMoney;
+    private String k_meAddress;
+
+    public String getK_meRealName() {
+        return k_meRealName;
+    }
+
+    public void setK_meRealName(String k_meRealName) {
+        this.k_meRealName = k_meRealName;
+    }
+
+    public String getK_meCode() {
+        return k_meCode;
+    }
+
+    public void setK_meCode(String k_meCode) {
+        this.k_meCode = k_meCode;
+    }
+
+    public int getK_meMoney() {
+        return k_meMoney;
+    }
+
+    public void setK_meMoney(int k_meMoney) {
+        this.k_meMoney = k_meMoney;
+    }
+
+    public String getK_meAddress() {
+        return k_meAddress;
+    }
+
+    public void setK_meAddress(String k_meAddress) {
+        this.k_meAddress = k_meAddress;
+    }
 
     public String getK_me_myUsername() {
         return k_me_myUsername;

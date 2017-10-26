@@ -15,9 +15,9 @@ public class K_infoDAO {
 
     public int add(K_info k_info) {
         int result = -1;
-        String sql = "INSERT INTO k_info(k_username,k_password,k_phone,k_qq,k_weChat,k_email,k_gender,k_status,k_emailValidate,k_registerTime)" +
-                "VALUES(?,?,?,?,?,?,?,?,?,?)";
-        Object[] objects = new Object[10];
+        String sql = "INSERT INTO k_info(k_username,k_password,k_phone,k_qq,k_weChat,k_email,k_gender,k_status,k_emailValidate,k_registerTime,k_money,k_address,k_name)" +
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        Object[] objects = new Object[13];
         objects[0] = k_info.getK_username();
         objects[1] = k_info.getK_password();
         objects[2] = k_info.getK_phone();
@@ -28,6 +28,9 @@ public class K_infoDAO {
         objects[7] = k_info.getK_status();
         objects[8] = k_info.getK_emailValidate();
         objects[9] = k_info.getK_registerTime();
+        objects[10] = k_info.getK_money();
+        objects[11] = k_info.getK_address();
+        objects[12] = k_info.getK_name();
 
         result = jdbcUtils.update(sql, objects);
 

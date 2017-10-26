@@ -11,9 +11,7 @@
 <%@ include file="reCommon.jsp" %>
 <html>
 <head>
-    <title>我的论坛</title>
-    <link type="text/css" rel="stylesheet" href="/statics/css/styleCommon.css"/>
-    <script type="text/javascript" src="/statics/js/jquery-3.2.1.js"></script>
+    <title>帮忙取快递</title>
     <script src="/statics/js/alertCommon.js"></script>
     <script type="text/javascript">
         $(function () {

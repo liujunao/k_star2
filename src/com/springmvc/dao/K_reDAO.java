@@ -14,10 +14,10 @@ public class K_reDAO {
     JdbcUtils jdbcUtils = new JdbcUtils();
 
     public int add2(K_re k_re){
-        String sql = "INSERT INTO k_re(k_reNumber,k_reName,k_rePhone,k_reText,k_re_infoId,k_infoName,k_reStatus,k_reTime,k_re_puTime)" +
-                "VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO k_re(k_reNumber,k_reName,k_rePhone,k_reText,k_re_infoId,k_infoName,k_reStatus,k_reTime,k_re_puTime,k_reRealName,k_reCode,k_reMoney,k_reAddress)" +
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
         int result = -1;
-        Object[] objects = new Object[9];
+        Object[] objects = new Object[13];
         objects[0] = k_re.getK_reNumber();
         objects[1] = k_re.getK_reName();
         objects[2] = k_re.getK_rePhone();
@@ -27,6 +27,10 @@ public class K_reDAO {
         objects[6] = k_re.getK_reStatus();
         objects[7] = k_re.getK_reTime();
         objects[8] = k_re.getK_re_puTime();
+        objects[9] = k_re.getK_reRealName();
+        objects[10] = k_re.getK_reCode();
+        objects[11] = k_re.getK_reMoney();
+        objects[12] = k_re.getK_reAddress();
 
         result = jdbcUtils.update(sql,objects);
 

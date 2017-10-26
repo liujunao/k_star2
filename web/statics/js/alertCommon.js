@@ -33,3 +33,29 @@ function appraiseGrade(grade) {
         return "很好";
     }
 }
+
+function typeToString(type) {
+    var result = "";
+    if (type == "中通") {
+        result = "zhongtong";
+    }
+    if (type == "韵达") {
+        result = "yunda";
+    }
+    if (type == "圆通") {
+        result = "yuantong";
+    }
+    if (type == "百世快递") {
+        result = "huitongkuaidi";
+    }
+    if (type == "申通") {
+        result = "shentong";
+    }
+    if (type == "万象物流") {
+        result = "wanxiangwuliu";
+    }
+    if (type == "EMS物流") {
+        result = "ems";
+    }
+    return result;
+}

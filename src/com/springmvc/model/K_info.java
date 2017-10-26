@@ -18,6 +18,33 @@ public class K_info {
     private int k_status;
     private String k_emailValidate;
     private Date k_registerTime;
+    private String k_name;
+    private int k_money;
+    private String k_address;
+
+    public String getK_name() {
+        return k_name;
+    }
+
+    public void setK_name(String k_name) {
+        this.k_name = k_name;
+    }
+
+    public int getK_money() {
+        return k_money;
+    }
+
+    public void setK_money(int k_money) {
+        this.k_money = k_money;
+    }
+
+    public String getK_address() {
+        return k_address;
+    }
+
+    public void setK_address(String k_address) {
+        this.k_address = k_address;
+    }
 
     public int getK_id() {
         return k_id;

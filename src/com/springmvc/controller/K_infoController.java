@@ -18,7 +18,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by lenovo on 2017/10/2.
+ * @author lenovo
+ * @date 2017/10/2
  */
 @Controller
 @RequestMapping("/user")
@@ -28,11 +29,6 @@ public class K_infoController {
     UUIDUtils uuidUtils = new UUIDUtils();
     String UUID = uuidUtils.getUUID();
 
-    @RequestMapping("/indexLogin")
-    public String indexLogin(){
-        return "login";
-    }
-
     @RequestMapping("/register")
     public String register(K_info k_info, HttpServletRequest request) throws Exception {
         String action = request.getParameter("action");
@@ -41,7 +37,7 @@ public class K_infoController {
             String k_password2 = request.getParameter("k_password2");
             if (k_info.getK_username() == null || k_info.getK_username().length() < 4 || k_info.getK_username().length() > 18
                     || k_info.getK_username().indexOf(" ") > 0) {
-                request.setAttribute("msg","用户名填写不正确");
+                request.setAttribute("msg", "用户名填写不正确");
                 return "register";
             }
             String passwordRegular = "/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9a-zA-Z]{6,18}$/";
@@ -49,7 +45,7 @@ public class K_infoController {
             Matcher passwordMatcher = pattern.matcher(k_info.getK_password());
             if (!k_info.getK_password().equalsIgnoreCase(k_password2) || k_info.getK_password().length() < 6 || k_info.getK_password().length() > 18
                     || passwordMatcher.lookingAt()) {
-                request.setAttribute("msg","密码格式填写有误！");
+                request.setAttribute("msg", "密码格式填写有误！");
                 return "register";
             }
             K_infoService k_infoService = new K_infoService();
@@ -69,7 +65,7 @@ public class K_infoController {
             }
             result = k_infoService.add(k_info);
             if (result < 0) {
-                request.setAttribute("msg","注册失败，请重新注册！");
+                request.setAttribute("msg", "注册失败，请重新注册！");
                 return "register";
             }
             processValidate(k_info.getK_email(), "register");
@@ -84,7 +80,7 @@ public class K_infoController {
             if (informationList != null) {
                 if (Integer.parseInt(informationList.get("k_status").toString()) == 0) {
                     if (validateCode.equalsIgnoreCase(informationList.get("k_emailValidate").toString())) {
-                        request.setAttribute("msg","注册成功！");
+                        request.setAttribute("msg", "注册成功！");
                         return "login";
                     } else {
                         request.setAttribute("msg", "激活码错误,请重新注册！");
@@ -111,25 +107,26 @@ public class K_infoController {
     }
 
     @RequestMapping("/login")
-    public String login(HttpServletRequest request,HttpServletResponse response) throws Exception {
+    public String login(HttpServletRequest request) throws Exception {
         String loginName = request.getParameter("username");
         String password = request.getParameter("password");
         String validation = request.getParameter("validation");
         String sessionValidation = (String) request.getSession().getAttribute("sessionValidation");
-
+        int result = -1;
         DesUtils desUtils = new DesUtils();
         K_info k_info = new K_info();
         K_infoService k_infoService = new K_infoService();
-        k_info.setK_username(loginName);
-        k_info.setK_email(loginName);
-        k_info.setK_password(desUtils.encrypt(password));
         HtmlCommon htmlCommon = new HtmlCommon();
-        if (!validation.equalsIgnoreCase(sessionValidation)) {
-            request.setAttribute("msg","验证码填写有误");
-            return "login";
+        if (loginName != null && password != null) {
+            k_info.setK_username(loginName);
+            k_info.setK_email(loginName);
+            k_info.setK_password(desUtils.encrypt(password));
+            if (!validation.equalsIgnoreCase(sessionValidation)) {
+                request.setAttribute("msg", "验证码填写有误");
+                return "login";
+            }
+            result = k_infoService.login(k_info);
         }
-        int result = -1;
-        result = k_infoService.login(k_info);
         if (result > 0) {
             k_info = new K_info();
             k_info.setK_email(loginName);
@@ -138,8 +135,8 @@ public class K_infoController {
             HttpSession session = htmlCommon.getSession();
             session.setAttribute("k_info", map);
             return "index";
-        }else {
-            request.setAttribute("msg","登录失败，请重新登录！");
+        } else {
+            request.setAttribute("msg", "登录失败，请重新登录！");
             return "login";
         }
     }
@@ -234,7 +231,7 @@ public class K_infoController {
                 int result = -1;
                 result = k_infoService.updatePassword(k_info);
                 if (result > 0) {
-                    request.setAttribute("msg","密码修改成功！");
+                    request.setAttribute("msg", "密码修改成功！");
                     return "login";
                 }
             }
@@ -271,12 +268,12 @@ public class K_infoController {
     @RequestMapping("/validateUserName")
     public void validateUserName(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HtmlCommon htmlCommon = new HtmlCommon();
-        String loginName = htmlCommon.getParameter(request,"k_username");
+        String loginName = htmlCommon.getParameter(request, "k_username");
 
         K_infoService k_infoService = new K_infoService();
         K_info k_info = new K_info();
 
-        if (loginName != null && !loginName.equals("")){
+        if (loginName != null && !loginName.equals("")) {
             k_info.setK_username(loginName);
         }
         int result = -1;

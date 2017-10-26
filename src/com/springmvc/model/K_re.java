@@ -15,6 +15,42 @@ public class K_re {
     private int k_reStatus;
     private String k_reTime;
     private String k_re_puTime;
+    private String k_reRealName;
+    private String k_reCode;
+    private int k_reMoney;
+    private String k_reAddress;
+
+    public String getK_reAddress() {
+        return k_reAddress;
+    }
+
+    public void setK_reAddress(String k_reAddress) {
+        this.k_reAddress = k_reAddress;
+    }
+
+    public String getK_reRealName() {
+        return k_reRealName;
+    }
+
+    public void setK_reRealName(String k_reRealName) {
+        this.k_reRealName = k_reRealName;
+    }
+
+    public String getK_reCode() {
+        return k_reCode;
+    }
+
+    public void setK_reCode(String k_reCode) {
+        this.k_reCode = k_reCode;
+    }
+
+    public int getK_reMoney() {
+        return k_reMoney;
+    }
+
+    public void setK_reMoney(int k_reMoney) {
+        this.k_reMoney = k_reMoney;
+    }
 
     public String getK_re_puTime() {
         return k_re_puTime;
