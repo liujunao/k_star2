@@ -1,4 +1,5 @@
-<%@ page import="java.util.Map" %><%--
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: lenovo
   Date: 2017/10/7
@@ -10,8 +11,13 @@
 <%@ include file="reCommon.jsp" %>
 <html>
 <head>
-    <title>我的消息</title>
+    <title>我的</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <script src="/statics/js/alertCommon.js"></script>
+
     <script type="text/javascript">
 
         var id = "<%=map.get("k_id")%>";
@@ -24,11 +30,12 @@
                 function (data) {
                     var list = "";
                     $.each($.parseJSON(data), function (num, content) {
-                        list += "<li>";
-                        list += content.k_infoName + "-->" + "<a href='/kuaidi/messageDetail?type=mine&number=" + content.k_reNumber + "&status="+ content.k_reStatus +"'>" + content.k_reText + "</a>"
-                            + status(content.k_reStatus);
+                        list += "<li class='list-group-item'>";
+                        list += "<div style='text-align: left'><a href='/kuaidi/messageDetail?type=mine&id=" + content.k_reId + "&status=" + content.k_reStatus + "'>" + content.k_reText + "</a>"
+                            + "</div>" + "<div style='text-align: right'><a href='#'><span class='glyphicon glyphicon-trash'></span></a>"
+                            + status(content.k_reStatus) + "</div>";
                         list += "</li>";
-                        $("#mine").html(list);
+                        $("#listPublish").html(list);
                     })
                 }
             )
@@ -40,7 +47,6 @@
                 function (data) {
                     var list = "";
                     $.each($.parseJSON(data), function (num, content) {
-                        list += "<li>";
                         var context = "";
                         var name = "";
                         var k_id = "";
@@ -53,33 +59,85 @@
                             name = content.k_me_myUsername;
                             k_id = content.k_me_myId;
                         }
-                        list += "<a href='/kuaidi/messageDetail?type=other&number=" + content.k_me_number + "&status="+ content.k_meStatus +"'>" + context + "</a>" +
-                            "<a href='/kuaidi/chat?k_id=" + k_id + "'>" + name + "</a> " + status(content.k_meStatus);
+                        list += "<li class='list-group-item'>";
+                        list += "<div style='text-align: left'><a href='/kuaidi/messageDetail?type=other&id=" + content.k_me_reId + "&status=" + content.k_meStatus + "'>" + context + "</a></div>" +
+                            "<div style='text-align: right;'><span><a href='/kuaidi/chat?k_id=" + k_id + "'>" + name + "</a><span></span>" + status(content.k_meStatus) + "<span></div>";
                         list += "</li>";
-                        $("#myOther").html(list);
+                        $("#listInform").html(list);
                     })
                 }
             )
-            var message = "<%=request.getAttribute("message")%>";
-            if (message != null && message != "null") {
-                if ($("#myThree").css("display") != "none") {
-                    $("#myThree").hide();
+            $.post(
+                "/kuaidi/showMine",
+                function (data) {
+                    var mapList = "";
+                    $.each($.parseJSON(data), function (name, content) {
+                        mapList += "<li class='list-group-item'>";
+                        mapList += "<div style='text-align: left'><a href='/kuaidi/chaxunGd2?number=" + content.k_number + "'>" + content.k_context + "</a></div>"
+                            + "<div style='text-align: right'><a href='#'><span class='glyphicon glyphicon-trash'></span></a><span>" + content.k_time + "</span><span> "
+                            + content.k_type + "</span></div>";
+                        mapList += "</li>";
+                        $("#listQuery").html(mapList);
+                    })
                 }
-            }
+            )
+            $("#publish").click(function () {
+                if ($("#publish").css("class") != "active") {
+                    $("#publish").addClass("active");
+                    $("#inform").removeClass("active");
+                    $("#query").removeClass("active");
+                }
+                $("#listPublish").show();
+                if ($("#listInform").css("display") != "none") {
+                    $("#listInform").hide();
+                }
+                if ($("#listQuery").css("display") != "none") {
+                    $("#listQuery").hide();
+                }
+            })
+            $("#inform").click(function () {
+                if ($("#inform").css("class") != "active") {
+                    $("#inform").addClass("active");
+                    $("#publish").removeClass("active");
+                    $("#query").removeClass("active");
+                }
+                $("#listInform").show();
+                if ($("#listPublish").css("display") != "none") {
+                    $("#listPublish").hide();
+                }
+                if ($("#listQuery").css("display") != "none") {
+                    $("#listQuery").hide();
+                }
+            })
+            $("#query").click(function () {
+                if ($("#query").css("class") != "active") {
+                    $("#query").addClass("active");
+                    $("#inform").removeClass("active");
+                    $("#publish").removeClass("active");
+                }
+                $("#listQuery").show();
+                if ($("#listInform").css("display") != "none") {
+                    $("#listInform").hide();
+                }
+                if ($("#listPublish").css("display") != "none") {
+                    $("#listPublish").hide();
+                }
+            })
+
             var status_m = "<%=request.getAttribute("status_m")%>";
-            if (status_m == 2){
+            if (status_m == 2) {
                 $("#a_status").html("任务已完成");
                 $("#a_status").click(function () {
                     alert("该任务已完成！");
                 })
-            }else if (status_m == 3){
+            } else if (status_m == 3) {
                 $("#a_status").html("任务已过期");
                 $("#a_status").click(function () {
                     alert("该任务已过期！");
                 })
             }
             var status_o = "<%=request.getAttribute("status_o")%>";
-            if (status_o == 2){
+            if (status_o == 2) {
                 $("#a_status1").html("任务已完成");
                 $("#a_status1").click(function () {
                     alert("该任务已完成！");
@@ -93,82 +151,251 @@
         var msg = "<%=request.getAttribute("msg")%>";
         window.onload = mine(msg);
     </script>
+
+    <script>
+        var mapDetail = "<%=request.getAttribute("mapDetail")%>";
+        var moType = "<%=request.getAttribute("moType")%>";
+        console.log("mapDetail: " + mapDetail);
+        console.log("moType: " + moType);
+        var gd2List = "<%=request.getAttribute("gd2List")%>";
+        console.log("gd2List: " + gd2List);
+
+        $(function () {
+            if (mapDetail != null && mapDetail != "null") {
+                if (moType == "myMine") {
+                    $("#myModalPublish").modal("show");
+                }
+                if (moType == "myOther") {
+                    $("#myModalInform").modal("show");
+                }
+            }
+            if (gd2List != null && gd2List != "null"){
+                $("#myModalQuery").modal("show");
+            }
+        })
+    </script>
 </head>
 <body>
 
-<div>
-    <ul id="title">
-        <li id="one"><a href="/views/index.jsp">我的快递</a></li>
-        <li id="two"><a href="#">我的消息</a></li>
-        <li id="three"><a href="/views/forum.jsp"> 我的论坛</a></li>
-        <li id="four"><a href="/views/release.jsp">发布任务</a></li>
-    </ul>
+<hr>
+<br>
+<center>
+    <div style="width: 80%;text-align: center">
+        <div>
+            <center>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th id="publish" class="active">我的发布</th>
+                        <th id="inform">通知消息</th>
+                        <th id="query">查询记录</th>
+                    </tr>
+                    </thead>
+                </table>
+            </center>
+        </div>
+
+        <div>
+            <ul class="list-group" id="listPublish"></ul>
+            <ul class="list-group" id="listInform" style="display: none"></ul>
+            <ul class="list-group" id="listQuery" style="display: none"></ul>
+        </div>
+    </div>
+</center>
+
+<div class="modal fade" id="myModalPublish" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabelPublish">详细信息</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="k_reName" class="col-sm-3 control-label">姓名：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="k_reName" value="${mapDetail.k_reRealName}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_rePhone" class="col-sm-3 control-label">手机号：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="k_rePhone" value="${mapDetail.k_rePhone}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reCode" class="col-sm-3 control-label">取件码：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="k_reCode" value="${mapDetail.k_reCode}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reAddress" class="col-sm-3 control-label">默认赏金：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="k_reAddress" value="${mapDetail.k_reMoney}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reText" class="col-sm-3 control-label">领取截至时间：</label>
+                        <div class="col-sm-8" rows="3">
+                            <input type="text" class="form-control" id="k_reText" value="${mapDetail.k_reTime}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reAddress" class="col-sm-3 control-label">包裹放置地：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" value="${mapDetail.k_reAddress}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reText" class="col-sm-3 control-label">取件详细信息：</label>
+                        <div class="col-sm-8" rows="3">
+                            <input type="text" class="form-control" value="${mapDetail.k_reText}" readonly="readonly"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="/views/message.jsp">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </a>
+                <a href="/kuaidi/messageDone?id=${mapDetail.k_me_reId}&k_infoId=${mapDetail.k_me_otherId}&type=accept"
+                   id="a_status">
+                    <button type="button" class="btn btn-primary">任务完成</button>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
 
-
-<div id="myThree">
-    我发布的消息
-    <ul id="mine"></ul>
-    其他消息
-    <ul id="myOther"></ul>
-</div>
-
-<c:if test="${mapDetail != null}">
-    <div id="show">
-        <c:if test="${moType eq 'myMine' }">
-            <table>
-                <tr>
-                    <td>快递单号</td>
-                    <td>${mapDetail.k_reNumber}</td>
-                </tr>
-                <tr>
-                    <td>详细信息</td>
-                    <td>${mapDetail.k_reText}</td>
-                </tr>
-                <tr>
-                    <td><a href="/views/message.jsp">确认</a></td>
-                    <td>
-                        <a href="/kuaidi/messageDone?number=${mapDetail.k_me_number}&k_infoId=${mapDetail.k_me_otherId}&type=accept" id="a_status">任务完成</a>
-                    </td>
-                </tr>
-            </table>
-        </c:if>
-        <c:if test="${moType eq 'myOther' }">
-            <table>
-                <tr>
-                    <td>快递单号</td>
-                    <td>${mapDetail.k_me_number }</td>
-                </tr>
-
+<div class="modal fade" id="myModalInform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabelInform">详细信息</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="k_reName" class="col-sm-3 control-label">姓名：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" value="${mapDetail.k_meRealName}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_rePhone" class="col-sm-3 control-label">手机号：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" value="${mapDetail.k_mePhone}" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_rePhone" class="col-sm-3 control-label">取件码：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" value="${mapDetail.k_meCode}" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reAddress" class="col-sm-3 control-label">默认赏金：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" value="${mapDetail.k_meMoney}" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reText" class="col-sm-3 control-label">领取截至时间：</label>
+                        <div class="col-sm-8" rows="3">
+                            <input type="text" class="form-control" value="${mapDetail.k_meTime}" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reAddress" class="col-sm-3 control-label">包裹放置地：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" value="${mapDetail.k_meAddress}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reText" class="col-sm-3 control-label">取件详细信息：</label>
+                        <div class="col-sm-8" rows="3">
+                            <input type="text" class="form-control" value="${mapDetail.k_meText}" readonly="readonly"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <c:if test="${mapDetail.k_me_myId eq id }">
-                    <tr>
-                        <td>详细信息</td>
-                        <td>${mapDetail.k_meWarn }</td>
-                    </tr>
-                    <tr>
-                        <td><a href="/views/message.jsp">确认</a></td>
-                        <td>
-                            <a href="/kuaidi/messageDone?number=${mapDetail.k_me_number}&k_infoId=${mapDetail.k_me_otherId}&type=release
-                         &kind=other" id="a_status1">任务完成</a>
-                        </td>
-                    </tr>
+                    <a href="/kuaidi/messageDone?id=${mapDetail.k_me_reId}&k_infoId=${mapDetail.k_me_otherId}&type=release&kind=other"
+                       id="a_status1">
+                        <button type="button" class="btn btn-primary">任务完成</button>
+                    </a>
                 </c:if>
                 <c:if test="${mapDetail.k_me_otherId eq id }">
-                    <tr>
-                        <td>详细信息</td>
-                        <td>${mapDetail.k_meOtherWarn }</td>
-                    </tr>
-                    <tr>
-                        <td><a href="/views/message.jsp">确认</a></td>
-                        <td>
-                            <a href="/kuaidi/messageDone?number=${mapDetail.k_me_number}&k_infoId=${mapDetail.k_me_myId}&type=release
-                         &kind=mine" id="a_status2">任务完成</a>
-                        </td>
-                    </tr>
+                    <a href="/kuaidi/messageDone?id=${mapDetail.k_me_reId}&k_infoId=${mapDetail.k_me_myId}&type=release&kind=mine"
+                       id="a_status2">
+                        <button type="button" class="btn btn-primary">任务完成</button>
+                    </a>
                 </c:if>
-            </table>
-        </c:if>
+            </div>
+        </div>
     </div>
-</c:if>
+</div>
+
+<div class="modal fade" id="myModalQuery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabelQuery">详细信息</h4>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <c:if test="${gd2List != null}">
+                        <%
+                            List<Map<String, Object>> list = (List<Map<String, Object>>) request.getAttribute("gd2List");
+                            if (list != null) {
+                        %>
+                            <%
+                                for (int i = 0; i < list.size(); i++) {
+                                    Map<String, Object> mapList =  list.get(i);
+                            %>
+                        <tr>
+                        <td><%=mapList.get("k_time")%>&nbsp;</td>
+                            <td>&nbsp;
+                                <div>
+                                    <div style='color: #FF6600;'>&nbsp;&nbsp;|</div>
+                                    <div>
+                                        <span class='glyphicon glyphicon-ok-circle' style='color: #FF6600;'></span>
+                                    </div>
+                                    <div style='color: #FF6600;'>&nbsp;&nbsp;|</div>
+                                </div>
+                            </td>
+                            <td>&nbsp;<%=mapList.get("k_context")%></td>
+                        </tr>
+                        <%
+                                }
+                            }
+                        %>
+                    </c:if>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </body>
 </html>

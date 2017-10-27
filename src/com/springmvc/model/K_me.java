@@ -20,6 +20,24 @@ public class K_me {
     private String k_meCode;
     private int k_meMoney;
     private String k_meAddress;
+    private String k_mePhone;
+    private String k_meText;
+
+    public String getK_mePhone() {
+        return k_mePhone;
+    }
+
+    public void setK_mePhone(String k_mePhone) {
+        this.k_mePhone = k_mePhone;
+    }
+
+    public String getK_meText() {
+        return k_meText;
+    }
+
+    public void setK_meText(String k_meText) {
+        this.k_meText = k_meText;
+    }
 
     public String getK_meRealName() {
         return k_meRealName;

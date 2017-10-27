@@ -76,11 +76,11 @@
                         </dt>
                         <dt><br></dt>
                         <dt>&nbsp;&nbsp;&nbsp;
-                            <a href='/kuaidi/supplement'>
+                            <a href='${pageContext.request.contextPath}/views/supplement.jsp'>
                                 <span class='glyphicon glyphicon-asterisk' style='color: #808080;width: 20px;height: 20px;font-weight: 400;text-align: left'></span>
                             </a>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#">
+                            <a href="/user/logout">
                                 <span class='glyphicon glyphicon-log-out' style='color: #808080;width: 20px;height: 20px;font-weight: 400;text-align: right'></span>
                             </a>
                         </dt>

@@ -132,7 +132,7 @@
 </nav>
 
 <div style="width: 1349px; height: 1200px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto; position: relative; z-index: 1;
-background-size: cover; background: url(../statics/images/login.jpg) no-repeat;">
+background-size: cover; background: url(../statics/images/register.jpg) no-repeat;">
     <div style="position: absolute; top: 70px; left: 400px; width: 450px; height: 400px;">
         <center>
             <div>
@@ -221,7 +221,7 @@ background-size: cover; background: url(../statics/images/login.jpg) no-repeat;"
                     <div class="form-group">
                         <label for="phone" class="col-sm-3 control-label">手机号码：</label>
                         <div class="col-sm-3">
-                            <select name="mobileCt" style="width: 100%;height: 39px;float:left;">
+                            <select name="k_tPhone" style="width: 100%;height: 39px;float:left;">
                                 <option value="ch">中国大陆+86</option>
                                 <option value="hk">香港+852</option>
                                 <option value="mc">澳门+853</option>

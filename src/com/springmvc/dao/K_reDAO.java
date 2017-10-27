@@ -45,9 +45,10 @@ public class K_reDAO {
     }
 
     public Map<String,Object> queryDetail(K_re k_re){
-        String sql = "SELECT * FROM k_re WHERE k_reNumber = ?";
-        Object[] objects = new Object[1];
-        objects[0] = k_re.getK_reNumber();
+        String sql = "SELECT * FROM k_re WHERE k_reId = ? OR k_reNumber = ?";
+        Object[] objects = new Object[2];
+        objects[0] = k_re.getK_reId();
+        objects[1] = k_re.getK_reNumber();
         List<Map<String,Object>> list = jdbcUtils.query(sql,objects);
         Map<String,Object> map1 = list.get(0);
 
@@ -55,12 +56,11 @@ public class K_reDAO {
     }
 
     public int updateStatusById(K_re k_re){
-        String sql = "UPDATE k_re SET k_reStatus = ? WHERE k_reId = ? OR k_reNumber=?";
+        String sql = "UPDATE k_re SET k_reStatus = ? WHERE k_reId = ?";
         int result = -1;
-        Object[] objects = new Object[3];
+        Object[] objects = new Object[2];
         objects[0] = k_re.getK_reStatus();
         objects[1] = k_re.getK_reId();
-        objects[2] = k_re.getK_reNumber();
         result = jdbcUtils.update(sql,objects);
 
         return result;

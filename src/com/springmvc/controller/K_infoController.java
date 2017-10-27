@@ -293,4 +293,9 @@ public class K_infoController {
         }
     }
 
+    @RequestMapping("/logout")
+    public String execute(HttpSession session){
+        session.invalidate();
+        return "redirect:/index.jsp";
+    }
 }

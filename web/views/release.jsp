@@ -18,7 +18,6 @@
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         var message = "<%=request.getAttribute("message")%>";
-        console.log(message);
         $(function () {
             $("#back").click(function () {
                 window.history.back();
@@ -72,23 +71,28 @@ background-size: cover; background: url(../statics/images/release.jpg) no-repeat
                     <div class="form-group">
                         <label for="k_rePhone" class="col-sm-3 control-label">取件码：</label>
                         <div class="col-sm-8">
-                            <input type="text" name="k_rePhone" id="k_reCode" class="form-control"/>
+                            <input type="text" name="k_reCode" id="k_reCode" class="form-control"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="money" class="col-sm-3 control-label">默认赏金：</label>
                         <div class="col-sm-8">
                             <select name="k_reMoney" id="money" class="form-control">
-                                <option value="<%=map.get("k_money")%>"><%=map.get("k_money")%>元</option>
-                                <option value="2">2元</option>
-                                <option value="3">3元</option>
-                                <option value="4">4元</option>
-                                <option value="5">5元</option>
-                                <option value="6">6元</option>
-                                <option value="7">7元</option>
-                                <option value="8">8元</option>
-                                <option value="9">9元</option>
-                                <option value="10">10元</option>
+                                <%
+                                    Object money = map.get("k_money");
+                                %>
+                                <c:if test="${map.get('k_money') != null && map.get('k_money') != 'null'}">
+                                    <option value="<%=map.get("k_money")%>"><%=map.get("k_money")%>元</option>
+                                </c:if>
+                                <option value="2" selected = "<c:if test="${map.get('k_money') == 2 }">selected</c:if>">2元</option>
+                                <option value="3" selected = "<c:if test="${map.get('k_money') == 3 }">selected</c:if>">3元</option>
+                                <option value="4" selected = "<c:if test="${map.get('k_money') == 4 }">selected</c:if>">4元</option>
+                                <option value="5" selected = "<c:if test="${map.get('k_money') == 5 }">selected</c:if>">5元</option>
+                                <option value="6" selected = "<c:if test="${map.get('k_money') == 6 }">selected</c:if>">6元</option>
+                                <option value="7" selected = "<c:if test="${map.get('k_money') == 7 }">selected</c:if>">7元</option>
+                                <option value="8" selected = "<c:if test="${map.get('k_money') == 8 }">selected</c:if>">8元</option>
+                                <option value="9" selected = "<c:if test="${map.get('k_money') == 9 }">selected</c:if>">9元</option>
+                                <option value="10" selected = "<c:if test="${map.get('k_money') == 10 }">selected</c:if>">10元</option>
                             </select>
                         </div>
                     </div>

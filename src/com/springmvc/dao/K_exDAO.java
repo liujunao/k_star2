@@ -28,10 +28,11 @@ public class K_exDAO {
         return result;
     }
 
-    public List<Map<String,Object>> queryByNumber(K_ex k_ex){
-        String sql = "SELECT * FROM k_ex WHERE k_number = ?";
-        Object[] objects = new Object[1];
-        objects[0] = k_ex.getK_number();
+    public List<Map<String,Object>> query(K_ex k_ex){
+        String sql = "SELECT * FROM k_ex WHERE k_exId = ? OR k_number = ?";
+        Object[] objects = new Object[2];
+        objects[0] = k_ex.getK_exId();
+        objects[1] = k_ex.getK_number();
         List<Map<String,Object>> list = jdbcUtils.query(sql,objects);
 
         return list;

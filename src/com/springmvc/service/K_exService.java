@@ -20,8 +20,8 @@ public class K_exService {
         return result;
     }
 
-    public List<Map<String,Object>> queryByNumber(K_ex k_ex){
-        List<Map<String,Object>> list = k_exDAO.queryByNumber(k_ex);
+    public List<Map<String,Object>> query(K_ex k_ex){
+        List<Map<String,Object>> list = k_exDAO.query(k_ex);
 
         return list;
     }

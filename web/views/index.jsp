@@ -62,22 +62,7 @@
             });
         })
     </script>
-    <%--<script>--%>
-        <%--$(function () {--%>
-            <%--$.post(--%>
-                <%--"/kuaidi/showMine",--%>
-                <%--function (data) {--%>
-                    <%--var mapList = "";--%>
-                    <%--$.each($.parseJSON(data), function (name, content) {--%>
-                        <%--mapList += "<li>";--%>
-                        <%--mapList += content.k_time + "-->" + "<a href='/kuaidi/chaxunGd2?orderNumber2=" + content.k_number + "'>"--%>
-                            <%--+ content.k_context + "</a>" + "-->" + content.k_type;--%>
-                        <%--mapList += "</li>";--%>
-                        <%--$("#mineOne").html(mapList);--%>
-                    <%--})--%>
-                <%--})--%>
-        <%--})--%>
-    <%--</script>--%>
+
     <script>
 
         function mine() {
@@ -182,33 +167,6 @@ background-size: cover; background: url(../statics/images/3.png) no-repeat 50% 5
         </div>
     </div>
 </div>
-
-<ul id="mineOne">
-    <li>我的快递</li>
-</ul>
-<c:if test="${gd2List != null}">
-    <ul>
-        <%
-            List<Map<String, Object>> list = (List<Map<String, Object>>) request.getAttribute("gd2List");
-            if (list != null) {
-                Map<String, Object> map1 = new HashMap<>();
-                map1 = list.get(0);
-        %>
-        <li><%=map1.get("k_type")%>--><%=map1.get("k_number")%>
-        </li>
-        <%
-            for (int i = 0; i < list.size(); i++) {
-                map1 = new HashMap<>();
-                map1 = list.get(i);
-        %>
-        <li><%=map1.get("k_time")%>--><%=map1.get("k_context")%>
-        </li>
-        <%
-                }
-            }
-        %>
-    </ul>
-</c:if>
 
 </body>
 </html>

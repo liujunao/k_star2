@@ -21,6 +21,15 @@ public class K_info {
     private String k_name;
     private int k_money;
     private String k_address;
+    private String k_tPhone;
+
+    public String getK_tPhone() {
+        return k_tPhone;
+    }
+
+    public void setK_tPhone(String k_tPhone) {
+        this.k_tPhone = k_tPhone;
+    }
 
     public String getK_name() {
         return k_name;

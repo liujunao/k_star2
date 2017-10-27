@@ -14,10 +14,10 @@ public class K_meDAO {
     JdbcUtils jdbcUtils = new JdbcUtils();
 
     public int add(K_me k_me){
-        String sql = "INSERT INTO k_me(k_meWarn,k_me_myId,k_me_myUsername,k_meTime,k_meStatus,k_me_number,k_meRealName,k_meCode,k_meMoney,k_meAddress)" +
-                "VALUES(?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO k_me(k_meWarn,k_me_myId,k_me_myUsername,k_meTime,k_meStatus,k_me_number,k_meRealName,k_meCode,k_meMoney," +
+                "k_meAddress,k_me_reId,k_mePhone,k_meText)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
         int result = -1;
-        Object[] objects = new Object[10];
+        Object[] objects = new Object[13];
         objects[0] = k_me.getK_meWarn();
         objects[1] = k_me.getK_me_myId();
         objects[2] = k_me.getK_me_myUsername();
@@ -28,6 +28,9 @@ public class K_meDAO {
         objects[7] = k_me.getK_meCode();
         objects[8] = k_me.getK_meMoney();
         objects[9] = k_me.getK_meAddress();
+        objects[10] = k_me.getK_me_reId();
+        objects[11] = k_me.getK_mePhone();
+        objects[12] = k_me.getK_meText();
 
         result = jdbcUtils.update(sql,objects);
 
@@ -35,17 +38,16 @@ public class K_meDAO {
     }
 
     public int updateGet(K_me k_me){
-        String sql = "UPDATE k_me SET k_me_otherId=?,k_meTime=?,k_meStatus=?,k_me_reId=?," +
+        String sql = "UPDATE k_me SET k_me_otherId=?,k_meTime=?,k_meStatus=?," +
                 "k_meWarn=?,k_meOtherWarn=?,k_me_otherUsername WHERE k_me_number=?";
-        Object[] objects = new Object[8];
+        Object[] objects = new Object[7];
         objects[0] = k_me.getK_me_otherId();
         objects[1] = k_me.getK_meTime();
         objects[2] = k_me.getK_meStatus();
-        objects[3] = k_me.getK_me_reId();
-        objects[4] = k_me.getK_meWarn();
-        objects[5] = k_me.getK_meOtherWarn();
-        objects[6] = k_me.getK_me_otherUsername();
-        objects[7] = k_me.getK_me_number();
+        objects[3] = k_me.getK_meWarn();
+        objects[4] = k_me.getK_meOtherWarn();
+        objects[5] = k_me.getK_me_otherUsername();
+        objects[6] = k_me.getK_me_number();
         int result = -1;
         result = jdbcUtils.update(sql,objects);
 
@@ -53,11 +55,11 @@ public class K_meDAO {
     }
 
     public int updateStatus(K_me k_me){
-        String sql = "UPDATE k_me SET k_meStatus=? WHERE k_me_number=?";
+        String sql = "UPDATE k_me SET k_meStatus=? WHERE k_me_reId=?";
         int result = -1;
         Object[] objects = new Object[2];
         objects[0] = k_me.getK_meStatus();
-        objects[1] = k_me.getK_me_number();
+        objects[1] = k_me.getK_me_reId();
         result = jdbcUtils.update(sql,objects);
 
         return result;
@@ -76,9 +78,9 @@ public class K_meDAO {
     }
 
     public Map<String,Object> queryByNumber(K_me k_me){
-        String sql = "SELECT * FROM k_me WHERE k_me_number=?";
+        String sql = "SELECT * FROM k_me WHERE k_me_reId=?";
         Object[] objects = new Object[1];
-        objects[0] = k_me.getK_me_number();
+        objects[0] = k_me.getK_me_reId();
         List<Map<String,Object>> list = jdbcUtils.query(sql,objects);
         Map<String,Object> map1 = list.get(0);
 
