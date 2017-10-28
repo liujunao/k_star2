@@ -317,6 +317,7 @@ public class DataController {
     public String forumDetail(HttpServletRequest request) {
         String id = request.getParameter("id");
         Map<String, Object> mapDetail = reDetailCommon(id);
+        System.out.println( "mapDetail: " + mapDetail);
         if (mapDetail != null) {
             request.setAttribute("mapDetail", mapDetail);
             request.setAttribute("message", "查看成功");
@@ -635,13 +636,23 @@ public class DataController {
     @RequestMapping("/lookAppraise")
     public void lookAppraise(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = request.getParameter("id");
-        String kindLook = request.getParameter("kindLook");
         K_ap k_ap = new K_ap();
         k_ap.setK_apInfoId(Integer.parseInt(id));
         K_apService k_apService = new K_apService();
         List<Map<String, Object>> mapList = k_apService.queryAllById(k_ap);
-        request.setAttribute("kindLook", kindLook);
-        listToJson(mapList, response);
+        int num = 0;
+        if (mapList != null){
+            for (int i = 0;i < mapList.size();i++){
+                num += Integer.parseInt(mapList.get(i).get("k_apGrade1").toString()) + Integer.parseInt(mapList.get(i).get("k_apGrade2").toString()) +
+                        Integer.parseInt(mapList.get(i).get("k_apGrade3").toString());
+            }
+        }
+        float ever = num / mapList.size();
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out  = response.getWriter();
+        out.write(String.valueOf(ever));
+        out.flush();
+        out.close();
     }
 
 }

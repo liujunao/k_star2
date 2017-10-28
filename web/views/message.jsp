@@ -12,7 +12,7 @@
 <html>
 <head>
     <title>我的</title>
-    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -310,7 +310,7 @@
                 </a>
                 <a href="/kuaidi/messageDone?id=${mapDetail.k_me_reId}&k_infoId=${mapDetail.k_me_otherId}&type=accept"
                    id="a_status">
-                    <button type="button" class="btn btn-primary">任务完成</button>
+                    <button type="button" class="btn btn-primary">确认</button>
                 </a>
             </div>
         </div>
@@ -378,13 +378,13 @@
                 <c:if test="${mapDetail.k_me_myId eq id }">
                     <a href="/kuaidi/messageDone?id=${mapDetail.k_me_reId}&k_infoId=${mapDetail.k_me_otherId}&type=release&kind=other"
                        id="a_status1">
-                        <button type="button" class="btn btn-primary">任务完成</button>
+                        <button type="button" class="btn btn-primary">确认</button>
                     </a>
                 </c:if>
                 <c:if test="${mapDetail.k_me_otherId eq id }">
                     <a href="/kuaidi/messageDone?id=${mapDetail.k_me_reId}&k_infoId=${mapDetail.k_me_myId}&type=release&kind=mine"
                        id="a_status2">
-                        <button type="button" class="btn btn-primary">任务完成</button>
+                        <button type="button" class="btn btn-primary">确认</button>
                     </a>
                 </c:if>
             </div>

@@ -209,7 +209,6 @@ background-size: cover; background: url(../statics/images/release.jpg) no-repeat
                             <input type="text" class="form-control" value="${k_re.k_reText}" readonly="readonly"/>
                         </div>
                     </div>
-
                 </form>
             </div>
             <div class="modal-footer">

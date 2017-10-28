@@ -7,13 +7,17 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="reCommon.jsp" %>
 <html>
 <head>
     <title>评价页面</title>
-    <script type="text/javascript" src="/statics/js/jquery-3.2.1.js"></script>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <script type="text/javascript" src="/statics/js/alertCommon.js"></script>
 
-    <script>
+    <script type="text/javascript">
         $(function () {
             var flag1 = 0;
             var flag2 = 0;
@@ -189,18 +193,16 @@
                 $.post(
                     "/kuaidi/appraise",
                     {
-                        "grade1":flag1,
-                        "grade2":flag2,
-                        "grade3":flag3,
+                        "grade1": flag1,
+                        "grade2": flag2,
+                        "grade3": flag3,
                         "k_infoId":${mapInfo.k_id},
-                        "text":$("#text").val()
+                        "text": $("#text").val()
                     },
                     function (data) {
-                        console.log(data);
-                        console.log(data == "ok");
-                        if (data == "ok"){
+                        if (data == "ok") {
                             window.location.href = "/views/message.jsp";
-                        }else {
+                        } else {
                             window.location.href = "/views/appraise.jsp";
                             var msg = "<%=request.getAttribute("msg")%>";
                             mine(msg);
@@ -208,170 +210,149 @@
                     }
                 )
             })
-
-            $("#history").click(function () {
-                $.post(
-                    "/kuaidi/lookAppraise",
-                    {
-                        "id":${mapInfo.k_id }
-                    },
-                    function (data) {
-                        var kindLook = "<%=request.getAttribute("kind")%>";
-                        var typeLook = "";
-                        console.log(kindLook);
-                        if (kindLook == "mine"){
-                            typeLook = "取货速度";
-                        }else if (kindLook == "other"){
-                            typeLook = "负责态度";
-                        }
-                        var list = "";
-                        $.each($.parseJSON(data),function (num,content) {
-                            list = "<li>";
-                            if (content.k_apText != null){
-                                list += "综合评价: ";
-                                list += content.k_apText;
-                            }
-                            list += typeLook + ": " + content.k_apGrade1;
-                            list += "沟通态度: " + content.k_apGrade2;
-                            list += "诚信度: " + content.k_apGrade3;
-                            list += "</li>";
-                            $("#listLook").html(list);
-                        })
+            $.post(
+                "/kuaidi/lookAppraise",
+                {
+                    "id":${mapInfo.k_id}
+                }, function (data) {
+                    if (data != null && data != "null"){
+                        $("#grade").html(data);
                     }
-                )
-            })
-
+                }
+            )
         })
     </script>
 </head>
 <body>
 <div>
-    <ul id="listLook"></ul>
-    <table>
-        <tr>
-            <td>${mapInfo.k_username}</td>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <td></td>
-            <td id="history">查看历史评价</td>
-        </tr>
-        <tr>
-            <td>综合评价</td>
-            <td>
-                <textarea id="text"></textarea>
-            </td>
-        </tr>
-        <%--<c:if test="${kind != null}">--%>
-            <tr>
-                <c:if test="${kind eq 'mine'}">
-                    <td>取货速度</td>
-                </c:if>
-                <c:if test="${kind eq 'other'}">
-                    <td>负责态度</td>
-                </c:if>
-                <td>
-                    <div>
-                        <img src="/statics/images/star.png" id="star1">
-                        <input type="hidden" value="0" id="star_h1"/>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <img src="/statics/images/star.png" id="star2">
-                        <input type="hidden" value="0" id="star_h2"/>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <img src="/statics/images/star.png" id="star3">
-                        <input type="hidden" value="0" id="star_h3"/>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <img src="/statics/images/star.png" id="star4">
-                        <input type="hidden" value="0" id="star_h4"/>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <img src="/statics/images/star.png" id="star5">
-                        <input type="hidden" value="0" id="star_h5"/>
-                    </div>
-                </td>
-            </tr>
-        <%--</c:if>--%>
+    <div style="width: 1349px; height: 600px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto;
+    position: relative; z-index: 1;background-size: cover; background: url(../statics/images/release.jpg) no-repeat 50% 50%;">
+        <div style="position: absolute; top: 70px; left: 400px; width: 450px; height: 400px;">
+            <div style="width: 600px;height: 500px;background-color: white;">
+                <center>
+                    <table>
+                        <tr>
+                            <td>
+                                <span style="font-weight: 800;font-size: 20px;color: #FF3300;float: left;" id="grade"></span>
+                            </td>
+                            <td>
+                                <div style="color: blue;font-weight: 700;font-size: 30px;float: none;">评价栏</div>
+                            </td>
+                            <td style="float: right">
+                                ${mapInfo.k_username}
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+                <br><br><br>
+                <center>
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="text" class="col-sm-3 control-label">综合评价：</label>
+                            <div class="col-sm-8">
+                                <textarea id="text" class="form-control" style="width: 70%;height: 100px;"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <c:if test="${kind eq 'mine'}">
+                                <label for="grade1" class="col-sm-3 control-label">取货速度：</label>
+                            </c:if>
+                            <c:if test="${kind eq 'other'}">
+                                <label for="grade1" class="col-sm-3 control-label">负责态度：</label>
+                            </c:if>
+                            <div class="col-sm-8">
+                                <div id="grade1">
+                                    <span>
+                                        <img src="/statics/images/star.png" id="star1">
+                                        <input type="hidden" value="0" id="star_h1"/>
+                                    </span>
+                                    <span>
+                                        <img src="/statics/images/star.png" id="star2">
+                                        <input type="hidden" value="0" id="star_h2"/>
+                                    </span>
+                                    <span>
+                                        <img src="/statics/images/star.png" id="star3">
+                                        <input type="hidden" value="0" id="star_h3"/>
+                                    </span>
+                                    <span>
+                                        <img src="/statics/images/star.png" id="star4">
+                                        <input type="hidden" value="0" id="star_h4"/>
+                                    </span>
+                                    <span>
+                                        <img src="/statics/images/star.png" id="star5">
+                                        <input type="hidden" value="0" id="star_h5"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
 
-        <tr>
-            <td>沟通态度</td>
-            <td>
-                <div>
-                    <img src="/statics/images/star.png" id="star6">
-                    <input type="hidden" value="0" id="star_h6"/>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <img src="/statics/images/star.png" id="star7">
-                    <input type="hidden" value="0" id="star_h7"/>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <img src="/statics/images/star.png" id="star8">
-                    <input type="hidden" value="0" id="star_h8"/>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <img src="/statics/images/star.png" id="star9">
-                    <input type="hidden" value="0" id="star_h9"/>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <img src="/statics/images/star.png" id="star10">
-                    <input type="hidden" value="0" id="star_h10"/>
-                </div>
-            </td>
-        </tr>
+                        <div class="form-group">
+                            <label for="grade2" class="col-sm-3 control-label">沟通态度：</label>
+                            <div class="col-sm-8">
+                                <div id="grade2">
+                                    <span>
+                                        <img src="/statics/images/star.png" id="star6">
+                                        <input type="hidden" value="0" id="star_h6"/>
+                                    </span>
+                                    <span>
+                                        <img src="/statics/images/star.png" id="star7">
+                                        <input type="hidden" value="0" id="star_h7"/>
+                                    </span>
+                                    <span>
+                                        <img src="/statics/images/star.png" id="star8">
+                                        <input type="hidden" value="0" id="star_h8"/>
+                                    </span>
+                                    <span>
+                                        <img src="/statics/images/star.png" id="star9">
+                                        <input type="hidden" value="0" id="star_h9"/>
+                                    </span>
+                                    <span>
+                                        <img src="/statics/images/star.png" id="star10">
+                                        <input type="hidden" value="0" id="star_h10"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
 
-        <tr>
-            <td>诚信度</td>
-            <td>
-                <div>
-                    <img src="/statics/images/star.png" id="star11">
-                    <input type="hidden" value="0" id="star_h11"/>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <img src="/statics/images/star.png" id="star12">
-                    <input type="hidden" value="0" id="star_h12"/>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <img src="/statics/images/star.png" id="star13">
-                    <input type="hidden" value="0" id="star_h13"/>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <img src="/statics/images/star.png" id="star14">
-                    <input type="hidden" value="0" id="star_h14"/>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <img src="/statics/images/star.png" id="star15">
-                    <input type="hidden" value="0" id="star_h15"/>
-                </div>
-            </td>
-        </tr>
-
-        <tr><td><input type="button" value="提交" id="submit"/></td></tr>
-
-    </table>
+                        <div class="form-group">
+                            <label for="grade3" class="col-sm-3 control-label">诚信度：</label>
+                            <div class="col-sm-8">
+                                <div id="grade3">
+                                    <span>
+                                        <img src="/statics/images/star.png" id="star11">
+                                        <input type="hidden" value="0" id="star_h11"/>
+                                    </span>
+                                    <span>
+                                        <img src="/statics/images/star.png" id="star12">
+                                        <input type="hidden" value="0" id="star_h12"/>
+                                    </span>
+                                    <span>
+                                        <img src="/statics/images/star.png" id="star13">
+                                        <input type="hidden" value="0" id="star_h13"/>
+                                    </span>
+                                    <span>
+                                        <img src="/statics/images/star.png" id="star14">
+                                        <input type="hidden" value="0" id="star_h14"/>
+                                    </span>
+                                    <span>
+                                        <img src="/statics/images/star.png" id="star15">
+                                        <input type="hidden" value="0" id="star_h15"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div class="col-sm-11">
+                                <input type="button" value="提交" class="btn btn-primary" id="submit"
+                                       style="width:240px;height:30px;background-color: blue;color: white"/>
+                            </div>
+                        </div>
+                    </form>
+                </center>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>

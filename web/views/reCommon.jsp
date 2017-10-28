@@ -11,7 +11,7 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/statics/js/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/statics/js/bootstrap.min.js"></script>
 
@@ -102,9 +102,13 @@
                         <dt><br></dt>
                         <dt>&nbsp;&nbsp;&nbsp;
                             <a href='${pageContext.request.contextPath}/views/supplement.jsp'>
+                                <span class='glyphicon glyphicon-edit' style='color: #808080;width: 20px;height: 20px;font-weight: 400;text-align: left'></span>
+                            </a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href='${pageContext.request.contextPath}/views/retrieve.jsp'>
                                 <span class='glyphicon glyphicon-asterisk' style='color: #808080;width: 20px;height: 20px;font-weight: 400;text-align: left'></span>
                             </a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="/user/logout">
                                 <span class='glyphicon glyphicon-log-out' style='color: #808080;width: 20px;height: 20px;font-weight: 400;text-align: right'></span>
                             </a>

@@ -131,7 +131,7 @@
     <input type="hidden" id="myId" name="myId" value="${mapMyInfo.k_id}"/>
     <input type="hidden" id="otherName" name="otherName" value="${mapInfo.k_username}"/>
     <input type="hidden" id="otherId" name="otherId" value="${mapInfo.k_id}"/>
-    <div style="width: 70%;height: 65%;">
+    <div style="width: 70%;height: 65%;top: 70px;">
         <div style="height: 60%;width: 100%;overflow: scroll;">
             <ul id="chat">
                 <ul id="before"></ul>
