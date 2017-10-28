@@ -13,6 +13,12 @@ public class K_reService {
 
     K_reDAO k_reDAO = new K_reDAO();
 
+    public int delete(K_re k_re){
+        int result = -1;
+        result = k_reDAO.delete(k_re);
+        return result;
+    }
+
     public int add(K_re k_re){
         int result = -1;
         result = k_reDAO.add2(k_re);

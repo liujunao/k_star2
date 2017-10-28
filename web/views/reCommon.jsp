@@ -18,6 +18,31 @@
     <script>
         $(function () {
             $("[data-toggle='popover']").popover();
+
+            $("#ti").click(function () {
+                $("#ti").addClass("active");
+                $("#pu").removeClass("active");
+                $("#fo").removeClass("active");
+                $("#my").removeClass("active");
+            })
+            $("#pu").click(function () {
+                $("#pu").addClass("active");
+                $("#ti").removeClass("active");
+                $("#fo").removeClass("active");
+                $("#my").removeClass("active");
+            })
+            $("#fo").click(function () {
+                $("#fo").addClass("active");
+                $("#pu").removeClass("active");
+                $("#ti").removeClass("active");
+                $("#my").removeClass("active");
+            })
+            $("#my").click(function () {
+                $("#my").addClass("active");
+                $("#pu").removeClass("active");
+                $("#fo").removeClass("active");
+                $("#ti").removeClass("active");
+            })
         });
     </script>
 
@@ -46,10 +71,10 @@
             </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/views/index.jsp"> 首页</a></li>
-            <li><a href="/views/release.jsp"> 发布任务</a></li>
-            <li><a href="/views/forum.jsp"> 帮忙取快递</a></li>
-            <li><a href="/views/message.jsp"> 我的</a></li>
+            <li><a href="/views/index.jsp" id="ti"> 首页</a></li>
+            <li><a href="/views/release.jsp" id="pu"> 发布任务</a></li>
+            <li><a href="/views/forum.jsp" id="fo"> 帮忙取快递</a></li>
+            <li><a href="/views/message.jsp" id="my"> 我的</a></li>
             <li><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
                     <span class="glyphicon glyphicon-user"></span>
                 </a>

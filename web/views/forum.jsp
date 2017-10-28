@@ -20,20 +20,22 @@
                 function (data) {
                     var list = "";
                     $.each($.parseJSON(data), function (num, content) {
-                        list += "<li>";
-                        list += content.k_infoName + "-->" + "<a href='/kuaidi/forumDetail?number=" + content.k_reNumber + "'>" + content.k_reText + "</a>"
-                            + status(content.k_reStatus);
-                        list += "</li>";
+                        list += "<tr>";
+                        list += "<td style='width: 60%'><a href='/kuaidi/forumDetail?id=" + content.k_reId + "'>" + content.k_reText + "</a></td>" +
+                            "<td style='width: 10%'>" + content.k_reMoney + "元</td>" +
+                            "<td style='width: 10%'>" + status(content.k_reStatus) + "</td>" +
+                            "<td style='width: 20%'>" + content.k_reTime + "</td>";
+                        list += "</tr>";
                         $("#mineThree").html(list);
                     })
                 }
             )
-            var message = "<%=request.getAttribute("message")%>";
-            if (message != null && message != "null") {
-                if ($("#myThree").css("display") != "none") {
-                    $("#myThree").hide();
-                }
+
+            var mapDetail = "<%=request.getAttribute("mapDetail")%>";
+            if (mapDetail != null && mapDetail != "nnull"){
+                $("#myModal").modal("show");
             }
+
             var mapDetail = "<%=request.getAttribute("mapDetail")%>";
             if (mapDetail != null && mapDetail != "null") {
                 var st = $("#status").val();
@@ -57,7 +59,7 @@
                 }
             }
             var infoId = "<%=map.get("k_id")%>";
-            if ($("#infoId") == infoId){
+            if ($("#infoId") == infoId) {
                 $("#a_status").html("领取任务");
                 $("#a_status").click(function () {
                     alert("您不能领取自己发布的任务！");
@@ -70,60 +72,114 @@
     </script>
 </head>
 <body>
+<hr>
+<br>
+<center>
+    <div id="myThree" style="width: 80%;text-align: center">
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="width: 60%">标题</th>
+                <th style="width: 10%">赏金</th>
+                <th style="width: 10%">领取状态</th>
+                <th style="width: 20%">截至时间</th>
+            </tr>
+            </thead>
+            <tbody id="mineThree">
 
-<div>
-    <ul id="title">
-        <li id="one"><a href="/views/index.jsp">我的快递</a></li>
-        <li id="two"><a href="/views/message.jsp">我的消息</a></li>
-        <li id="three"><a href="#"> 我的论坛</a></li>
-        <li id="four"><a href="/views/release.jsp">发布任务</a></li>
-    </ul>
-</div>
+            </tbody>
+        </table>
+    </div>
+</center>
 
-<div id="myThree">
-    <ul id="mineThree"></ul>
-</div>
-
-<c:if test="${mapDetail != null}">
-    <div id="show">
-        <table>
-            <tr>
-                <td>快递单号</td>
-                <td>${mapDetail.k_reNumber}</td>
-            </tr>
-            <tr>
-                <td>取件人姓名</td>
-                <td>${mapDetail.k_reName}</td>
-            </tr>
-            <tr>
-                <td>取件人手机号码</td>
-                <td>${mapDetail.k_rePhone}</td>
-            </tr>
-            <tr>
-                <td>领取截至时间</td>
-                <td>${mapDetail.k_reTime}</td>
-            </tr>
-            <tr>
-                <td>取件详细信息</td>
-                <td>${mapDetail.k_reText}</td>
-            </tr>
-            <tr>
-                <td><input type="hidden" value="${mapDetail.k_reStatus }" id="status"/></td>
-            </tr>
-            <tr>
-                <td><input type="hidden" value="${mapDetail.k_re_infoId }" id="infoId"/></td>
-            </tr>
-            <tr>
-                <td><a href="/views/forum.jsp">确认</a></td>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabelPublish">详细信息</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="k_reName" class="col-sm-3 control-label">姓名：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="k_reName" value="${mapDetail.k_reRealName}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_rePhone" class="col-sm-3 control-label">手机号：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="k_rePhone" value="${mapDetail.k_rePhone}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reCode" class="col-sm-3 control-label">取件码：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="k_reCode" value="${mapDetail.k_reCode}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reAddress" class="col-sm-3 control-label">默认赏金：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="k_reAddress" value="${mapDetail.k_reMoney}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reText" class="col-sm-3 control-label">领取截至时间：</label>
+                        <div class="col-sm-8" rows="3">
+                            <input type="text" class="form-control" id="k_reText" value="${mapDetail.k_reTime}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reAddress" class="col-sm-3 control-label">包裹放置地：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" value="${mapDetail.k_reAddress}"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reText" class="col-sm-3 control-label">取件详细信息：</label>
+                        <div class="col-sm-8" rows="3">
+                            <input type="text" class="form-control" value="${mapDetail.k_reText}" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reText" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-8" rows="3">
+                            <input class="form-control"type="hidden" value="${mapDetail.k_reStatus }" id="status"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="k_reText" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-8" rows="3">
+                            <input class="form-control" type="hidden" value="${mapDetail.k_re_infoId }" id="infoId"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="/views/message.jsp">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </a>
                 <%
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String date = simpleDateFormat.format(new Date());
                 %>
-                <td id="a_status"><a href="/kuaidi/forumTask?k_reStatus=2&k_reId=${mapDetail.k_reId }&username=${mapDetail.k_infoName}&meTime=<%=date%>">领取任务</a>
-                </td>
-            </tr>
-        </table>
+                <a href="/kuaidi/forumTask?k_reStatus=2&k_reId=${mapDetail.k_reId }&username=${mapDetail.k_infoName}&meTime=<%=date%>"
+                   id="a_status">
+                    <button type="button" class="btn btn-primary">领取任务</button>
+                </a>
+            </div>
+        </div>
     </div>
-</c:if>
+</div>
+
 </body>
 </html>

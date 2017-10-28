@@ -109,7 +109,7 @@
 </head>
 <body>
 
-<div style="width: 1349px; height: 1200px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto; position: relative; z-index: 1;
+<div style="width: 1349px; height: 1000px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto; position: relative; z-index: 1;
 background-size: cover; background: url(../statics/images/supplement.jpg) no-repeat;">
     <div style="position: absolute; top: 70px; left: 400px; width: 450px; height: 400px;">
         <center>
@@ -140,11 +140,11 @@ background-size: cover; background: url(../statics/images/supplement.jpg) no-rep
                 </table>
             </div>
         </center>
-        <div style="width: 600px;height: 800px;background-color: white">
+        <div style="width: 600px;height: 600px;background-color: white">
                 <table>
                     <tr>
                         <td>
-                            <div style="color: blue;font-weight: 700;font-size: 30px" class='glyphicon glyphicon-asterisk'>账号设置</div>
+                            <div style="color: #808080;font-weight: 500;font-size: 30px" class='glyphicon glyphicon-asterisk'>账号设置</div>
                         </td>
                     </tr>
                 </table>

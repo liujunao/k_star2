@@ -187,6 +187,22 @@ public class DataController {
 
     }
 
+    @RequestMapping("/deleteGd2")
+    public String deleteGd2(HttpServletRequest request){
+        String number = request.getParameter("number");
+        System.out.println("number: " + number);
+        K_ex k_ex = new K_ex();
+        k_ex.setK_number(number);
+        K_exService k_exService = new K_exService();
+        int result = k_exService.deleteByNumber(k_ex);
+        if (result > 0){
+            return "message";
+        }else {
+            request.setAttribute("msg","操作失败，请重试！");
+            return "message";
+        }
+    }
+
     @RequestMapping("/supplement")
     public String supplement(K_info k_info, HttpServletRequest request) {
         Map<String, Object> map = (Map<String, Object>) request.getSession().getAttribute("k_info");
@@ -299,8 +315,8 @@ public class DataController {
 
     @RequestMapping("/forumDetail")
     public String forumDetail(HttpServletRequest request) {
-        String number = request.getParameter("number");
-        Map<String, Object> mapDetail = reDetailCommon(number);
+        String id = request.getParameter("id");
+        Map<String, Object> mapDetail = reDetailCommon(id);
         if (mapDetail != null) {
             request.setAttribute("mapDetail", mapDetail);
             request.setAttribute("message", "查看成功");
@@ -339,6 +355,27 @@ public class DataController {
             return "message";
         } else {
             request.setAttribute("msg", "查看失败，请重试！");
+            return "message";
+        }
+    }
+
+    @RequestMapping("/messageDelete")
+    public String messageDelete(HttpServletRequest request){
+        String id = request.getParameter("id");
+        K_re k_re = new K_re();
+        k_re.setK_reId(Integer.parseInt(id));
+        K_reService k_reService = new K_reService();
+        int result = -1;
+        result = k_reService.delete(k_re);
+        int meResult = -1;
+        K_me k_me = new K_me();
+        k_me.setK_me_reId(Integer.parseInt(id));
+        K_meService k_meService = new K_meService();
+        meResult = k_meService.delete(k_me);
+        if (result > 0 && meResult > 0){
+            return "message";
+        }else {
+            request.setAttribute("msg","删除失败，请重试！");
             return "message";
         }
     }

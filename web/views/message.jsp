@@ -30,12 +30,13 @@
                 function (data) {
                     var list = "";
                     $.each($.parseJSON(data), function (num, content) {
-                        list += "<li class='list-group-item'>";
-                        list += "<div style='text-align: left'><a href='/kuaidi/messageDetail?type=mine&id=" + content.k_reId + "&status=" + content.k_reStatus + "'>" + content.k_reText + "</a>"
-                            + "</div>" + "<div style='text-align: right'><a href='#'><span class='glyphicon glyphicon-trash'></span></a>"
-                            + status(content.k_reStatus) + "</div>";
-                        list += "</li>";
-                        $("#listPublish").html(list);
+                        list += "<tr>";
+                        list += "<td style='width: 60%'><a href='/kuaidi/messageDetail?type=mine&id=" + content.k_reId + "&status=" + content.k_reStatus + "'>" + content.k_reText + "</a></td>"
+                             + "<td style='width: 10%'><a href='/kuaidi/messageDelete?id=" + content.k_reId + "'><span class='glyphicon glyphicon-trash'></span></a>"
+                             + "<td style='width: 10%'>"+ status(content.k_reStatus) +"</td>"
+                             + "<td style='width: 20%'>" + content.k_reTime + "</td>";
+                        list += "</tr>";
+                        $("#myPublish").html(list);
                     })
                 }
             )
@@ -59,11 +60,12 @@
                             name = content.k_me_myUsername;
                             k_id = content.k_me_myId;
                         }
-                        list += "<li class='list-group-item'>";
-                        list += "<div style='text-align: left'><a href='/kuaidi/messageDetail?type=other&id=" + content.k_me_reId + "&status=" + content.k_meStatus + "'>" + context + "</a></div>" +
-                            "<div style='text-align: right;'><span><a href='/kuaidi/chat?k_id=" + k_id + "'>" + name + "</a><span></span>" + status(content.k_meStatus) + "<span></div>";
-                        list += "</li>";
-                        $("#listInform").html(list);
+                        list += "<tr>";
+                        list += "<td style='width: 60%'><a href='/kuaidi/messageDetail?type=other&id=" + content.k_me_reId + "&status=" + content.k_meStatus + "'>" + context + "</a></td>"
+                            + "<td style='width: 15%'><a href='/kuaidi/chat?k_id=" + k_id + "'>" + name + "</a><td>"
+                            + "<td style='width: 15%'>" + status(content.k_meStatus) + "</td>";
+                        list += "</tr>";
+                        $("#myInform").html(list);
                     })
                 }
             )
@@ -72,12 +74,13 @@
                 function (data) {
                     var mapList = "";
                     $.each($.parseJSON(data), function (name, content) {
-                        mapList += "<li class='list-group-item'>";
-                        mapList += "<div style='text-align: left'><a href='/kuaidi/chaxunGd2?number=" + content.k_number + "'>" + content.k_context + "</a></div>"
-                            + "<div style='text-align: right'><a href='#'><span class='glyphicon glyphicon-trash'></span></a><span>" + content.k_time + "</span><span> "
-                            + content.k_type + "</span></div>";
-                        mapList += "</li>";
-                        $("#listQuery").html(mapList);
+                        mapList += "<tr>";
+                        mapList += "<td style='width: 60%'><a href='/kuaidi/chaxunGd2?number=" + content.k_number + "'>" + content.k_context + "</a></td>"
+                            + "<td style='width: 10%'><a href='/kuaidi/deleteGd2?number=" + content.k_number + "'><span class='glyphicon glyphicon-trash'></span></a></td>"
+                            + "<td style='width: 10%'>" + content.k_type + "</td>"
+                            + "<td style='width: 20%'>" + content.k_time + "</td>";
+                        mapList += "</tr>";
+                        $("#myQuery").html(mapList);
                     })
                 }
             )
@@ -126,7 +129,7 @@
 
             var status_m = "<%=request.getAttribute("status_m")%>";
             if (status_m == 2) {
-                $("#a_status").html("任务已完成");
+                $("#a_status").html("已完成");
                 $("#a_status").click(function () {
                     alert("该任务已完成！");
                 })
@@ -138,11 +141,11 @@
             }
             var status_o = "<%=request.getAttribute("status_o")%>";
             if (status_o == 2) {
-                $("#a_status1").html("任务已完成");
+                $("#a_status1").html("已完成");
                 $("#a_status1").click(function () {
                     alert("该任务已完成！");
                 });
-                $("#a_status2").html("任务已完成");
+                $("#a_status2").html("已完成");
                 $("#a_status2").click(function () {
                     alert("该任务已完成！");
                 });
@@ -155,10 +158,7 @@
     <script>
         var mapDetail = "<%=request.getAttribute("mapDetail")%>";
         var moType = "<%=request.getAttribute("moType")%>";
-        console.log("mapDetail: " + mapDetail);
-        console.log("moType: " + moType);
         var gd2List = "<%=request.getAttribute("gd2List")%>";
-        console.log("gd2List: " + gd2List);
 
         $(function () {
             if (mapDetail != null && mapDetail != "null") {
@@ -194,11 +194,52 @@
                 </table>
             </center>
         </div>
+        <br>
+        <div id="listPublish" style="width: 80%;text-align: center">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th style="width: 60%">标题</th>
+                    <th style="width: 10%">删除</th>
+                    <th style="width: 10%">领取状态</th>
+                    <th style="width: 20%">截至时间</th>
+                </tr>
+                </thead>
+                <tbody id="myPublish">
 
-        <div>
-            <ul class="list-group" id="listPublish"></ul>
-            <ul class="list-group" id="listInform" style="display: none"></ul>
-            <ul class="list-group" id="listQuery" style="display: none"></ul>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="listInform" style="width: 80%;text-align: center;display: none">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th style="width: 60%">消息</th>
+                    <th style="width: 15%">楼主</th>
+                    <th style="width: 15%">领取状态</th>
+                </tr>
+                </thead>
+                <tbody id="myInform">
+
+                </tbody>
+            </table>
+        </div>
+
+        <div id="listQuery" style="width: 80%;text-align: center;display: none">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th style="width: 60%">消息</th>
+                    <th style="width: 10%">删除</th>
+                    <th style="width: 10%">快递公司</th>
+                    <th style="width: 20%">时间</th>
+                </tr>
+                </thead>
+                <tbody id="myQuery">
+
+                </tbody>
+            </table>
         </div>
     </div>
 </center>

@@ -13,6 +13,13 @@ public class K_exService {
 
     K_exDAO k_exDAO = new K_exDAO();
 
+    public int deleteByNumber(K_ex k_ex){
+        int result = -1;
+        result = k_exDAO.deleteByNumber(k_ex);
+
+        return result;
+    }
+
     public int add(K_ex k_ex){
         int result = -1;
         result = k_exDAO.add(k_ex);

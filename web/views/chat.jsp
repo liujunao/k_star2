@@ -9,16 +9,37 @@
 <html>
 <head>
     <title>聊天室</title>
+
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/statics/js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/statics/js/bootstrap.min.js"></script>
+
     <script src="/statics/utf8-jsp/ueditor.config.js"></script>
     <script src="/statics/utf8-jsp/ueditor.all.js"></script>
-    <script src="/statics/js/jquery-3.2.1.js"></script>
+
     <script>
         $(function () {
             var status = "<%=request.getSession().getAttribute("status")%>";
             var chatStatus = 0;
-
             var editor = UE.ui.Editor();
-            editor.render("text");
+            editor.render("text",{
+                toolbars:[
+                    [   'fontfamily',
+                        'emotion',
+                        'snapscreen',
+                        'simpleupload',
+                        'attachment',
+                        'link'
+                    ],
+                ]
+            });
+//            var editor = UE.getEditor('text', {
+//                toolbars: [
+//                    ['fullscreen', 'source', 'undo', 'redo', 'bold']
+//                ],
+//                autoHeightEnabled: true,
+//                autoFloatEnabled: true
+//            });
             var url = "ws://localhost:8080/webSocket";
             var webSocket = null;
             webSocket = new WebSocket(url);
@@ -39,11 +60,11 @@
                 console.log("收到的消息： " + event.data);
                 var json = $.parseJSON(event.data);
                 var list = "<li>";
-                list += json.time + " " + json.myName + ":<br>";
+                list += json.time + "<br>" + "<span class='glyphicon glyphicon-user' style='color: #4B4B4B;'></span>" + json.myName + ":&nbsp;";
                 list += json.text;
                 list += "</li>";
                 $("#now").html(list);
-                if (json.chatStatus == 1){
+                if (json.chatStatus == 1) {
                     status = 1;
                 }
                 console.log("status:" + status);
@@ -60,21 +81,21 @@
                     otherId: $("#otherId").val(),
                     text: editor.getContent(),
                     time: getNowFormatDate(),
-                    chatStatus:1
+                    chatStatus: 1
                 }));
                 editor.setContent('');
                 editor.focus();
             })
-            if (status == 0){
+            if (status == 0) {
                 $.post(
                     "/kuaidi/chatMessage",
                     {
-                        "k_chatOtherId":$("#otherId").val(),
-                        "k_chatMyId":$("#myId").val()
+                        "k_chatOtherId": $("#otherId").val(),
+                        "k_chatMyId": $("#myId").val()
                     },
                     function (data) {
                         var list = "";
-                        $.each($.parseJSON(data),function (num,content) {
+                        $.each($.parseJSON(data), function (num, content) {
                             list += "<li>";
                             list += content.k_chatTime + " " + content.k_chatMyName + ":<br>";
                             list += content.k_chatMessage;
@@ -105,22 +126,24 @@
     </script>
 </head>
 <body>
-
-<div>
-    <ul id="chat">
-        <ul id="before"></ul>
-        <ul id="now"></ul>
-    </ul>
+<center>
     <input type="hidden" id="myName" name="myName" value="${mapMyInfo.k_username}"/>
     <input type="hidden" id="myId" name="myId" value="${mapMyInfo.k_id}"/>
     <input type="hidden" id="otherName" name="otherName" value="${mapInfo.k_username}"/>
     <input type="hidden" id="otherId" name="otherId" value="${mapInfo.k_id}"/>
-    <textarea id="text" name="text"></textarea>
-    <button id="but">发送</button>
-    <script>
-
-    </script>
-</div>
+    <div style="width: 70%;height: 65%;">
+        <div style="height: 60%;width: 100%;overflow: scroll;">
+            <ul id="chat">
+                <ul id="before"></ul>
+                <ul id="now"></ul>
+            </ul>
+        </div>
+        <div style="height: 40%;width: 100%;">
+            <textarea id="text" name="text" style="height: 85%;width: 100%;"></textarea>
+            <button id="but" style="height: 15%;width:20%;float: right;" class="btn btn-primary">发送</button>
+        </div>
+    </div>
+</center>
 
 </body>
 </html>

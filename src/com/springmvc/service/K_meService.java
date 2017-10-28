@@ -13,6 +13,13 @@ public class K_meService {
 
     K_meDAO k_meDAO = new K_meDAO();
 
+    public int delete(K_me k_me){
+        int result = -1;
+        result = k_meDAO.delete(k_me);
+
+        return result;
+    }
+
     public int add(K_me k_me){
         int result = -1;
         result = k_meDAO.add(k_me);

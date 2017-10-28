@@ -13,6 +13,16 @@ public class K_meDAO {
 
     JdbcUtils jdbcUtils = new JdbcUtils();
 
+    public int delete(K_me k_me){
+        int result = -1;
+        String sql = "DELETE FROM k_me WHERE k_me_reId = ?";
+        Object[] objects = new Object[1];
+        objects[0] = k_me.getK_me_reId();
+        result = jdbcUtils.update(sql,objects);
+
+        return result;
+    }
+
     public int add(K_me k_me){
         String sql = "INSERT INTO k_me(k_meWarn,k_me_myId,k_me_myUsername,k_meTime,k_meStatus,k_me_number,k_meRealName,k_meCode,k_meMoney," +
                 "k_meAddress,k_me_reId,k_mePhone,k_meText)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
