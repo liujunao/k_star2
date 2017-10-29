@@ -110,15 +110,15 @@
                         </dt>
                         <dt><br></dt>
                         <dt>
-                            &nbsp;&nbsp;&nbsp;<img src='../statics/images/timg.jpg'
-                                                   style="width: 20px;height: 20px;color: #C0C0C0;">&nbsp;&nbsp;&nbsp;
-                            <span style="font-weight: 400;" id="appraise"></span>
-                        </dt>
-                        <dt><br></dt>
-                        <dt>
                             &nbsp;&nbsp;&nbsp;<img src='../statics/images/phone.png'
                                                    style="width: 20px;height: 20px;color: #C0C0C0;">&nbsp;&nbsp;&nbsp;
                             <span style="font-weight: 400;"><%=map.get("k_phone")%></span>
+                        </dt>
+                        <dt><br></dt>
+                        <dt>
+                            &nbsp;&nbsp;&nbsp;<img src='../statics/images/timg.jpg'
+                                                   style="width: 20px;height: 20px;color: #C0C0C0;">&nbsp;&nbsp;&nbsp;
+                            <span style="font-weight: 400;" id="appraise"></span>
                         </dt>
                         <dt><br></dt>
                         <dt>&nbsp;&nbsp;&nbsp;

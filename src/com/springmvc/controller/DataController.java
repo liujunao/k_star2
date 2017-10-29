@@ -424,7 +424,7 @@ public class DataController {
                 k_me.setK_me_otherId(Integer.parseInt(map.get("k_id").toString()));
                 k_me.setK_meTime(request.getParameter("meTime"));
                 k_me.setK_meStatus(Integer.parseInt(k_reStatus));
-                k_me.setK_meWarn("您于" + map1.get("k_puTime") + "发布的快递单号为" + map1.get("k_reNumber") + "的任务已被" + map.get("k_username") + "领取");//xxx领取
+                k_me.setK_meWarn("您于" + map1.get("k_re_puTime") + "发布的快递的任务已被" + map.get("k_username") + "领取");
                 k_me.setK_meOtherWarn("您已成功领取" + map1.get("k_infoName") + "发布的任务");
                 k_me.setK_me_otherUsername(infoName);
                 k_me.setK_me_reId(Integer.parseInt(k_reId));
@@ -676,7 +676,7 @@ public class DataController {
                         Integer.parseInt(mapList.get(i).get("k_apGrade3").toString());
             }
         }
-        float ever = num / mapList.size();
+        float ever = num / 3 * mapList.size();
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out  = response.getWriter();
         out.write(String.valueOf(ever));

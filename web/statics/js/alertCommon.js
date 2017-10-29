@@ -14,7 +14,7 @@ function status(k_status) {
     }else if (k_status == 1){
         return"已领取";
     }else if (k_status == 2){
-        return"任务已完成";
+        return"已完成";
     }else if (k_status == 3){
         return"截至时间已过";
     }

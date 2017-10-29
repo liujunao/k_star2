@@ -121,15 +121,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/openSource/utf8-jsp/jsp/lib/ueditor-1.1.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://D:/openSource/gson-2.7.jar!/" />
         </CLASSES>
         <JAVADOC />

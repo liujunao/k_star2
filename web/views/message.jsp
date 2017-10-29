@@ -64,8 +64,8 @@
                         }
                         list += "<tr>";
                         list += "<td style='width: 60%'><a href='/kuaidi/messageDetail?type=other&id=" + content.k_me_reId + "&status=" + content.k_meStatus + "'>" + context + "</a></td>"
-                            + "<td style='width: 15%'><a href='#'>" + name + "</a><td>"
-                            + "<td style='width: 15%'>" + status(content.k_meStatus) + "</td>";
+                             + "<td style='width: 15%'><a href='#'>" + name + "</a><td>"
+                             + "<td style='width: 15%'>" + status(content.k_meStatus) + "</td>";
                         list += "</tr>";
                         $("#myInform").html(list);
                     })
