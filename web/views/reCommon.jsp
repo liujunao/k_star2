@@ -10,7 +10,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/statics/js/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/statics/js/bootstrap.min.js"></script>
@@ -43,6 +42,19 @@
                 $("#fo").removeClass("active");
                 $("#ti").removeClass("active");
             })
+            <%
+                Map<String, Object> map1 = (Map<String, Object>) session.getAttribute("k_info");
+            %>
+            $.post(
+                "/kuaidi/lookAppraise",
+                {
+                    "id": "<%=map1.get("k_id")%>"
+                },function (data) {
+                    if (data != null && data != "null"){
+                        $("#appraise").html(data);
+                    }
+                }
+            )
         });
     </script>
 
@@ -52,7 +64,6 @@
 <%
     Map<String, Object> map = (Map<String, Object>) session.getAttribute("k_info");
 %>
-
 <nav class="navbar navbar-collapse" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -71,46 +82,59 @@
             </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/views/index.jsp" id="ti"> 首页</a></li>
-            <li><a href="/views/release.jsp" id="pu"> 发布任务</a></li>
-            <li><a href="/views/forum.jsp" id="fo"> 帮忙取快递</a></li>
-            <li><a href="/views/message.jsp" id="my"> 我的</a></li>
+            <li class="active" id="ti"><a href="/views/index.jsp"> 首页</a></li>
+            <li id="pu"><a href="/views/release.jsp"> 发布任务</a></li>
+            <li id="fo"><a href="/views/forum.jsp"> 帮忙取快递</a></li>
+            <li id="my"><a href="/views/message.jsp"> 我的</a></li>
             <li><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="glyphicon glyphicon-user"></span>
-                </a>
+                <span class="glyphicon glyphicon-user"></span>
+            </a>
                 <div class="dropdown-menu">
                     <dl>
                         <dt>
-                            &nbsp;&nbsp;&nbsp;<img src='../statics/images/info.png' style="width: 20px;height: 20px;color: #C0C0C0;">&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;<img src='../statics/images/info.png'
+                                                   style="width: 20px;height: 20px;color: #C0C0C0;">&nbsp;&nbsp;&nbsp;
                             <span style="font-weight: 400;"><%=map.get("k_username")%></span>
                         </dt>
                         <dt><br></dt>
                         <dt>
-                            &nbsp;&nbsp;&nbsp;<img src='../statics/images/qq.png' style="width: 20px;height: 20px;color: #C0C0C0;">&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;<img src='../statics/images/qq.png'
+                                                   style="width: 20px;height: 20px;color: #C0C0C0;">&nbsp;&nbsp;&nbsp;
                             <span style="font-weight: 400;"><%=map.get("k_qq")%></span>
                         </dt>
                         <dt><br></dt>
                         <dt>
-                            &nbsp;&nbsp;&nbsp;<img src='../statics/images/weChat.png' style="width: 20px;height: 20px;color: #C0C0C0;">&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;<img src='../statics/images/weChat.png'
+                                                   style="width: 20px;height: 20px;color: #C0C0C0;">&nbsp;&nbsp;&nbsp;
                             <span style="font-weight: 400;"><%=map.get("k_weChat")%></span>
                         </dt>
                         <dt><br></dt>
                         <dt>
-                            &nbsp;&nbsp;&nbsp;<img src='../statics/images/phone.png' style="width: 20px;height: 20px;color: #C0C0C0;">&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;<img src='../statics/images/timg.jpg'
+                                                   style="width: 20px;height: 20px;color: #C0C0C0;">&nbsp;&nbsp;&nbsp;
+                            <span style="font-weight: 400;" id="appraise"></span>
+                        </dt>
+                        <dt><br></dt>
+                        <dt>
+                            &nbsp;&nbsp;&nbsp;<img src='../statics/images/phone.png'
+                                                   style="width: 20px;height: 20px;color: #C0C0C0;">&nbsp;&nbsp;&nbsp;
                             <span style="font-weight: 400;"><%=map.get("k_phone")%></span>
                         </dt>
                         <dt><br></dt>
                         <dt>&nbsp;&nbsp;&nbsp;
                             <a href='${pageContext.request.contextPath}/views/supplement.jsp'>
-                                <span class='glyphicon glyphicon-edit' style='color: #808080;width: 20px;height: 20px;font-weight: 400;text-align: left'></span>
+                                <span class='glyphicon glyphicon-edit'
+                                      style='color: #808080;width: 20px;height: 20px;font-weight: 400;text-align: left'></span>
                             </a>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href='${pageContext.request.contextPath}/views/retrieve.jsp'>
-                                <span class='glyphicon glyphicon-asterisk' style='color: #808080;width: 20px;height: 20px;font-weight: 400;text-align: left'></span>
+                            <a href='/user/revisePassword?revise=page&action=null'>
+                                <span class='glyphicon glyphicon-asterisk'
+                                      style='color: #808080;width: 20px;height: 20px;font-weight: 400;text-align: left'></span>
                             </a>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="/user/logout">
-                                <span class='glyphicon glyphicon-log-out' style='color: #808080;width: 20px;height: 20px;font-weight: 400;text-align: right'></span>
+                                <span class='glyphicon glyphicon-log-out'
+                                      style='color: #808080;width: 20px;height: 20px;font-weight: 400;text-align: right'></span>
                             </a>
                         </dt>
                     </dl>

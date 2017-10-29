@@ -16,37 +16,11 @@
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script>
-
         function CheckString(string) {
             if (string.indexOf(" ") > -1) {
                 return true;
             }
         }
-
-        function CheckPassword() {
-            var password = document.getElementById("password").value;
-            if (password.length < 6 || password.length > 18) {
-                document.getElementById("m_password").innerHTML = "<font color='red'>密码长度为6-18位</font>";
-                return;
-            }
-            var regular = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9a-zA-Z]{6,18}$/;
-            if (!password.match(regular)) {
-                document.getElementById("m_password").innerHTML = "<font color='red'>密码只能且必须包含字母和数字</font>";
-                return;
-            }
-            return true;
-        }
-
-        function CheckPassword2() {
-            var password2 = document.getElementById("password2").value;
-            if (password2 != document.getElementById("password").value) {
-                document.getElementById("password2").value = "";
-                document.getElementById("m_password2").innerHTML = "<font color='red'>密码前后不一致</font>";
-                return;
-            }
-            return true;
-        }
-
         function CheckEmail() {
             var email = document.getElementById("email").value;
             var regular = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
@@ -57,11 +31,16 @@
             return true;
         }
 
-
+        function mine() {
+            var msg = "<%=request.getAttribute("msg")%>";
+            if (msg != null && msg != "null"){
+                alert(msg);
+            }
+        }
+        window.onload = mine;
     </script>
 
     <script type="text/javascript">
-
         $(function () {
             $("#username").blur(function () {
                 $.post("/user/validateUserName?dt=" + new Date(),
@@ -97,15 +76,6 @@
 
     </script>
 
-    <script>
-        function mine() {
-            var msg = "<%=request.getAttribute("msg")%>";
-            if (msg != null && msg != "null"){
-                alert(msg);
-            }
-        }
-        window.onload = mine;
-    </script>
 </head>
 <body>
 
@@ -178,28 +148,28 @@ background-size: cover; background: url(../statics/images/supplement.jpg) no-rep
                         <label for="phone" class="col-sm-3 control-label">手机号码：</label>
                         <div class="col-sm-3">
                             <select name="k_tPhone" style="width: 100%;height: 39px;float:left;">
-                                <option value="ch" selected = "<c:if test="${map.get('k_tPhone') == 'ch'}">selected</c:if>">中国大陆+86</option>
-                                <option value="hk" selected = "<c:if test="${map.get('k_tPhone') == 'hk'}">selected</c:if>">香港+852</option>
-                                <option value="mc" selected = "<c:if test="${map.get('k_tPhone') == 'mc'}">selected</c:if>">澳门+853</option>
-                                <option value="tw" selected = "<c:if test="${map.get('k_tPhone') == 'tw'}">selected</c:if>">台湾+886</option>
-                                <option value="kr" selected = "<c:if test="${map.get('k_tPhone') == 'kr'}">selected</c:if>">韩国+82</option>
-                                <option value="jp" selected = "<c:if test="${map.get('k_tPhone') == 'jp'}">selected</c:if>">日本+81</option>
-                                <option value="ac" selected = "<c:if test="${map.get('k_tPhone') == 'ac'}">selected</c:if>">美国+1</option>
-                                <option value="cnd" selected = "<c:if test="${map.get('k_tPhone') == 'cnd'}">selected</c:if>">加拿大+1</option>
-                                <option value="el" selected = "<c:if test="${map.get('k_tPhone') == 'el'}">selected</c:if>">英国+44</option>
-                                <option value="mls" selected = "<c:if test="${map.get('k_tPhone') == 'mls'}">selected</c:if>">马来西亚+60</option>
-                                <option value="tl" selected = "<c:if test="${map.get('k_tPhone') == 'tl'}">selected</c:if>">泰国+66</option>
-                                <option value="vtn" selected = "<c:if test="${map.get('k_tPhone') == 'vtn'}">selected</c:if>">越南+84</option>
-                                <option value="fc" selected = "<c:if test="${map.get('k_tPhone') == 'fc'}">selected</c:if>">法国+33</option>
-                                <option value="plp" selected = "<c:if test="${map.get('k_tPhone') == 'plp'}">selected</c:if>">菲律宾+63</option>
-                                <option value="idns" selected = "<c:if test="${map.get('k_tPhone') == 'idns'}">selected</c:if>">印度尼西亚+62</option>
-                                <option value="itl" selected = "<c:if test="${map.get('k_tPhone') == 'itl'}">selected</c:if>">意大利+39</option>
-                                <option value="rs" selected = "<c:if test="${map.get('k_tPhone') == 'rs'}">selected</c:if>">俄罗斯+7</option>
-                                <option value="zl" selected = "<c:if test="${map.get('k_tPhone') == 'zl'}">selected</c:if>">新西兰+64</option>
-                                <option value="nl" selected = "<c:if test="${map.get('k_tPhone') == 'nl'}">selected</c:if>">荷兰+31</option>
-                                <option value="swd" selected = "<c:if test="${map.get('k_tPhone') == 'swd'}">selected</c:if>">瑞典+46</option>
-                                <option value="atl" selected = "<c:if test="${map.get('k_tPhone') == 'atl'}">selected</c:if>">澳大利亚+61</option>
-                                <option value="gm" selected = "<c:if test="${map.get('k_tPhone') == 'gm'}">selected</c:if>">德国+49</option>
+                                <option value="ch" <c:if test="${sessionScope.k_info.k_tPhone == 'ch'}">selected</c:if>>中国大陆+86</option>
+                                <option value="hk" <c:if test="${sessionScope.k_info.k_tPhone == 'hk'}">selected</c:if>>香港+852</option>
+                                <option value="mc" <c:if test="${sessionScope.k_info.k_tPhone == 'mc'}">selected</c:if>>澳门+853</option>
+                                <option value="tw" <c:if test="${sessionScope.k_info.k_tPhone == 'tw'}">selected</c:if>>台湾+886</option>
+                                <option value="kr" <c:if test="${sessionScope.k_info.k_tPhone == 'kr'}">selected</c:if>>韩国+82</option>
+                                <option value="jp" <c:if test="${sessionScope.k_info.k_tPhone == 'jp'}">selected</c:if>>日本+81</option>
+                                <option value="ac" <c:if test="${sessionScope.k_info.k_tPhone == 'ac'}">selected</c:if>>美国+1</option>
+                                <option value="cnd" <c:if test="${sessionScope.k_info.k_tPhone == 'cnd'}">selected</c:if>>加拿大+1</option>
+                                <option value="el" <c:if test="${sessionScope.k_info.k_tPhone == 'el'}">selected</c:if>>英国+44</option>
+                                <option value="mls" <c:if test="${sessionScope.k_info.k_tPhone == 'mls'}">selected</c:if>>马来西亚+60</option>
+                                <option value="tl" <c:if test="${sessionScope.k_info.k_tPhone == 'tl'}">selected</c:if>>泰国+66</option>
+                                <option value="vtn" <c:if test="${sessionScope.k_info.k_tPhone == 'vtn'}">selected</c:if>>越南+84</option>
+                                <option value="fc" <c:if test="${sessionScope.k_info.k_tPhone == 'fc'}">selected</c:if>>法国+33</option>
+                                <option value="plp" <c:if test="${sessionScope.k_info.k_tPhone == 'plp'}">selected</c:if>>菲律宾+63</option>
+                                <option value="idns" <c:if test="${sessionScope.k_info.k_tPhone == 'idns'}">selected</c:if>>印度尼西亚+62</option>
+                                <option value="itl" <c:if test="${sessionScope.k_info.k_tPhone == 'itl'}">selected</c:if>>意大利+39</option>
+                                <option value="rs" <c:if test="${sessionScope.k_info.k_tPhone == 'rs'}">selected</c:if>>俄罗斯+7</option>
+                                <option value="zl" <c:if test="${sessionScope.k_info.k_tPhone == 'zl'}">selected</c:if>>新西兰+64</option>
+                                <option value="nl" <c:if test="${sessionScope.k_info.k_tPhone == 'nl'}">selected</c:if>>荷兰+31</option>
+                                <option value="swd" <c:if test="${sessionScope.k_info.k_tPhone == 'swd'}">selected</c:if>>瑞典+46</option>
+                                <option value="atl" <c:if test="${sessionScope.k_info.k_tPhone == 'atl'}">selected</c:if>>澳大利亚+61</option>
+                                <option value="gm" <c:if test="${sessionScope.k_info.k_tPhone == 'gm'}">selected</c:if>>德国+49</option>
                             </select>
                         </div>
                         <div class="col-sm-5">
@@ -225,15 +195,15 @@ background-size: cover; background: url(../statics/images/supplement.jpg) no-rep
                         <label for="money" class="col-sm-3 control-label">默认赏金：</label>
                         <div class="col-sm-8">
                             <select name="k_money" id="money" class="form-control">
-                                <option value="2" selected = "<c:if test="${map.get('k_money') == 2 }">selected</c:if>">2元</option>
-                                <option value="3" selected = "<c:if test="${map.get('k_money') == 3 }">selected</c:if>">3元</option>
-                                <option value="4" selected = "<c:if test="${map.get('k_money') == 4 }">selected</c:if>">4元</option>
-                                <option value="5" selected = "<c:if test="${map.get('k_money') == 5 }">selected</c:if>">5元</option>
-                                <option value="6" selected = "<c:if test="${map.get('k_money') == 6 }">selected</c:if>">6元</option>
-                                <option value="7" selected = "<c:if test="${map.get('k_money') == 7 }">selected</c:if>">7元</option>
-                                <option value="8" selected = "<c:if test="${map.get('k_money') == 8 }">selected</c:if>">8元</option>
-                                <option value="9" selected = "<c:if test="${map.get('k_money') == 9 }">selected</c:if>">9元</option>
-                                <option value="10" selected = "<c:if test="${map.get('k_money') == 10 }">selected</c:if>">10元</option>
+                                <option value="2" <c:if test="${sessionScope.k_info.k_money == 2 }">selected</c:if>>2元</option>
+                                <option value="3" <c:if test="${sessionScope.k_info.k_money == 3 }">selected</c:if>>3元</option>
+                                <option value="4" <c:if test="${sessionScope.k_info.k_money == 4 }">selected</c:if>>4元</option>
+                                <option value="5" <c:if test="${sessionScope.k_info.k_money == 5 }">selected</c:if>>5元</option>
+                                <option value="6" <c:if test="${sessionScope.k_info.k_money == 6 }">selected</c:if>>6元</option>
+                                <option value="7" <c:if test="${sessionScope.k_info.k_money == 7 }">selected</c:if>>7元</option>
+                                <option value="8" <c:if test="${sessionScope.k_info.k_money == 8 }">selected</c:if>>8元</option>
+                                <option value="9" <c:if test="${sessionScope.k_info.k_money == 9 }">selected</c:if>>9元</option>
+                                <option value="10" <c:if test="${sessionScope.k_info.k_money == 10 }">selected</c:if>>10元</option>
                             </select>
                         </div>
                     </div>

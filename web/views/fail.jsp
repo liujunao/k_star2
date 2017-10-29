@@ -7,11 +7,27 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="reCommon.jsp" %>
 <html>
 <head>
     <title>结果页面</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
 </head>
 <body>
-<h1>${msg}</h1>
+<center>
+    <div style="top: 50%;">
+        <h1>${msg}...</h1>
+        <c:if test="${message == 'register'}">
+            <a href="/views/login.jsp">
+                <button value="已完成邮箱验证" class="btn btn-success"></button>
+            </a>
+        </c:if>
+        <c:if test="${message == 'revise'}">
+            <a href="/views/index.jsp">
+                <button value="已完成邮箱验证" class="btn btn-success"></button>
+            </a>
+        </c:if>
+    </div>
+</center>
 </body>
 </html>

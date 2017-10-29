@@ -26,8 +26,19 @@ public class K_reService {
         return result;
     }
 
+    public Map<String,Object> queryLast(){
+        Map<String,Object> map = k_reDAO.queryLast();
+
+        return map;
+    }
+
     public List<Map<String,Object>> queryAll(){
         List<Map<String,Object>> list = k_reDAO.queryAll();
+        return list;
+    }
+
+    public List<Map<String,Object>> queryAllById(K_re k_re){
+        List<Map<String,Object>> list = k_reDAO.queryAllById(k_re);
         return list;
     }
 

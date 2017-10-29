@@ -112,17 +112,12 @@ background-size: cover; background: url(../statics/images/3.png) no-repeat 50% 5
                     <tr>
                         <td width="10%" height="41px">
                             <select name="type" id="type" style="width: 100%;height: 41px">
-                                <option value="zhongtong">中通
-                                </option>
+                                <option value="zhongtong">中通</option>
                                 <option value="yunda">韵达</option>
                                 <option value="yuantong">圆通</option>
-                                <option value="huitongkuaidi">
-                                    百世快递
-                                </option>
+                                <option value="huitongkuaidi">百世快递</option>
                                 <option value="shentong">申通</option>
-                                <option value="wanxiangwuliu">
-                                    万象物流
-                                </option>
+                                <option value="wanxiangwuliu">万象物流</option>
                                 <option value="ems">EMS物流</option>
                             </select>
                         </td>

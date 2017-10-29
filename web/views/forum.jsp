@@ -19,55 +19,61 @@
     <script src="/statics/js/alertCommon.js"></script>
     <script type="text/javascript">
         $(function () {
+            var infoId = "<%=map.get("k_id")%>";
             $.post(
                 "/kuaidi/forumAll",
+                {
+                  "id": infoId
+                },
                 function (data) {
                     var list = "";
                     $.each($.parseJSON(data), function (num, content) {
                         list += "<tr>";
-                        list += "<td style='width: 60%'><a href='/kuaidi/forumDetail?id=" + content.k_reId + "'>" + content.k_reText + "</a></td>" +
+                        list += "<td style='width: 55%' class='detail'><a href='/kuaidi/forumDetail?id=" + content.k_reId + "'>" + content.k_reText + "</a></td>" +
+                            "<td style='width: 10%'><a href='#'>" + content.k_infoName + "</a></td>" +
                             "<td style='width: 10%'>" + content.k_reMoney + "元</td>" +
                             "<td style='width: 10%'>" + status(content.k_reStatus) + "</td>" +
-                            "<td style='width: 20%'>" + content.k_reTime + "</td>";
+                            "<td style='width: 15%'>" + content.k_reTime + "</td>";
                         list += "</tr>";
                         $("#mineThree").html(list);
                     })
                 }
             )
 
+            console.log("mapDetail: " + mapDetail);
             var mapDetail = "<%=request.getAttribute("mapDetail")%>";
-            if (mapDetail != null && mapDetail != "nnull"){
+            if (mapDetail != null && mapDetail != "null" && mapDetail != undefined) {
                 $("#myModal").modal("show");
             }
 
+            if ($("#infoId") == infoId) {
+                $("#a_status").attr("href","#");
+                $("#a_status").click(function () {
+                    alert("您不能领取自己发布的任务！");
+                })
+            }
             var mapDetail = "<%=request.getAttribute("mapDetail")%>";
             if (mapDetail != null && mapDetail != "null") {
                 var st = $("#status").val();
+                console.log("status: " + st);
                 if (st == 1) {
-                    $("#a_status").html("领取任务");
+                    $("#a_status").attr("href","#");
                     $("#a_status").click(function () {
                         alert("该快递已被领取！");
                     })
                 }
                 if (st == 2) {
-                    $("#a_status").html("领取任务");
+                    $("#a_status").attr("href","#");
                     $("#a_status").click(function () {
                         alert("该快递任务已被接受！");
                     })
                 }
                 if (st == 3) {
-                    $("#a_status").html("领取任务");
+                    $("#a_status").attr("href","#");
                     $("#a_status").click(function () {
                         alert("截至时间已过，该任务失效");
                     })
                 }
-            }
-            var infoId = "<%=map.get("k_id")%>";
-            if ($("#infoId") == infoId) {
-                $("#a_status").html("领取任务");
-                $("#a_status").click(function () {
-                    alert("您不能领取自己发布的任务！");
-                })
             }
         })
         var msg = "<%=request.getAttribute("msg")%>";
@@ -83,10 +89,11 @@
         <table class="table">
             <thead>
             <tr>
-                <th style="width: 60%">标题</th>
+                <th style="width: 55%">标题</th>
+                <th style="width: 10%">发布者</th>
                 <th style="width: 10%">赏金</th>
                 <th style="width: 10%">领取状态</th>
-                <th style="width: 20%">截至时间</th>
+                <th style="width: 15%">截至时间</th>
             </tr>
             </thead>
             <tbody id="mineThree">
@@ -157,7 +164,7 @@
                     <div class="form-group">
                         <label for="k_reText" class="col-sm-3 control-label"></label>
                         <div class="col-sm-8" rows="3">
-                            <input class="form-control"type="hidden" value="${mapDetail.k_reStatus }" id="status"/>
+                            <input class="form-control" type="hidden" value="${mapDetail.k_reStatus }" id="status"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -176,9 +183,8 @@
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String date = simpleDateFormat.format(new Date());
                 %>
-                <a href="/kuaidi/forumTask?k_reStatus=2&k_reId=${mapDetail.k_reId }&username=${mapDetail.k_infoName}&meTime=<%=date%>"
-                   id="a_status">
-                    <button type="button" class="btn btn-primary">领取任务</button>
+                <a href="${pageContext.request.contextPath}/kuaidi/forumTask?k_reStatus=1&k_reId=${mapDetail.k_reId }&username=${mapDetail.k_infoName}&meTime=<%=date%>"
+                   id="a_status" class="btn btn-primary">领取任务
                 </a>
             </div>
         </div>

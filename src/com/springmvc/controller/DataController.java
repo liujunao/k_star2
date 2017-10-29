@@ -275,19 +275,19 @@ public class DataController {
             sessionK_re.setK_reTime(ymd + " " + hms + ":00");
             result = k_reService.add(sessionK_re);
             if (result > 0) {
+                Map<String,Object> mapK_re = k_reService.queryLast();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 K_me k_me = new K_me();
-                k_me.setK_me_myId(Integer.parseInt(String.valueOf(sessionK_re.getK_re_infoId())));
-                k_me.setK_me_myUsername(sessionK_re.getK_infoName());
+                k_me.setK_me_myId(Integer.parseInt(String.valueOf(mapK_re.get("k_re_infoId"))));
+                k_me.setK_me_myUsername(mapK_re.get("k_infoName").toString());
                 k_me.setK_meTime(simpleDateFormat.format(new Date()));
-                k_me.setK_me_number(sessionK_re.getK_reNumber());
-                k_me.setK_meStatus(0);
-                k_me.setK_meWarn("您成功发布了快递单号为" + sessionK_re.getK_reNumber() + "的快递领取任务！");
+                k_me.setK_meStatus(Integer.parseInt(mapK_re.get("k_reStatus").toString()));
+                k_me.setK_meWarn("您于"+ simpleDateFormat.format(new Date()) +"成功发布了快递领取任务！");
                 k_me.setK_meRealName(sessionK_re.getK_reRealName());
                 k_me.setK_meCode(sessionK_re.getK_reCode());
                 k_me.setK_meAddress(sessionK_re.getK_reAddress());
                 k_me.setK_meMoney(sessionK_re.getK_reMoney());
-                k_me.setK_me_reId(sessionK_re.getK_reId());
+                k_me.setK_me_reId(Integer.parseInt(mapK_re.get("k_reId").toString()));
                 k_me.setK_mePhone(sessionK_re.getK_rePhone());
                 k_me.setK_meText(sessionK_re.getK_reText());
                 K_meService k_meService = new K_meService();
@@ -297,7 +297,7 @@ public class DataController {
                     System.out.println("任务发布成功消息添加成功！");
                 }
                 request.setAttribute("msg", "任务发布成功！");
-                return "forum";
+                return "message";
             } else {
                 request.setAttribute("msg", "任务发布失败，请重新发布！");
                 return "release";
@@ -307,9 +307,12 @@ public class DataController {
     }
 
     @RequestMapping("/forumAll")
-    public void forumAll(HttpServletResponse response) throws IOException {
+    public void forumAll(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        String id = request.getParameter("id");
+        K_re k_re = new K_re();
+        k_re.setK_re_infoId(Integer.parseInt(id));
         K_reService k_reService = new K_reService();
-        List<Map<String, Object>> list = k_reService.queryAll();
+        List<Map<String, Object>> list = k_reService.queryAllById(k_re);
         listToJson(list, response);
     }
 
@@ -317,7 +320,6 @@ public class DataController {
     public String forumDetail(HttpServletRequest request) {
         String id = request.getParameter("id");
         Map<String, Object> mapDetail = reDetailCommon(id);
-        System.out.println( "mapDetail: " + mapDetail);
         if (mapDetail != null) {
             request.setAttribute("mapDetail", mapDetail);
             request.setAttribute("message", "查看成功");
@@ -421,21 +423,24 @@ public class DataController {
                 K_meService k_meService = new K_meService();
                 k_me.setK_me_otherId(Integer.parseInt(map.get("k_id").toString()));
                 k_me.setK_meTime(request.getParameter("meTime"));
-                k_me.setK_meStatus(2);
+                k_me.setK_meStatus(Integer.parseInt(k_reStatus));
                 k_me.setK_meWarn("您于" + map1.get("k_puTime") + "发布的快递单号为" + map1.get("k_reNumber") + "的任务已被" + map.get("k_username") + "领取");//xxx领取
-                k_me.setK_meOtherWarn("您已成功领取" + map1.get("k_re_infoName") + "发布的任务");
-                k_me.setK_me_number(map1.get("k_reNumber").toString());
+                k_me.setK_meOtherWarn("您已成功领取" + map1.get("k_infoName") + "发布的任务");
                 k_me.setK_me_otherUsername(infoName);
+                k_me.setK_me_reId(Integer.parseInt(k_reId));
                 int meResult = -1;
                 meResult = k_meService.updateGet(k_me);
                 if (meResult > 0) {
                     System.out.println("任务领取成功消息添加成功！");
+                    request.setAttribute("msg", "任务领取成功，请注意查收！");
+                    return "message";
+                }else {
+                    request.setAttribute("msg", "任务领取失败，请重试！");
+                    return "forum";
                 }
-                request.setAttribute("msg", "任务领取成功，请注意查收！");
-                return "fail";
             } else {
                 request.setAttribute("msg", "任务领取失败，请重试！");
-                return "fail";
+                return "forum";
             }
         } else {
             request.setAttribute("msg", "操作有误，请重试！");
@@ -510,7 +515,31 @@ public class DataController {
             k_me.setK_me_myId(Integer.parseInt(k_me_myId));
             k_me.setK_me_otherId(Integer.parseInt(k_me_myId));
             List<Map<String, Object>> list = k_meService.queryMine(k_me);
-            listToJson(list, response);
+            List<Map<String,Object>> list0 = new ArrayList<>();
+            List<Map<String,Object>> list1 = new ArrayList<>();
+            List<Map<String,Object>> list2 = new ArrayList<>();
+            List<Map<String,Object>> list3 = new ArrayList<>();
+
+            for (Map<String,Object> map : list){
+                if (Integer.parseInt(map.get("k_meStatus").toString()) == 0){
+                    list0.add(map);
+                }
+                if (Integer.parseInt(map.get("k_meStatus").toString()) == 1){
+                    list1.add(map);
+                }
+                if (Integer.parseInt(map.get("k_meStatus").toString()) == 2){
+                    list2.add(map);
+                }
+                if (Integer.parseInt(map.get("k_meStatus").toString()) == 3){
+                    list3.add(map);
+                }
+            }
+            List<Map<String,Object>> listJson = new ArrayList<>();
+            listJson.addAll(list0);
+            listJson.addAll(list1);
+            listJson.addAll(list2);
+            listJson.addAll(list3);
+            listToJson(listJson, response);
         }
     }
 
@@ -654,5 +683,4 @@ public class DataController {
         out.flush();
         out.close();
     }
-
 }

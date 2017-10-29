@@ -210,16 +210,7 @@
                     }
                 )
             })
-            $.post(
-                "/kuaidi/lookAppraise",
-                {
-                    "id":${mapInfo.k_id}
-                }, function (data) {
-                    if (data != null && data != "null"){
-                        $("#grade").html(data);
-                    }
-                }
-            )
+
         })
     </script>
 </head>
@@ -227,40 +218,29 @@
 <div>
     <div style="width: 1349px; height: 600px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto;
     position: relative; z-index: 1;background-size: cover; background: url(../statics/images/release.jpg) no-repeat 50% 50%;">
-        <div style="position: absolute; top: 70px; left: 400px; width: 450px; height: 400px;">
+        <div style="position: absolute; top: 70px; left: 400px; width: 600px; height: 400px;">
             <div style="width: 600px;height: 500px;background-color: white;">
                 <center>
-                    <table>
-                        <tr>
-                            <td>
-                                <span style="font-weight: 800;font-size: 20px;color: #FF3300;float: left;" id="grade"></span>
-                            </td>
-                            <td>
-                                <div style="color: blue;font-weight: 700;font-size: 30px;float: none;">评价栏</div>
-                            </td>
-                            <td style="float: right">
-                                ${mapInfo.k_username}
-                            </td>
-                        </tr>
-                    </table>
+                    <div style="color: blue;font-weight: 700;font-size: 30px;float: none;">评价栏</div>
                 </center>
-                <br><br><br>
+                <div style="float: right;font-weight: 600;font-size: 20px;color: #00a0e9;">${mapInfo.k_username}</div>
+                <br><br><hr>
                 <center>
                     <form role="form">
-                        <div class="form-group">
+                        <div class="form-group" style="height: 100px;">
                             <label for="text" class="col-sm-3 control-label">综合评价：</label>
-                            <div class="col-sm-8">
-                                <textarea id="text" class="form-control" style="width: 70%;height: 100px;"></textarea>
+                            <div class="col-sm-7">
+                                <textarea id="text" class="form-control" style="height: 100px;"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <c:if test="${kind eq 'mine'}">
-                                <label for="grade1" class="col-sm-3 control-label">取货速度：</label>
+                                <label for="grade1" class="col-sm-3 control-label"style="float: left;">取货速度：</label>
                             </c:if>
                             <c:if test="${kind eq 'other'}">
-                                <label for="grade1" class="col-sm-3 control-label">负责态度：</label>
+                                <label for="grade1" class="col-sm-3 control-label" style="float: left;">负责态度：</label>
                             </c:if>
-                            <div class="col-sm-8">
+                            <div class="col-sm-7">
                                 <div id="grade1">
                                     <span>
                                         <img src="/statics/images/star.png" id="star1">
@@ -287,8 +267,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="grade2" class="col-sm-3 control-label">沟通态度：</label>
-                            <div class="col-sm-8">
+                            <label for="grade2" class="col-sm-3 control-label" style="float: left;">沟通态度：</label>
+                            <div class="col-sm-7">
                                 <div id="grade2">
                                     <span>
                                         <img src="/statics/images/star.png" id="star6">
@@ -315,8 +295,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="grade3" class="col-sm-3 control-label">诚信度：</label>
-                            <div class="col-sm-8">
+                            <label for="grade3" class="col-sm-3 control-label" style="float: left;">诚信度：</label>
+                            <div class="col-sm-7">
                                 <div id="grade3">
                                     <span>
                                         <img src="/statics/images/star.png" id="star11">
@@ -341,7 +321,6 @@
                                 </div>
                             </div>
                         </div>
-                        <br>
                         <div class="form-group">
                             <div class="col-sm-11">
                                 <input type="button" value="提交" class="btn btn-primary" id="submit"

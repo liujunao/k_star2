@@ -47,9 +47,26 @@ public class K_reDAO {
         return result;
     }
 
+    public Map<String,Object> queryLast(){
+        String sql = "SELECT * FROM k_re ORDER BY k_reId DESC";
+        List<Map<String,Object>> list = jdbcUtils.query(sql,null);
+        Map<String,Object> map = list.get(0);
+
+        return map;
+    }
+
     public List<Map<String,Object>>queryAll(){
         String sql = "SELECT * FROM k_re";
         List<Map<String,Object>> list = jdbcUtils.query(sql,null);
+
+        return list;
+    }
+
+    public List<Map<String,Object>>queryAllById(K_re k_re){
+        String sql = "SELECT * FROM k_re WHERE k_re_infoId != ?";
+        Object[] objects = new Object[1];
+        objects[0] = k_re.getK_re_infoId();
+        List<Map<String,Object>> list = jdbcUtils.query(sql,objects);
 
         return list;
     }

@@ -69,6 +69,7 @@ public class K_infoController {
                 return "register";
             }
             processValidate(k_info.getK_email(), "register");
+            request.setAttribute("message","register");
             request.setAttribute("msg", "请点击验证邮件完成验证！");
             return "fail";
         } else if (action.equalsIgnoreCase("activation")) {
@@ -148,12 +149,12 @@ public class K_infoController {
         String action = request.getParameter("action");
         K_infoService k_infoService = new K_infoService();
 
-        if (revise.equalsIgnoreCase("page")) {
+        if ("page".equalsIgnoreCase(revise)) {
             request.setAttribute("revise", "first");
             return "retrieve";
         }
 
-        if (revise.equalsIgnoreCase("count")) {
+        if ("count".equalsIgnoreCase(revise)) {
             String validation1 = (String) request.getSession().getAttribute("sessionValidation");
             System.out.println(validation1);
             String validation = (String) request.getAttribute("validation");
@@ -173,7 +174,7 @@ public class K_infoController {
             }
             //前台验证是否存在该用户
         }
-        if (revise.equalsIgnoreCase("validateCode")) {
+        if ("validateCode".equalsIgnoreCase(revise)) {
             String validation1 = (String) request.getSession().getAttribute("sessionValidation");
             System.out.println(validation1);
             String validation = (String) request.getAttribute("validation");
@@ -192,12 +193,13 @@ public class K_infoController {
                     session.setAttribute("sessionEmail", email);
                     processValidate(email, "revisePassword");
                     request.setAttribute("msg", "请点击邮箱完成身份验证");
+                    request.setAttribute("message","revise");
                     return "fail";
                 }
             }
             //否则，前台验证是否存在该邮箱
         }
-        if (action != null && action.equalsIgnoreCase("activation")) {
+        if (action != null && "activation".equalsIgnoreCase(action)) {
             String email = request.getParameter("email");
             String validationCode = request.getParameter("validateCode");
             if (validationCode.equalsIgnoreCase(md5Utils.encode2hex(email) + UUID)) {

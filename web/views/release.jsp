@@ -12,7 +12,7 @@
 <%@ include file="reCommon.jsp" %>
 <html>
 <head>
-    <title>消息页面</title>
+    <title>发布任务</title>
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -78,21 +78,15 @@ background-size: cover; background: url(../statics/images/release.jpg) no-repeat
                         <label for="money" class="col-sm-3 control-label">默认赏金：</label>
                         <div class="col-sm-8">
                             <select name="k_reMoney" id="money" class="form-control">
-                                <%
-                                    Object money = map.get("k_money");
-                                %>
-                                <c:if test="${map.get('k_money') != null && map.get('k_money') != 'null'}">
-                                    <option value="<%=map.get("k_money")%>"><%=map.get("k_money")%>元</option>
-                                </c:if>
-                                <option value="2" selected = "<c:if test="${map.get('k_money') == 2 }">selected</c:if>">2元</option>
-                                <option value="3" selected = "<c:if test="${map.get('k_money') == 3 }">selected</c:if>">3元</option>
-                                <option value="4" selected = "<c:if test="${map.get('k_money') == 4 }">selected</c:if>">4元</option>
-                                <option value="5" selected = "<c:if test="${map.get('k_money') == 5 }">selected</c:if>">5元</option>
-                                <option value="6" selected = "<c:if test="${map.get('k_money') == 6 }">selected</c:if>">6元</option>
-                                <option value="7" selected = "<c:if test="${map.get('k_money') == 7 }">selected</c:if>">7元</option>
-                                <option value="8" selected = "<c:if test="${map.get('k_money') == 8 }">selected</c:if>">8元</option>
-                                <option value="9" selected = "<c:if test="${map.get('k_money') == 9 }">selected</c:if>">9元</option>
-                                <option value="10" selected = "<c:if test="${map.get('k_money') == 10 }">selected</c:if>">10元</option>
+                                <option value="2" <c:if test="${sessionScope.k_info.k_money == 2 }">selected</c:if>>2元</option>
+                                <option value="3" <c:if test="${sessionScope.k_info.k_money == 3 }">selected</c:if>>3元</option>
+                                <option value="4" <c:if test="${sessionScope.k_info.k_money == 4 }">selected</c:if>>4元</option>
+                                <option value="5" <c:if test="${sessionScope.k_info.k_money == 5 }">selected</c:if>>5元</option>
+                                <option value="6" <c:if test="${sessionScope.k_info.k_money == 6 }">selected</c:if>>6元</option>
+                                <option value="7" <c:if test="${sessionScope.k_info.k_money == 7 }">selected</c:if>>7元</option>
+                                <option value="8" <c:if test="${sessionScope.k_info.k_money == 8 }">selected</c:if>>8元</option>
+                                <option value="9" <c:if test="${sessionScope.k_info.k_money == 9 }">selected</c:if>>9元</option>
+                                <option value="10" <c:if test="${sessionScope.k_info.k_money == 10 }">selected</c:if>>10元</option>
                             </select>
                         </div>
                     </div>

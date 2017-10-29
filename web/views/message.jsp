@@ -52,8 +52,10 @@
                         var name = "";
                         var k_id = "";
                         if (content.k_me_myId == id) {
+                            if (content.k_me_otherUsername != null && content.k_me_otherUsername != "null" && content.k_me_otherUsername != undefined){
+                                name = content.k_me_otherUsername;
+                            }
                             context = content.k_meWarn;
-                            name = content.k_me_otherUsername;
                             k_id = content.k_me_otherId;
                         } else {
                             context = content.k_meOtherWarn;
@@ -62,7 +64,7 @@
                         }
                         list += "<tr>";
                         list += "<td style='width: 60%'><a href='/kuaidi/messageDetail?type=other&id=" + content.k_me_reId + "&status=" + content.k_meStatus + "'>" + context + "</a></td>"
-                            + "<td style='width: 15%'><a href='/kuaidi/chat?k_id=" + k_id + "'>" + name + "</a><td>"
+                            + "<td style='width: 15%'><a href='#'>" + name + "</a><td>"
                             + "<td style='width: 15%'>" + status(content.k_meStatus) + "</td>";
                         list += "</tr>";
                         $("#myInform").html(list);
@@ -384,7 +386,7 @@
                 <c:if test="${mapDetail.k_me_otherId eq id }">
                     <a href="/kuaidi/messageDone?id=${mapDetail.k_me_reId}&k_infoId=${mapDetail.k_me_myId}&type=release&kind=mine"
                        id="a_status2">
-                        <button type="button" class="btn btn-primary">确认</button>
+                        <button type="button" class="btn btn-primary">完成任务</button>
                     </a>
                 </c:if>
             </div>

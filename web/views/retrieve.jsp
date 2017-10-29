@@ -11,6 +11,7 @@
 <html>
 <head>
     <title>找回密码</title>
+
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <script type="text/javascript" src="${pageContext.request.contextPath}/statics/js/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/statics/js/bootstrap.min.js"></script>
@@ -84,16 +85,20 @@
 </head>
 <body>
 
-</center>
-<div style="width: 600px;height: 600px;background-color: #969696;">
+<center>
+<div style="width: 600px;height: 600px;background-color: #DDDDDD;">
     <table>
         <tr>
-            <td>
-                <div style="color: #242424;font-weight: 500;font-size: 30px" class='glyphicon glyphicon-lock'>密码修改</div>
+            <td style="text-align: left;">
+                <div style="color: #242424;font-weight: 500;font-size: 30px" class='glyphicon glyphicon-lock'></div>
+            </td>
+            <td style="text-align: center;">
+                <div>密码修改</div>
             </td>
         </tr>
     </table>
     <hr>
+    <br>
     <center>
         <c:if test="${requestScope.revise == 'first'}">
         <form action="${pageContext.request.contextPath}/user/revisePassword?revise=count" method="post"
@@ -195,6 +200,6 @@
         </c:if>
     </center>
 </div>
-
+</center>
 </body>
 </html>
