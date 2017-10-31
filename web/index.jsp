@@ -13,7 +13,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-    <%--<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>--%>
     <script src="${pageContext.request.contextPath}/statics/js/jquery-3.2.1.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -78,7 +77,7 @@
                 <div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <img src="../statics/images/1.png" height="55" width="50">
+                    <img src="${pageContext.request.contextPath}/statics/images/1.png" height="55" width="50">
                     <span style="font-size: 30px;color: #0000FF;font-weight: 900;">  -star</span>
                     <span style="font-size: 30px;">
                         <span style="color: #969696; font-size: 26px;font-weight: 900">
@@ -97,13 +96,13 @@
 </nav>
 
 <div style="width: 1349px; height: 600px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto; position: relative; z-index: 1;
-background-size: cover; background: url(/statics/images/3.png) no-repeat 50% 50%;">
+background-size: cover; background: url(${pageContext.request.contextPath}/statics/images/3.png) no-repeat 50% 50%;">
     <div style="text-align: left;">
         <div style="position: absolute; top: 148px; left: 434px; width: 476px; height: 158px;">
             <div>
                 <table>
                     <tr>
-                        <td><img src="../statics/images/1.png"></td>
+                        <td><img src="${pageContext.request.contextPath}/statics/images/1.png"></td>
                         <td>
                             <b>
                                 <span style="font-size: 84px;color: rgb(255, 255, 255);">  -star</span>

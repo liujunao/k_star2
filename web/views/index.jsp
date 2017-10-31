@@ -1,18 +1,12 @@
-<%--suppress ALL --%>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="reCommon.jsp" %>
 <html>
 <head>
     <title>首页</title>
-    <%--<link rel="stylesheet" href="/statics/css/bootstrap.css"/>--%>
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <%--<script type="text/javascript" src="/statics/js/bootstrap.min.js"></script>--%>
     <script type="text/javascript">
         $(function () {
             $("#cli").click(function () {
@@ -30,7 +24,7 @@
                             result += "<a href='" + content.office + "'><span class='glyphicon glyphicon-globe' style='color: #969696;'>官网</span></a>";
                             result += "&nbsp;&nbsp;<span class='glyphicon glyphicon-earphone' style='color: #969696;'>" + content.phone + "</span>";
                             result += "</div>";
-                            $("#myModalLabel").html(result);
+                            $("#myModalLabelIndex").html(result);
                         })
                     }
                 )
@@ -55,16 +49,16 @@
                             list += content.k_context;
                             list += "</td>";
                             list += "</tr>";
-                            $("#myTable").html(list);
+                            $("#myTableIndex").html(list);
                         })
                     }
                 );
+                $("#myModalIndex").modal("show");
             });
         })
     </script>
 
     <script>
-
         function mine() {
             var msg = "<%=request.getAttribute("msg")%>";
             if (msg != null && msg != "null") {
@@ -78,13 +72,13 @@
 <body>
 
 <div style="width: 1349px; height: 600px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto; position: relative; z-index: 1;
-background-size: cover; background: url(../statics/images/3.png) no-repeat 50% 50%;">
+background-size: cover; background: url(${pageContext.request.contextPath}/statics/images/3.png) no-repeat 50% 50%;">
     <div style="text-align: left;">
         <div style="position: absolute; top: 148px; left: 434px; width: 476px; height: 158px;">
             <div>
                 <table>
                     <tr>
-                        <td><img src="../statics/images/1.png"></td>
+                        <td><img src="${pageContext.request.contextPath}/statics/images/1.png"></td>
                         <td>
                             <b>
                                 <span style="font-size: 84px;color: rgb(255, 255, 255);">  -star</span>
@@ -131,7 +125,8 @@ background-size: cover; background: url(../statics/images/3.png) no-repeat 50% 5
                                     <a href="javascript:void(0)" id="cli" >
                                         <span data-toggle="modal" data-target="#myModal">
                                         <span style="color: rgb(255, 255, 255);line-height:41px;font-size:30px;"
-                                              class="glyphicon glyphicon-search"></span>
+                                              class="glyphicon glyphicon-search">
+                                        </span>
                                         </span>
                                     </a>
                                 </center>
@@ -144,15 +139,15 @@ background-size: cover; background: url(../statics/images/3.png) no-repeat 50% 5
     </div>
 </div>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModalIndex" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel"></h4>
+                <h4 class="modal-title" id="myModalLabelIndex"></h4>
             </div>
             <div class="modal-body" id="modal-body">
-                <table id="myTable">
+                <table id="myTableIndex">
 
                 </table>
             </div>

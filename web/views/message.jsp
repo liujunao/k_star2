@@ -16,7 +16,7 @@
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script src="/statics/js/alertCommon.js"></script>
+    <script src="${pageContext.request.contextPath}/statics/js/alertCommon.js"></script>
 
     <script type="text/javascript">
 
@@ -310,7 +310,7 @@
                 <a href="/views/message.jsp">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </a>
-                <a href="/kuaidi/messageDone?id=${mapDetail.k_me_reId}&k_infoId=${mapDetail.k_me_otherId}&type=accept"
+                <a href="${pageContext.request.contextPath}/kuaidi/messageDone?id=${mapDetail.k_me_reId}&k_infoId=${mapDetail.k_me_otherId}&type=accept"
                    id="a_status">
                     <button type="button" class="btn btn-primary">确认</button>
                 </a>
@@ -378,13 +378,13 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <c:if test="${mapDetail.k_me_myId eq id }">
-                    <a href="/kuaidi/messageDone?id=${mapDetail.k_me_reId}&k_infoId=${mapDetail.k_me_otherId}&type=release&kind=other"
+                    <a href="${pageContext.request.contextPath}/kuaidi/messageDone?id=${mapDetail.k_me_reId}&k_infoId=${mapDetail.k_me_otherId}&type=release&kind=other"
                        id="a_status1">
                         <button type="button" class="btn btn-primary">确认</button>
                     </a>
                 </c:if>
                 <c:if test="${mapDetail.k_me_otherId eq id }">
-                    <a href="/kuaidi/messageDone?id=${mapDetail.k_me_reId}&k_infoId=${mapDetail.k_me_myId}&type=release&kind=mine"
+                    <a href="${pageContext.request.contextPath}/kuaidi/messageDone?id=${mapDetail.k_me_reId}&k_infoId=${mapDetail.k_me_myId}&type=release&kind=mine"
                        id="a_status2">
                         <button type="button" class="btn btn-primary">完成任务</button>
                     </a>

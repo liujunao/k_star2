@@ -11,7 +11,6 @@
 <head>
     <title>信息变更</title>
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-    <%--<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>--%>
     <script src="${pageContext.request.contextPath}/statics/js/jquery-3.2.1.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -80,13 +79,13 @@
 <body>
 
 <div style="width: 1349px; height: 1000px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto; position: relative; z-index: 1;
-background-size: cover; background: url(../statics/images/supplement.jpg) no-repeat;">
+background-size: cover; background: url(${pageContext.request.contextPath}/statics/images/supplement.jpg) no-repeat;">
     <div style="position: absolute; top: 70px; left: 400px; width: 450px; height: 400px;">
         <center>
             <div>
                 <table>
                     <tr>
-                        <td><img src="../statics/images/1.png"></td>
+                        <td><img src="${pageContext.request.contextPath}/statics/images/1.png"></td>
                         <td>
                             <b>
                                 <span style="font-size: 50px;color: rgb(255, 255, 255);">  -star</span>

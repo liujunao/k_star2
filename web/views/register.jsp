@@ -115,7 +115,7 @@
                 <div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <img src="../statics/images/1.png" height="55" width="50">
+                    <img src="${pageContext.request.contextPath}/statics/images/1.png" height="55" width="50">
                     <span style="font-size: 30px;color: #0000FF;font-weight: 900;">  -star</span>
                     <span style="font-size: 30px;">
                         <span style="color: #969696; font-size: 26px;font-weight: 900">
@@ -126,7 +126,7 @@
             </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/views/login.jsp"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+            <li><a href="${pageContext.request.contextPath}/views/login.jsp"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
         </ul>
     </div>
 </nav>
@@ -138,7 +138,7 @@ background-size: cover; background: url(../statics/images/register.jpg) no-repea
             <div>
                 <table>
                     <tr>
-                        <td><img src="../statics/images/1.png"></td>
+                        <td><img src="${pageContext.request.contextPath}/statics/images/1.png"></td>
                         <td>
                             <b>
                                 <span style="font-size: 50px;color: rgb(255, 255, 255);">  -star</span>

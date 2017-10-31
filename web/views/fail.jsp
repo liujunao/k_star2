@@ -18,12 +18,12 @@
     <div style="top: 50%;">
         <h1>${msg}...</h1>
         <c:if test="${message == 'register'}">
-            <a href="/views/login.jsp">
+            <a href="${pageContext.request.contextPath}/views/login.jsp">
                 <button value="已完成邮箱验证" class="btn btn-success"></button>
             </a>
         </c:if>
         <c:if test="${message == 'revise'}">
-            <a href="/views/index.jsp">
+            <a href="${pageContext.request.contextPath}/views/index.jsp">
                 <button value="已完成邮箱验证" class="btn btn-success"></button>
             </a>
         </c:if>

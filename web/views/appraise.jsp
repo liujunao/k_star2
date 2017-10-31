@@ -25,165 +25,165 @@
 
             $("#star1").click(function () {
                 if ($("#star_h1").val() == 0) {
-                    $("#star1").attr("src", "/statics/images/star_red.png");
+                    $("#star1").attr("src", "${pageContext.request.contextPath}/statics/images/star_red.png");
                     document.getElementById("star_h1").value = 1;
                     flag1 += 1;
                 } else if ($("#star_h1").val() == 1) {
-                    $("#star1").attr("src", "/statics/images/star.png");
+                    $("#star1").attr("src", "${pageContext.request.contextPath}/statics/images/star.png");
                     document.getElementById("star_h1").value = 0;
                     flag1 -= 1;
                 }
             })
             $("#star2").click(function () {
                 if ($("#star_h2").val() == 0) {
-                    $("#star2").attr("src", "/statics/images/star_red.png");
+                    $("#star2").attr("src", "${pageContext.request.contextPath}/statics/images/star_red.png");
                     document.getElementById("star_h2").value = 1;
                     flag1 += 1;
                 } else if ($("#star_h2").val() == 1) {
-                    $("#star2").attr("src", "/statics/images/star.png");
+                    $("#star2").attr("src", "${pageContext.request.contextPath}/statics/images/star.png");
                     document.getElementById("star_h2").value = 0;
                     flag1 -= 1;
                 }
             })
             $("#star3").click(function () {
                 if ($("#star_h3").val() == 0) {
-                    $("#star3").attr("src", "/statics/images/star_red.png");
+                    $("#star3").attr("src", "${pageContext.request.contextPath}/statics/images/star_red.png");
                     document.getElementById("star_h3").value = 1;
                     flag1 += 1;
                 } else if ($("#star_h3").val() == 1) {
-                    $("#star3").attr("src", "/statics/images/star.png");
+                    $("#star3").attr("src", "${pageContext.request.contextPath}/statics/images/star.png");
                     document.getElementById("star_h3").value = 0;
                     flag1 -= 1;
                 }
             })
             $("#star4").click(function () {
                 if ($("#star_h4").val() == 0) {
-                    $("#star4").attr("src", "/statics/images/star_red.png");
+                    $("#star4").attr("src", "${pageContext.request.contextPath}/statics/images/star_red.png");
                     document.getElementById("star_h4").value = 1;
                     flag1 += 1;
                 } else if ($("#star_h4").val() == 1) {
-                    $("#star4").attr("src", "/statics/images/star.png");
+                    $("#star4").attr("src", "${pageContext.request.contextPath}/statics/images/star.png");
                     document.getElementById("star_h4").value = 0;
                     flag1 -= 1;
                 }
             })
             $("#star5").click(function () {
                 if ($("#star_h5").val() == 0) {
-                    $("#star5").attr("src", "/statics/images/star_red.png");
+                    $("#star5").attr("src", "${pageContext.request.contextPath}/statics/images/star_red.png");
                     document.getElementById("star_h5").value = 1;
                     flag1 += 1;
                 } else if ($("#star_h5").val() == 1) {
-                    $("#star5").attr("src", "/statics/images/star.png");
+                    $("#star5").attr("src", "${pageContext.request.contextPath}/statics/images/star.png");
                     document.getElementById("star_h5").value = 0;
                     flag1 -= 1;
                 }
             })
             $("#star6").click(function () {
                 if ($("#star_h6").val() == 0) {
-                    $("#star6").attr("src", "/statics/images/star_red.png");
+                    $("#star6").attr("src", "${pageContext.request.contextPath}/statics/images/star_red.png");
                     document.getElementById("star_h6").value = 1;
                     flag2 += 1;
                 } else if ($("#star_h6").val() == 1) {
-                    $("#star6").attr("src", "/statics/images/star.png");
+                    $("#star6").attr("src", "${pageContext.request.contextPath}/statics/images/star.png");
                     document.getElementById("star_h6").value = 0;
                     flag2 -= 1;
                 }
             })
             $("#star7").click(function () {
                 if ($("#star_h7").val() == 0) {
-                    $("#star7").attr("src", "/statics/images/star_red.png");
+                    $("#star7").attr("src", "${pageContext.request.contextPath}/statics/images/star_red.png");
                     document.getElementById("star_h7").value = 1;
                     flag2 += 1;
                 } else if ($("#star_h7").val() == 1) {
-                    $("#star7").attr("src", "/statics/images/star.png");
+                    $("#star7").attr("src", "${pageContext.request.contextPath}/statics/images/star.png");
                     document.getElementById("star_h7").value = 0;
                     flag2 -= 1;
                 }
             })
             $("#star8").click(function () {
                 if ($("#star_h8").val() == 0) {
-                    $("#star8").attr("src", "/statics/images/star_red.png");
+                    $("#star8").attr("src", "${pageContext.request.contextPath}/statics/images/star_red.png");
                     document.getElementById("star_h8").value = 1;
                     flag2 += 1;
                 } else if ($("#star_h8").val() == 1) {
-                    $("#star8").attr("src", "/statics/images/star.png");
+                    $("#star8").attr("src", "${pageContext.request.contextPath}/statics/images/star.png");
                     document.getElementById("star_h8").value = 0;
                     flag2 -= 1;
                 }
             })
             $("#star9").click(function () {
                 if ($("#star_h9").val() == 0) {
-                    $("#star9").attr("src", "/statics/images/star_red.png");
+                    $("#star9").attr("src", "${pageContext.request.contextPath}/statics/images/star_red.png");
                     document.getElementById("star_h9").value = 1;
                     flag2 += 1;
                 } else if ($("#star_h9").val() == 1) {
-                    $("#star9").attr("src", "/statics/images/star.png");
+                    $("#star9").attr("src", "${pageContext.request.contextPath}/statics/images/star.png");
                     document.getElementById("star_h9").value = 0;
                     flag2 -= 1;
                 }
             })
             $("#star10").click(function () {
                 if ($("#star_h10").val() == 0) {
-                    $("#star10").attr("src", "/statics/images/star_red.png");
+                    $("#star10").attr("src", "${pageContext.request.contextPath}/statics/images/star_red.png");
                     document.getElementById("star_h10").value = 1;
                     flag2 += 1;
                 } else if ($("#star_h10").val() == 1) {
-                    $("#star10").attr("src", "/statics/images/star.png");
+                    $("#star10").attr("src", "${pageContext.request.contextPath}/statics/images/star.png");
                     document.getElementById("star_h10").value = 0;
                     flag2 -= 1;
                 }
             })
             $("#star11").click(function () {
                 if ($("#star_h11").val() == 0) {
-                    $("#star11").attr("src", "/statics/images/star_red.png");
+                    $("#star11").attr("src", "${pageContext.request.contextPath}/statics/images/star_red.png");
                     document.getElementById("star_h11").value = 1;
                     flag3 += 1;
                 } else if ($("#star_h11").val() == 1) {
-                    $("#star11").attr("src", "/statics/images/star.png");
+                    $("#star11").attr("src", "${pageContext.request.contextPath}/statics/images/star.png");
                     document.getElementById("star_h11").value = 0;
                     flag3 -= 1;
                 }
             })
             $("#star12").click(function () {
                 if ($("#star_h12").val() == 0) {
-                    $("#star12").attr("src", "/statics/images/star_red.png");
+                    $("#star12").attr("src", "${pageContext.request.contextPath}/statics/images/star_red.png");
                     document.getElementById("star_h12").value = 1;
                     flag3 += 1;
                 } else if ($("#star_h12").val() == 1) {
-                    $("#star12").attr("src", "/statics/images/star.png");
+                    $("#star12").attr("src", "${pageContext.request.contextPath}/statics/images/star.png");
                     document.getElementById("star_h12").value = 0;
                     flag3 -= 1;
                 }
             })
             $("#star13").click(function () {
                 if ($("#star_h13").val() == 0) {
-                    $("#star13").attr("src", "/statics/images/star_red.png");
+                    $("#star13").attr("src", "${pageContext.request.contextPath}/statics/images/star_red.png");
                     document.getElementById("star_h13").value = 1;
                     flag3 += 1;
                 } else if ($("#star_h13").val() == 1) {
-                    $("#star13").attr("src", "/statics/images/star.png");
+                    $("#star13").attr("src", "${pageContext.request.contextPath}/statics/images/star.png");
                     document.getElementById("star_h13").value = 0;
                     flag3 -= 1;
                 }
             })
             $("#star14").click(function () {
                 if ($("#star_h14").val() == 0) {
-                    $("#star14").attr("src", "/statics/images/star_red.png");
+                    $("#star14").attr("src", "${pageContext.request.contextPath}/statics/images/star_red.png");
                     document.getElementById("star_h14").value = 1;
                     flag3 += 1;
                 } else if ($("#star_h14").val() == 1) {
-                    $("#star14").attr("src", "/statics/images/star.png");
+                    $("#star14").attr("src", "${pageContext.request.contextPath}/statics/images/star.png");
                     document.getElementById("star_h14").value = 0;
                     flag3 -= 1;
                 }
             })
             $("#star15").click(function () {
                 if ($("#star_h15").val() == 0) {
-                    $("#star15").attr("src", "/statics/images/star_red.png");
+                    $("#star15").attr("src", "${pageContext.request.contextPath}/statics/images/star_red.png");
                     document.getElementById("star_h15").value = 1;
                     flag3 += 1;
                 } else if ($("#star_h15").val() == 1) {
-                    $("#star15").attr("src", "/statics/images/star.png");
+                    $("#star15").attr("src", "${pageContext.request.contextPath}/statics/images/star.png");
                     document.getElementById("star_h15").value = 0;
                     flag3 -= 1;
                 }
@@ -201,9 +201,9 @@
                     },
                     function (data) {
                         if (data == "ok") {
-                            window.location.href = "/views/message.jsp";
+                            window.location.href = "${pageContext.request.contextPath}/views/message.jsp";
                         } else {
-                            window.location.href = "/views/appraise.jsp";
+                            window.location.href = "${pageContext.request.contextPath}/views/appraise.jsp";
                             var msg = "<%=request.getAttribute("msg")%>";
                             mine(msg);
                         }
@@ -217,7 +217,7 @@
 <body>
 <div>
     <div style="width: 1349px; height: 600px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto;
-    position: relative; z-index: 1;background-size: cover; background: url(../statics/images/release.jpg) no-repeat 50% 50%;">
+    position: relative; z-index: 1;background-size: cover; background: url(${pageContext.request.contextPath}/statics/images/release.jpg) no-repeat 50% 50%;">
         <div style="position: absolute; top: 70px; left: 400px; width: 600px; height: 400px;">
             <div style="width: 600px;height: 500px;background-color: white;">
                 <center>
@@ -243,23 +243,23 @@
                             <div class="col-sm-7">
                                 <div id="grade1">
                                     <span>
-                                        <img src="/statics/images/star.png" id="star1">
+                                        <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star1">
                                         <input type="hidden" value="0" id="star_h1"/>
                                     </span>
                                     <span>
-                                        <img src="/statics/images/star.png" id="star2">
+                                        <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star2">
                                         <input type="hidden" value="0" id="star_h2"/>
                                     </span>
                                     <span>
-                                        <img src="/statics/images/star.png" id="star3">
+                                        <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star3">
                                         <input type="hidden" value="0" id="star_h3"/>
                                     </span>
                                     <span>
-                                        <img src="/statics/images/star.png" id="star4">
+                                        <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star4">
                                         <input type="hidden" value="0" id="star_h4"/>
                                     </span>
                                     <span>
-                                        <img src="/statics/images/star.png" id="star5">
+                                        <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star5">
                                         <input type="hidden" value="0" id="star_h5"/>
                                     </span>
                                 </div>
@@ -271,23 +271,23 @@
                             <div class="col-sm-7">
                                 <div id="grade2">
                                     <span>
-                                        <img src="/statics/images/star.png" id="star6">
+                                        <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star6">
                                         <input type="hidden" value="0" id="star_h6"/>
                                     </span>
                                     <span>
-                                        <img src="/statics/images/star.png" id="star7">
+                                        <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star7">
                                         <input type="hidden" value="0" id="star_h7"/>
                                     </span>
                                     <span>
-                                        <img src="/statics/images/star.png" id="star8">
+                                        <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star8">
                                         <input type="hidden" value="0" id="star_h8"/>
                                     </span>
                                     <span>
-                                        <img src="/statics/images/star.png" id="star9">
+                                        <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star9">
                                         <input type="hidden" value="0" id="star_h9"/>
                                     </span>
                                     <span>
-                                        <img src="/statics/images/star.png" id="star10">
+                                        <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star10">
                                         <input type="hidden" value="0" id="star_h10"/>
                                     </span>
                                 </div>
@@ -299,23 +299,23 @@
                             <div class="col-sm-7">
                                 <div id="grade3">
                                     <span>
-                                        <img src="/statics/images/star.png" id="star11">
+                                        <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star11">
                                         <input type="hidden" value="0" id="star_h11"/>
                                     </span>
                                     <span>
-                                        <img src="/statics/images/star.png" id="star12">
+                                        <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star12">
                                         <input type="hidden" value="0" id="star_h12"/>
                                     </span>
                                     <span>
-                                        <img src="/statics/images/star.png" id="star13">
+                                        <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star13">
                                         <input type="hidden" value="0" id="star_h13"/>
                                     </span>
                                     <span>
-                                        <img src="/statics/images/star.png" id="star14">
+                                        <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star14">
                                         <input type="hidden" value="0" id="star_h14"/>
                                     </span>
                                     <span>
-                                        <img src="/statics/images/star.png" id="star15">
+                                        <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star15">
                                         <input type="hidden" value="0" id="star_h15"/>
                                     </span>
                                 </div>

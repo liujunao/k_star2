@@ -8,7 +8,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
 <%@ include file="reCommon.jsp" %>
 <html>
 <head>
@@ -38,7 +37,7 @@
 <body>
 
 <div style="width: 1349px; height: 600px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto; position: relative; z-index: 1;
-background-size: cover; background: url(../statics/images/release.jpg) no-repeat 50% 50%;">
+background-size: cover; background: url(${pageContext.request.contextPath}/statics/images/release.jpg) no-repeat 50% 50%;">
     <div style="position: absolute; top: 70px; left: 400px; width: 450px; height: 400px;">
         <div style="width: 600px;height: 500px;background-color: white">
             <center>
@@ -209,7 +208,7 @@ background-size: cover; background: url(../statics/images/release.jpg) no-repeat
                 <a href="javascript:void(0)" id="back">
                     <button type="button" class="btn btn-default">返回</button>
                 </a>
-                <a href="/kuaidi/release?save=yes">
+                <a href="${pageContext.request.contextPath}/kuaidi/release?save=yes">
                     <button type="button" class="btn btn-primary">确认</button>
                 </a>
             </div>

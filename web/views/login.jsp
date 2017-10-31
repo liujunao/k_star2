@@ -34,7 +34,7 @@
                 <div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <img src="../statics/images/1.png" height="55" width="50">
+                    <img src="${pageContext.request.contextPath}/statics/images/1.png" height="55" width="50">
                     <span style="font-size: 30px;color: #0000FF;font-weight: 900;">  -star</span>
                     <span style="font-size: 30px;">
                         <span style="color: #969696; font-size: 26px;font-weight: 900">
@@ -45,7 +45,7 @@
             </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/views/register.jsp"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+            <li><a href="${pageContext.request.contextPath}/views/register.jsp"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
         </ul>
     </div>
 </nav>
@@ -56,7 +56,7 @@ background-size: cover; background: url(../statics/images/login.jpg) no-repeat 5
         <div>
             <table>
                 <tr>
-                    <td><img src="../statics/images/1.png"></td>
+                    <td><img src="${pageContext.request.contextPath}/statics/images/1.png"></td>
                     <td>
                         <b>
                             <span style="font-size: 50px;color: rgb(255, 255, 255);">  -star</span>
@@ -131,7 +131,7 @@ background-size: cover; background: url(../statics/images/login.jpg) no-repeat 5
                         </tr>
                         <tr>
                             <td width="108" valign="middle" colspan="8" align="center">
-                                <img src="/user/validation" name="validate" border="0"
+                                <img src="${pageContext.request.contextPath}/user/validation" name="validate" border="0"
                                      onclick="this.src=this.src+'?'" style="width: 140px">
                             </td>
                         </tr>
@@ -151,7 +151,7 @@ background-size: cover; background: url(../statics/images/login.jpg) no-repeat 5
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="/user/revisePassword?revise=page">
+                                <a href="${pageContext.request.contextPath}/user/revisePassword?revise=page">
                                     <font size="2" color="red">忘记密码&gt;&gt;</font></a>
                             </td>
                         </tr>

@@ -683,4 +683,14 @@ public class DataController {
         out.flush();
         out.close();
     }
+
+    @RequestMapping("/detailAppraise")
+    public void detailAppraise(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        String id = request.getParameter("id");
+        K_ap k_ap = new K_ap();
+        k_ap.setK_apInfoId(Integer.parseInt(id));
+        K_apService k_apService = new K_apService();
+        List<Map<String, Object>> mapList = k_apService.queryAllById(k_ap);
+        listToJson(mapList,response);
+    }
 }

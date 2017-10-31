@@ -85,121 +85,131 @@
 </head>
 <body>
 
+<br>
+<hr>
+<br>
 <center>
-<div style="width: 600px;height: 600px;background-color: #DDDDDD;">
-    <table>
-        <tr>
-            <td style="text-align: left;">
-                <div style="color: #242424;font-weight: 500;font-size: 30px" class='glyphicon glyphicon-lock'></div>
-            </td>
-            <td style="text-align: center;">
-                <div>密码修改</div>
-            </td>
-        </tr>
-    </table>
-    <hr>
-    <br>
-    <center>
-        <c:if test="${requestScope.revise == 'first'}">
-        <form action="${pageContext.request.contextPath}/user/revisePassword?revise=count" method="post"
-              class="form-horizontal" role="form">
-            <div class="form-group">
-                <label for="loginName" class="col-sm-3 control-label">登录账号：</label>
-                <div class="col-sm-8">
-                    <input type="text" name="loginName" id="loginName" class="form-control"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="validationCount" class="col-sm-3 control-label">验证码：</label>
-                <div class="col-sm-8">
-                    <input type="text" name="validation" id="validationCount" class="form-control"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-8">
-                    <img src="/user/validation" name="validate" onclick="this.src=this.src+'?'">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-11">
-                    <input type="submit" value="下一步" class="btn btn-primary"
-                           style="width:240px;height:30px;background-color: #FF3333;color: white"/>
-                </div>
-            </div>
-        </form>
-        </c:if>
-    </center>
+    <div style="width: 600px;height: 300px;background-color: #DDDDDD;">
+        <table>
+            <tr>
+                <td style="text-align: left;">
+                    <div style="color: black;font-weight: 500;font-size: 30px" class='glyphicon glyphicon-lock'></div>
+                </td>
+                <td style="text-align: center;font-size: 30px;">
+                    <div>密码修改</div>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <br>
+        <center>
+            <c:if test="${requestScope.revise == 'first'}">
+                <form action="${pageContext.request.contextPath}/user/revisePassword?revise=count" method="post"
+                      class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="loginName" class="col-sm-3 control-label">登录账号：</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="loginName" id="loginName" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="validationCount" class="col-sm-3 control-label">验证码：</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="validation" id="validationCount" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <center>
+                                <img src="${pageContext.request.contextPath}/user/validation" name="validate" onclick="this.src=this.src+'?'">
+                            </center>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-11">
+                            <input type="submit" value="下一步" class="btn btn-primary"
+                                   style="width:240px;height:30px;background-color: #FF3333;color: white"/>
+                        </div>
+                    </div>
+                </form>
+            </c:if>
+        </center>
 
-    <center>
-        <c:if test="${requestScope.revise == 'email'}">
-            <form action="${pageContext.request.contextPath}/user/revisePassword?revise=validateCode" method="post"
-                  class="form-horizontal" role="form">
-                <div class="form-group">
-                    <label for="email" class="col-sm-3 control-label">邮箱：</label>
-                    <div class="col-sm-8">
-                        <input type="text" name="emailName" id="email" class="form-control"/>
+        <center>
+            <c:if test="${requestScope.revise == 'email'}">
+                <form action="${pageContext.request.contextPath}/user/revisePassword?revise=validateCode" method="post"
+                      class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="email" class="col-sm-3 control-label">邮箱：</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="emailName" id="email" class="form-control"/>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="validationEmail" class="col-sm-3 control-label">验证码：</label>
-                    <div class="col-sm-8">
-                        <input type="text" name="validation" id="validationEmail" class="form-control"/>
+                    <div class="form-group">
+                        <label for="validationEmail" class="col-sm-3 control-label">验证码：</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="validation" id="validationEmail" class="form-control"/>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-8">
-                        <img src="/user/validation" name="validate" onclick="this.src=this.src+'?'">
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <center>
+                                <img src="${pageContext.request.contextPath}/user/validation" name="validate" onclick="this.src=this.src+'?'">
+                            </center>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-11">
-                        <input type="submit" value="下一步" class="btn btn-primary"
-                               style="width:240px;height:30px;background-color: #FF3333;color: white"/>
+                    <div class="form-group">
+                        <div class="col-sm-11">
+                            <input type="submit" value="下一步" class="btn btn-primary"
+                                   style="width:240px;height:30px;background-color: #FF3333;color: white"/>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </c:if>
-    </center>
+                </form>
+            </c:if>
+        </center>
 
-    <center>
-        <c:if test="${requestScope.revise == 'newPassword'}">
-            <form action="${pageContext.request.contextPath}/user/revisePassword?revise=password" method="post"
-                  class="form-horizontal" role="form">
-                <div class="form-group">
-                    <label for="password" class="col-sm-3 control-label">新密码：</label>
-                    <div class="col-sm-8">
-                        <input type="password" name="password" id="password" onblur="CheckNewPassword()" class="form-control"/>
-                        <em id="m_password"></em>
+        <center>
+            <c:if test="${requestScope.revise == 'newPassword'}">
+                <form action="${pageContext.request.contextPath}/user/revisePassword?revise=password" method="post"
+                      class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="password" class="col-sm-3 control-label">新密码：</label>
+                        <div class="col-sm-8">
+                            <input type="password" name="password" id="password" onblur="CheckNewPassword()"
+                                   class="form-control"/>
+                            <em id="m_password"></em>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="password2" class="col-sm-3 control-label">确认密码：</label>
-                    <div class="col-sm-8">
-                        <input type="password" name="password2" id="password2" onblur="CheckNewPassword2()"/>
-                        <em id="m_password2"></em>
+                    <div class="form-group">
+                        <label for="password2" class="col-sm-3 control-label">确认密码：</label>
+                        <div class="col-sm-8">
+                            <input type="password" name="password2" id="password2" onblur="CheckNewPassword2()"/>
+                            <em id="m_password2"></em>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="validationPassword" class="col-sm-3 control-label">验证码：</label>
-                    <div class="col-sm-8">
-                        <input type="text" name="validation" id="validationPassword" class="form-control"/>
+                    <div class="form-group">
+                        <label for="validationPassword" class="col-sm-3 control-label">验证码：</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="validation" id="validationPassword" class="form-control"/>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-8">
-                        <img src="/user/validation" name="validate" onclick="this.src=this.src+'?'">
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <center>
+                                <img src="${pageContext.request.contextPath}/user/validation" name="validate" onclick="this.src=this.src+'?'">
+                            </center>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-11">
-                        <input type="submit" value="下一步" class="btn btn-primary"
-                               style="width:240px;height:30px;background-color: #FF3333;color: white"/>
+                    <div class="form-group">
+                        <div class="col-sm-11">
+                            <input type="submit" value="下一步" class="btn btn-primary"
+                                   style="width:240px;height:30px;background-color: #FF3333;color: white"/>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </c:if>
-    </center>
-</div>
+                </form>
+            </c:if>
+        </center>
+    </div>
 </center>
 </body>
 </html>
