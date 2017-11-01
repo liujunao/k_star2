@@ -49,7 +49,6 @@ public class K_infoController {
                 return "register";
             }
             K_infoService k_infoService = new K_infoService();
-            int result = -1;
             DesUtils desUtils = new DesUtils();
             k_info.setK_password(desUtils.encrypt(k_info.getK_password()));
             k_info.setK_status(0);
@@ -63,6 +62,7 @@ public class K_infoController {
                     return "register";
                 }
             }
+            int result = -1;
             result = k_infoService.add(k_info);
             if (result < 0) {
                 request.setAttribute("msg", "注册失败，请重新注册！");
@@ -73,7 +73,6 @@ public class K_infoController {
             request.setAttribute("msg", "请点击验证邮件完成验证！");
             return "fail";
         } else if (action.equalsIgnoreCase("activation")) {
-            HtmlCommon htmlCommon = new HtmlCommon();
             String email = request.getParameter("email");
             String validateCode = request.getParameter("validateCode");
             K_infoService k_infoService = new K_infoService();
@@ -243,11 +242,11 @@ public class K_infoController {
 
     public void processValidate(String email, String url) {
         StringBuffer stringBuffer = new StringBuffer("点击下面链接激活账号，24小时生效，否则重新注册账号，链接只能使用一次，请尽快激活！</br>");
-        stringBuffer.append("<a href=\"http://localhost:8080/user/" + url + "?action=activation&email=");
+        stringBuffer.append("<a href=\"http://182.254.225.87:8080/user/" + url + "?action=activation&email=");
         stringBuffer.append(email);
         stringBuffer.append("&validateCode=");
         stringBuffer.append(md5Utils.encode2hex(email) + UUID);
-        stringBuffer.append("&revise=test\">http://localhost:8080/user/register?action=activation&email=");
+        stringBuffer.append("&revise=test\">http://182.254.225.87:8080/user/register?action=activation&email=");
         stringBuffer.append(email);
         stringBuffer.append("&validateCode=");
         stringBuffer.append(md5Utils.encode2hex(email) + UUID);

@@ -47,7 +47,7 @@ public class SendEmail {
             //得到邮差对象
             Transport transport = session.getTransport();
             //连接到自己的邮箱账户
-            transport.connect("1713507920@qq.com","deyeyanspqcxbdji");
+            transport.connect("1713507920@qq.com","sxetqgpcvnahecfa");
             //发送邮件
             transport.sendMessage(message,message.getAllRecipients());
         } catch (MessagingException e) {

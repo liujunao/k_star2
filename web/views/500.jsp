@@ -15,7 +15,7 @@
 
 <div style="top: 50%">
     <center>
-        <div style="height: 45%;">
+        <div style="height: 40%;">
             <div style="text-align: left;">
                 <div style="position: absolute; top: 148px; left: 434px; width: 476px; height: 158px;">
                     <div>
@@ -44,6 +44,8 @@
                 </div>
             </div>
         </div>
+        <br>
+        <br>
         <br>
         <div>
             <h1>服务器响应错误</h1>

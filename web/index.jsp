@@ -1,10 +1,3 @@
-<%@ page import="java.util.Map" %><%--
-  Created by IntelliJ IDEA.
-  User: lenovo
-  Date: 2017/9/26
-  Time: 19:42
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -13,10 +6,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/statics/css/bootstrap.min.css">--%>
     <script src="${pageContext.request.contextPath}/statics/js/jquery-3.2.1.js"></script>
-    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <%--<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>--%>
+    <script src="${pageContext.request.contextPath}/statics/js/bootstrap.min.js"></script>
 
-    <script src="/statics/js/alertCommon.js"></script>
+    <script src="${pageContext.request.contextPath}/statics/js/alertCommon.js"></script>
 
     <script type="text/javascript">
         $(function () {
@@ -89,8 +84,8 @@
         </div>
         <ul class="nav navbar-nav navbar-right">
 
-            <li><a href="/views/register.jsp"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
-            <li><a href="/views/login.jsp"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+            <li><a href="${pageContext.request.contextPath}/views/register.jsp"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+            <li><a href="${pageContext.request.contextPath}/views/login.jsp"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
         </ul>
     </div>
 </nav>

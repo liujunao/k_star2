@@ -2,7 +2,7 @@
   <artifact type="war" name="k_star2:war">
     <output-path>$PROJECT_DIR$/out/artifacts/k_star2_war</output-path>
     <root id="archive" name="k_star2_war.war">
-      <element id="artifact" artifact-name="k_star2:war exploded" />
+      <element id="dir-copy" path="$PROJECT_DIR$/web" />
     </root>
   </artifact>
 </component>
