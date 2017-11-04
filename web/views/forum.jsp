@@ -11,7 +11,7 @@
 <%@ include file="reCommon.jsp" %>
 <html>
 <head>
-    <title>帮忙取快递</title>
+    <title>帮取快递</title>
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -21,7 +21,7 @@
         $(function () {
             var infoId = "<%=map.get("k_id")%>";
             $.post(
-                "/kuaidi/forumAll",
+                "/k_star2_war/kuaidi/forumAll",
                 {
                   "id": infoId
                 },
@@ -29,7 +29,7 @@
                     var list = "";
                     $.each($.parseJSON(data), function (num, content) {
                         list += "<tr>";
-                        list += "<td style='width: 55%' class='detail'><a href='/kuaidi/forumDetail?id=" + content.k_reId + "'>" + content.k_reText + "</a></td>" +
+                        list += "<td style='width: 55%' class='detail'><a href='/k_star2_war/kuaidi/forumDetail?id=" + content.k_reId + "'>" + content.k_reText + "</a></td>" +
                             "<td style='width: 10%'><a href='#'>" + content.k_infoName + "</a></td>" +
                             "<td style='width: 10%'>" + content.k_reMoney + "元</td>" +
                             "<td style='width: 10%'>" + status(content.k_reStatus) + "</td>" +
@@ -82,10 +82,12 @@
     </script>
 </head>
 <body>
+<div style="width: 1349px; height: 600px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto; position: relative; z-index: 1;
+        background-size: cover; background: url(${pageContext.request.contextPath}/statics/images/forum.jpg) no-repeat 50% 50%;">
 <hr>
 <br>
 <center>
-    <div id="myThree" style="width: 80%;text-align: center">
+    <div id="myThree" style="width: 80%;text-align: center;background-color: white;">
         <table class="table">
             <thead>
             <tr>
@@ -102,7 +104,7 @@
         </table>
     </div>
 </center>
-
+</div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">

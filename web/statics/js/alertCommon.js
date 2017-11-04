@@ -12,7 +12,7 @@ function status(k_status) {
     if (k_status == 0){
         return"未领取";
     }else if (k_status == 1){
-        return"已领取";
+        return"未完成";
     }else if (k_status == 2){
         return"已完成";
     }else if (k_status == 3){

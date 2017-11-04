@@ -23,7 +23,7 @@
         var id = "<%=map.get("k_id")%>";
         $(function () {
             $.post(
-                "/kuaidi/puMessage",
+                "/k_star2_war/kuaidi/puMessage",
                 {
                     "k_re_infoId": id
                 },
@@ -31,8 +31,8 @@
                     var list = "";
                     $.each($.parseJSON(data), function (num, content) {
                         list += "<tr>";
-                        list += "<td style='width: 60%'><a href='/kuaidi/messageDetail?type=mine&id=" + content.k_reId + "&status=" + content.k_reStatus + "'>" + content.k_reText + "</a></td>"
-                             + "<td style='width: 10%'><a href='/kuaidi/messageDelete?id=" + content.k_reId + "'><span class='glyphicon glyphicon-trash'></span></a>"
+                        list += "<td style='width: 60%'><a href='/k_star2_war/kuaidi/messageDetail?type=mine&id=" + content.k_reId + "&status=" + content.k_reStatus + "'>" + content.k_reText + "</a></td>"
+                             + "<td style='width: 10%'><a href='/k_star2_war/kuaidi/messageDelete?id=" + content.k_reId + "'><span class='glyphicon glyphicon-trash'></span></a>"
                              + "<td style='width: 10%'>"+ status(content.k_reStatus) +"</td>"
                              + "<td style='width: 20%'>" + content.k_reTime + "</td>";
                         list += "</tr>";
@@ -41,7 +41,7 @@
                 }
             )
             $.post(
-                "/kuaidi/messageMine",
+                "/k_star2_war/kuaidi/messageMine",
                 {
                     "k_me_myId": id
                 },
@@ -63,7 +63,7 @@
                             k_id = content.k_me_myId;
                         }
                         list += "<tr>";
-                        list += "<td style='width: 60%'><a href='/kuaidi/messageDetail?type=other&id=" + content.k_me_reId + "&status=" + content.k_meStatus + "'>" + context + "</a></td>"
+                        list += "<td style='width: 60%'><a href='/k_star2_war/kuaidi/messageDetail?type=other&id=" + content.k_me_reId + "&status=" + content.k_meStatus + "'>" + context + "</a></td>"
                              + "<td style='width: 15%'><a href='#'>" + name + "</a><td>"
                              + "<td style='width: 15%'>" + status(content.k_meStatus) + "</td>";
                         list += "</tr>";
@@ -77,8 +77,8 @@
                     var mapList = "";
                     $.each($.parseJSON(data), function (name, content) {
                         mapList += "<tr>";
-                        mapList += "<td style='width: 60%'><a href='/kuaidi/chaxunGd2?number=" + content.k_number + "'>" + content.k_context + "</a></td>"
-                            + "<td style='width: 10%'><a href='/kuaidi/deleteGd2?number=" + content.k_number + "'><span class='glyphicon glyphicon-trash'></span></a></td>"
+                        mapList += "<td style='width: 60%'><a href='/k_star2_war/kuaidi/chaxunGd2?number=" + content.k_number + "'>" + content.k_context + "</a></td>"
+                            + "<td style='width: 10%'><a href='/k_star2_war/kuaidi/deleteGd2?number=" + content.k_number + "'><span class='glyphicon glyphicon-trash'></span></a></td>"
                             + "<td style='width: 10%'>" + content.k_type + "</td>"
                             + "<td style='width: 20%'>" + content.k_time + "</td>";
                         mapList += "</tr>";
@@ -178,11 +178,12 @@
     </script>
 </head>
 <body>
-
+<div style="width: 1349px; height: 600px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto; position: relative; z-index: 1;
+        background-size: cover; background: url(${pageContext.request.contextPath}/statics/images/message.jpg) no-repeat 50% 50%;">
 <hr>
 <br>
 <center>
-    <div style="width: 80%;text-align: center">
+    <div style="width: 80%;text-align: center;background-color: white;">
         <div>
             <center>
                 <table class="table table-bordered">
@@ -218,7 +219,7 @@
                 <thead>
                 <tr>
                     <th style="width: 60%">消息</th>
-                    <th style="width: 15%">楼主</th>
+                    <th style="width: 15%">消息来源</th>
                     <th style="width: 15%">领取状态</th>
                 </tr>
                 </thead>
@@ -245,7 +246,7 @@
         </div>
     </div>
 </center>
-
+</div>
 <div class="modal fade" id="myModalPublish" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">

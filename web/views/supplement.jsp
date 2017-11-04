@@ -42,7 +42,7 @@
     <script type="text/javascript">
         $(function () {
             $("#username").blur(function () {
-                $.post("/user/validateUserName?dt=" + new Date(),
+                $.post("/k_star2_war/user/validateUserName?dt=" + new Date(),
                     {
                         "k_username": $("#username").val()
                     }, function (data) {

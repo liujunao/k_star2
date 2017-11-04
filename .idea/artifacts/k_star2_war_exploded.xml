@@ -23,7 +23,6 @@
           <element id="file-copy" path="D:/openSource/commons-fileupload-1.3.1.jar" />
           <element id="file-copy" path="D:/openSource/commons-io-2.4.jar" />
         </element>
-        <element id="module-output" name="k_star2" />
       </element>
       <element id="javaee-facet-resources" facet="k_star2/web/Web" />
     </root>

@@ -47,7 +47,7 @@
             })
 
             $.post(
-                "/kuaidi/lookAppraise",
+                "/k_star2_war/kuaidi/lookAppraise",
                 {
                     "id": "<%=map1.get("k_id")%>"
                 }, function (data) {
@@ -58,7 +58,7 @@
             )
             $("#appraiseDetail").click(function () {
                 $.post(
-                    "/kuaidi/detailAppraise",
+                    "/k_star2_war/kuaidi/detailAppraise",
                     {
                         "id": "<%=map1.get("k_id")%>"
                     }, function (data) {
@@ -110,46 +110,46 @@
     <script>
         function appraise(num) {
             if (num == 0) {
-                return "<img src='/statics/images/star.png'>" +
-                    "<img src='/statics/images/star.png'>" +
-                    "<img src='/statics/images/star.png'>" +
-                    "<img src='/statics/images/star.png'>" +
-                    "<img src='/statics/images/star.png'>";
+                return "<img src='/k_star2_war/statics/images/star.png'>" +
+                    "<img src='/k_star2_war/statics/images/star.png'>" +
+                    "<img src='/k_star2_war/statics/images/star.png'>" +
+                    "<img src='/k_star2_war/statics/images/star.png'>" +
+                    "<img src='/k_star2_war/statics/images/star.png'>";
             }
             if (num == 1) {
-                return "<img src='/statics/images/star_red.png'>" +
-                    "<img src='/statics/images/star.png'>" +
-                    "<img src='/statics/images/star.png'>" +
-                    "<img src='/statics/images/star.png'>" +
-                    "<img src='/statics/images/star.png'>";
+                return "<img src='/k_star2_war/statics/images/star_red.png'>" +
+                    "<img src='/k_star2_war/statics/images/star.png'>" +
+                    "<img src='/k_star2_war/statics/images/star.png'>" +
+                    "<img src='/k_star2_war/statics/images/star.png'>" +
+                    "<img src='/k_star2_war/statics/images/star.png'>";
             }
             if (num == 2) {
-                return "<img src='/statics/images/star_red.png'>" +
-                    "<img src='/statics/images/star_red.png'>" +
-                    "<img src='/statics/images/star.png'>" +
-                    "<img src='/statics/images/star.png'>" +
-                    "<img src='/statics/images/star.png'>";
+                return "<img src='/k_star2_war/statics/images/star_red.png'>" +
+                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
+                    "<img src='/k_star2_war/statics/images/star.png'>" +
+                    "<img src='/k_star2_war/statics/images/star.png'>" +
+                    "<img src='/k_star2_war/statics/images/star.png'>";
             }
             if (num == 3) {
-                return "<img src='/statics/images/star_red.png'>" +
-                    "<img src='/statics/images/star_red.png'>" +
-                    "<img src='/statics/images/star_red.png'>" +
-                    "<img src='/statics/images/star.png'>" +
-                    "<img src='/statics/images/star.png'>";
+                return "<img src='/k_star2_war/statics/images/star_red.png'>" +
+                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
+                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
+                    "<img src='/k_star2_war/statics/images/star.png'>" +
+                    "<img src='/k_star2_war/statics/images/star.png'>";
             }
             if (num == 4) {
-                return "<img src='/statics/images/star_red.png'>" +
-                    "<img src='/statics/images/star_red.png'>" +
-                    "<img src='/statics/images/star_red.png'>" +
-                    "<img src='/statics/images/star_red.png'>" +
-                    "<img src='/statics/images/star.png'>";
+                return "<img src='/k_star2_war/statics/images/star_red.png'>" +
+                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
+                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
+                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
+                    "<img src='/k_star2_war/statics/images/star.png'>";
             }
             if (num == 5) {
-                return "<img src='/statics/images/star_red.png'>" +
-                    "<img src='/statics/images/star_red.png'>" +
-                    "<img src='/statics/images/star_red.png'>" +
-                    "<img src='/statics/images/star_red.png'>" +
-                    "<img src='/statics/images/star_red.png'>";
+                return "<img src='/k_star2_war/statics/images/star_red.png'>" +
+                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
+                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
+                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
+                    "<img src='/k_star2_war/statics/images/star_red.png'>";
             }
         }
     </script>
@@ -180,7 +180,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="active" id="ti"><a href="${pageContext.request.contextPath}/views/index.jsp"> 首页</a></li>
             <li id="pu"><a href="${pageContext.request.contextPath}/views/release.jsp"> 发布任务</a></li>
-            <li id="fo"><a href="${pageContext.request.contextPath}/views/forum.jsp"> 帮忙取快递</a></li>
+            <li id="fo"><a href="${pageContext.request.contextPath}/views/forum.jsp"> 帮取快递</a></li>
             <li id="my"><a href="${pageContext.request.contextPath}/views/message.jsp"> 我的</a></li>
             <li><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
                 <span class="glyphicon glyphicon-user"></span>

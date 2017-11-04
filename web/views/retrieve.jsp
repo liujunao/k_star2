@@ -47,7 +47,7 @@
     <script>
         $(function () {
             $("#loginName").blur(function () {
-                $.post("/user/validateUserName?dt=" + new Date(),
+                $.post("/k_star2_war/user/validateUserName?dt=" + new Date(),
                     {
                         loginName: $(this).val()
                     }, function (data) {
@@ -59,7 +59,7 @@
                 )
             })
             $("#email").blur(function () {
-                $.post("/user/validateUserName?dt=" + new Date(),
+                $.post("/k_star2_war/user/validateUserName?dt=" + new Date(),
                     {
                         emailName: $(this).val()
                     }, function (data) {

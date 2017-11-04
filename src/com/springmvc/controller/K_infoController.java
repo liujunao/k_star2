@@ -242,7 +242,7 @@ public class K_infoController {
 
     public void processValidate(String email, String url) {
         StringBuffer stringBuffer = new StringBuffer("点击下面链接激活账号，24小时生效，否则重新注册账号，链接只能使用一次，请尽快激活！</br>");
-        stringBuffer.append("<a href=\"http://182.254.225.87:8080/user/" + url + "?action=activation&email=");
+        stringBuffer.append("<a href=\"http://182.254.225.87:8080/k_star2_war/user/" + url + "?action=activation&email=");
         stringBuffer.append(email);
         stringBuffer.append("&validateCode=");
         stringBuffer.append(md5Utils.encode2hex(email) + UUID);

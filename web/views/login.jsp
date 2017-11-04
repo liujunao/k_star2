@@ -130,10 +130,16 @@ background-size: cover; background: url(../statics/images/login.jpg) no-repeat 5
                             </td>
                         </tr>
                         <tr>
+                            <td><br></td>
+                        </tr>
+                        <tr>
                             <td width="108" valign="middle" colspan="8" align="center">
                                 <img src="${pageContext.request.contextPath}/user/validation" name="validate" border="0"
                                      onclick="this.src=this.src+'?'" style="width: 140px">
                             </td>
+                        </tr>
+                        <tr>
+                            <td><br></td>
                         </tr>
                         <tr>
                             <td align="center">

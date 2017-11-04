@@ -191,7 +191,7 @@
 
             $("#submit").click(function () {
                 $.post(
-                    "/kuaidi/appraise",
+                    "/k_star2_war/kuaidi/appraise",
                     {
                         "grade1": flag1,
                         "grade2": flag2,
@@ -223,14 +223,16 @@
                 <center>
                     <div style="color: blue;font-weight: 700;font-size: 30px;float: none;">评价栏</div>
                 </center>
-                <div style="float: right;font-weight: 600;font-size: 20px;color: #00a0e9;">${mapInfo.k_username}</div>
+                <div style="float: right;font-weight: 600;font-size: 20px;color: #00a0e9;">
+                    评价对象：${mapInfo.k_username}
+                </div>
                 <br><br><hr>
                 <center>
                     <form role="form">
                         <div class="form-group" style="height: 100px;">
                             <label for="text" class="col-sm-3 control-label">综合评价：</label>
                             <div class="col-sm-7">
-                                <textarea id="text" class="form-control" style="height: 100px;"></textarea>
+                                <textarea id="text" class="form-control" style="height: 100px;" placeholder="选填"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -321,6 +323,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <div class="col-sm-11">
                                 <input type="button" value="提交" class="btn btn-primary" id="submit"

@@ -28,7 +28,6 @@ public class HttpCommon {
             sparam = json;
         }
         BufferedReader bufferedReader = null;
-        PrintWriter printWriter = null;
         HttpURLConnection connection = null;
 
         try {
@@ -41,7 +40,6 @@ public class HttpCommon {
             connection.setRequestProperty("user-agent","Mozilla/4.0(compatible;MSIE 6.0;Windows NT 5.1;SV1)");
             connection.setRequestProperty("Accept-Language","zh-CN,zh;q=0.8");
             connection.setRequestProperty("contentType",encode.toUpperCase());
-
             //如果是 post 请求要设置这两个属性
             connection.setDoInput(true);
             connection.setDoOutput(true);
@@ -50,17 +48,13 @@ public class HttpCommon {
                 case "JSON":connection.setRequestProperty("content-Type","application/json;charset=" + encode.toUpperCase());break;
             }
             connection.setRequestMethod(type.toUpperCase());
-
             //建立实际的连接
             connection.connect();
             //获取所有的响应头字段
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(connection.getOutputStream(),encode.toLowerCase());
-            //System.out.println(outputStreamWriter);
             outputStreamWriter.write(sparam);
-            //System.out.println(outputStreamWriter);
             outputStreamWriter.flush();
             outputStreamWriter.close();
-
             if (connection.getResponseCode() == 200){
                 bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream(),encode.toLowerCase()));
                 String inputLine;
@@ -93,13 +87,11 @@ public class HttpCommon {
 
     //发送 get 请求
     public String getContentUrl(String url,String encode){
-        //System.out.println(submitUrlContent(url,null,"GET",encode,"HTML",""));
         return submitUrlContent(url,null,"GET",encode,"HTML","");
     }
 
     //发送 post 请求
     public String postContentUrl(String url,String encode,Map<String,String>param){
-        //System.out.println(submitUrlContent(url,param,"POST",encode,"HTML",""));
         return submitUrlContent(url,param,"POST",encode,"HTML","");
     }
 

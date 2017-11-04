@@ -63,7 +63,7 @@
 
         $(function () {
             $("#username").blur(function () {
-                $.post("/user/validateUserName?dt=" + new Date(),
+                $.post("/k_star2_war/user/validateUserName?dt=" + new Date(),
                     {
                         "k_username": $("#username").val()
                     }, function (data) {
@@ -177,7 +177,7 @@ background-size: cover; background: url(../statics/images/register.jpg) no-repea
                 <form action="${pageContext.request.contextPath}/user/register?action=register" method="post"
                       class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label for="username" class="col-sm-3 control-label">账号：</label>
+                        <label for="username" class="col-sm-3 control-label">请hub账号：</label>
                         <div class="col-sm-8">
                             <input type="text" name="k_username" id="username" onblur="CheckUserName()"
                                    class="form-control"/>
@@ -185,7 +185,7 @@ background-size: cover; background: url(../statics/images/register.jpg) no-repea
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="password" class="col-sm-3 control-label">密码：</label>
+                        <label for="password" class="col-sm-3 control-label">请输入hub密码：</label>
                         <div class="col-sm-8">
                             <input type="password" name="k_password" id="password" onblur="CheckPassword()"
                                    class="form-control"/>
@@ -254,14 +254,14 @@ background-size: cover; background: url(../statics/images/register.jpg) no-repea
                     <div class="form-group">
                         <label for="qq" class="col-sm-3 control-label">QQ号码：</label>
                         <div class="col-sm-8">
-                            <input type="text" name="k_qq" id="qq" class="form-control"/>
+                            <input type="text" name="k_qq" id="qq" class="form-control" placeholder="选填"/>
                             <em id="m_qq"></em>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="weChat" class="col-sm-3 control-label">微信：</label>
                         <div class="col-sm-8">
-                            <input type="text" name="k_weChat" id="weChat" class="form-control"/>
+                            <input type="text" name="k_weChat" id="weChat" class="form-control" placeholder="选填"/>
                             <em id="m_weChat"></em>
                         </div>
                     </div>
@@ -285,7 +285,7 @@ background-size: cover; background: url(../statics/images/register.jpg) no-repea
                     <div class="form-group">
                         <label for="username" class="col-sm-3 control-label">包裹放置地：</label>
                         <div class="col-sm-8">
-                            <input type="text" name="k_address" id="address" class="form-control"/>
+                            <input type="text" name="k_address" id="address" class="form-control" placeholder="如：韵苑16栋1楼"/>
                         </div>
                     </div>
                     <div class="form-group">

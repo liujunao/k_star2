@@ -111,7 +111,7 @@ background-size: cover; background: url(${pageContext.request.contextPath}/stati
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="k_reText" class="col-sm-3 control-label">取件详细信息：</label>
+                        <label for="k_reText" class="col-sm-3 control-label">取件地：</label>
                         <div class="col-sm-8" rows="3">
                             <input type="text" name="k_reText" id="k_reText" class="form-control"/>
                         </div>
@@ -197,7 +197,7 @@ background-size: cover; background: url(${pageContext.request.contextPath}/stati
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="k_reText" class="col-sm-3 control-label">取件详细信息：</label>
+                        <label for="k_reText" class="col-sm-3 control-label">取件地：</label>
                         <div class="col-sm-8" rows="3">
                             <input type="text" class="form-control" value="${k_re.k_reText}" readonly="readonly"/>
                         </div>

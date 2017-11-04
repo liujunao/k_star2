@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/statics/css/bootstrap.min.css">--%>
     <script src="${pageContext.request.contextPath}/statics/js/jquery-3.2.1.js"></script>
-    <%--<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>--%>
-    <script src="${pageContext.request.contextPath}/statics/js/bootstrap.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <%--<script src="${pageContext.request.contextPath}/statics/js/bootstrap.min.js"></script>--%>
 
     <script src="${pageContext.request.contextPath}/statics/js/alertCommon.js"></script>
 
@@ -17,7 +17,7 @@
         $(function () {
             $("#cli").click(function () {
                 $.post(
-                    "/kuaidi/chaxunTitle",
+                    "${pageContext.request.contextPath}/kuaidi/chaxunTitle",
                     {
                         "type":$("#type").val()
                     },function (data) {
@@ -35,7 +35,7 @@
                     }
                 )
                 $.post(
-                    "/kuaidi/chaxunNo",
+                    "${pageContext.request.contextPath}/kuaidi/chaxunNo",
                     {
                         "orderNumber": $("#orderNumber").val(),
                         "type":$("#type").val()
@@ -58,9 +58,11 @@
                         })
                     }
                 );
+                $("#myModalIn").modal("show");
             });
         })
     </script>
+
 
 </head>
 <body>
@@ -93,7 +95,7 @@
 <div style="width: 1349px; height: 600px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto; position: relative; z-index: 1;
 background-size: cover; background: url(${pageContext.request.contextPath}/statics/images/3.png) no-repeat 50% 50%;">
     <div style="text-align: left;">
-        <div style="position: absolute; top: 148px; left: 434px; width: 476px; height: 158px;">
+        <div style="position: absolute; top: 148px; left: 450px; width: 476px; height: 158px;">
             <div>
                 <table>
                     <tr>
@@ -119,7 +121,7 @@ background-size: cover; background: url(${pageContext.request.contextPath}/stati
             </div>
         </div>
 
-        <div style="position: absolute; top: 326px; left: 350px; width: 500px; height: 87px;" id="myOne">
+        <div style="position: absolute; top: 326px; left: 370px; width: 500px; height: 87px;" id="myOne">
             <table style="height:87px; width: 500px" cellpadding="0" cellspacing="0">
                 <div style="color: white;width: 400px;text-align: left">
                     <tr>
@@ -157,7 +159,7 @@ background-size: cover; background: url(${pageContext.request.contextPath}/stati
     </div>
 </div>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModalIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
