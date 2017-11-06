@@ -49,11 +49,11 @@
             $("#loginName").blur(function () {
                 $.post("/k_star2_war/user/validateUserName?dt=" + new Date(),
                     {
-                        loginName: $(this).val()
+                        "loginName": $("#loginName").val()
                     }, function (data) {
                         if (data == "0") {
                             alert("您输入的用户名不存在，请重新输入");
-                            $(this).focus();
+                            $("#loginName").focus();
                         }
                     }
                 )
@@ -61,11 +61,11 @@
             $("#email").blur(function () {
                 $.post("/k_star2_war/user/validateUserName?dt=" + new Date(),
                     {
-                        emailName: $(this).val()
+                        "loginName": $("#email").val()
                     }, function (data) {
                         if (data == "0") {
                             alert("您输入的邮箱不存在，请重新输入");
-                            $(this).focus();
+                            $("#email").focus();
                         }
                     }
                 )
@@ -104,7 +104,7 @@
         <br>
         <center>
             <c:if test="${requestScope.revise == 'first'}">
-                <form action="${pageContext.request.contextPath}/user/revisePassword?revise=count" method="post"
+                <form action="${pageContext.request.contextPath}/user/revisePassword?revise=count&action=1" method="post"
                       class="form-horizontal" role="form">
                     <div class="form-group">
                         <label for="loginName" class="col-sm-3 control-label">登录账号：</label>
@@ -137,7 +137,7 @@
 
         <center>
             <c:if test="${requestScope.revise == 'email'}">
-                <form action="${pageContext.request.contextPath}/user/revisePassword?revise=validateCode" method="post"
+                <form action="${pageContext.request.contextPath}/user/revisePassword?revise=validateCode&action=1" method="post"
                       class="form-horizontal" role="form">
                     <div class="form-group">
                         <label for="email" class="col-sm-3 control-label">邮箱：</label>
@@ -170,7 +170,7 @@
 
         <center>
             <c:if test="${requestScope.revise == 'newPassword'}">
-                <form action="${pageContext.request.contextPath}/user/revisePassword?revise=password" method="post"
+                <form action="${pageContext.request.contextPath}/user/revisePassword?revise=password&action=1" method="post"
                       class="form-horizontal" role="form">
                     <div class="form-group">
                         <label for="password" class="col-sm-3 control-label">新密码：</label>

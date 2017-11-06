@@ -72,7 +72,7 @@
                 }
             )
             $.post(
-                "/kuaidi/showMine",
+                "/k_star2_war//kuaidi/showMine",
                 function (data) {
                     var mapList = "";
                     $.each($.parseJSON(data), function (name, content) {

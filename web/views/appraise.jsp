@@ -242,7 +242,7 @@
                             <c:if test="${kind eq 'other'}">
                                 <label for="grade1" class="col-sm-3 control-label" style="float: left;">负责态度：</label>
                             </c:if>
-                            <div class="col-sm-7">
+                            <div class="col-sm-10">
                                 <div id="grade1">
                                     <span>
                                         <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star1">
@@ -270,7 +270,7 @@
 
                         <div class="form-group">
                             <label for="grade2" class="col-sm-3 control-label" style="float: left;">沟通态度：</label>
-                            <div class="col-sm-7">
+                            <div class="col-sm-10">
                                 <div id="grade2">
                                     <span>
                                         <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star6">
@@ -298,7 +298,7 @@
 
                         <div class="form-group">
                             <label for="grade3" class="col-sm-3 control-label" style="float: left;">诚信度：</label>
-                            <div class="col-sm-7">
+                            <div class="col-sm-10">
                                 <div id="grade3">
                                     <span>
                                         <img src="${pageContext.request.contextPath}/statics/images/star.png" id="star11">

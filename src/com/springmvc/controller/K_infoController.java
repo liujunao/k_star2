@@ -156,7 +156,8 @@ public class K_infoController {
         if ("count".equalsIgnoreCase(revise)) {
             String validation1 = (String) request.getSession().getAttribute("sessionValidation");
             System.out.println(validation1);
-            String validation = (String) request.getAttribute("validation");
+            String validation = request.getParameter("validation");
+            System.out.println(validation);
             if (!validation1.equalsIgnoreCase(validation)) {
                 request.setAttribute("revise", "first");
                 return "retrieve";
@@ -176,7 +177,7 @@ public class K_infoController {
         if ("validateCode".equalsIgnoreCase(revise)) {
             String validation1 = (String) request.getSession().getAttribute("sessionValidation");
             System.out.println(validation1);
-            String validation = (String) request.getAttribute("validation");
+            String validation = request.getParameter("validation");
             if (!validation1.equalsIgnoreCase(validation)) {
                 request.setAttribute("revise", "email");
                 return "retrieve";
@@ -269,16 +270,17 @@ public class K_infoController {
     @RequestMapping("/validateUserName")
     public void validateUserName(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HtmlCommon htmlCommon = new HtmlCommon();
-        String loginName = htmlCommon.getParameter(request, "k_username");
+        String loginName = htmlCommon.getParameter(request, "loginName");
 
         K_infoService k_infoService = new K_infoService();
         K_info k_info = new K_info();
 
         if (loginName != null && !loginName.equals("")) {
             k_info.setK_username(loginName);
+            k_info.setK_email(loginName);
         }
         int result = -1;
-        result = k_infoService.queryUsername(k_info);
+        result = k_infoService.retrieve(k_info);
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
         if (result > 0) {
