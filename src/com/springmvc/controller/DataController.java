@@ -99,7 +99,6 @@ public class DataController {
 
         String num = request.getParameter("orderNumber");
         String type = request.getParameter("type");
-
         DataList dataList = new DataList();
         List<KDModel> data = dataList.getData(num, type);
         List<Map<String, Object>> listData = toListMap(data);
@@ -107,7 +106,6 @@ public class DataController {
         map1.put("enterprise", type);
         listData.add(map1);
         listToJson(listData, response);
-
     }
 
     @RequestMapping("/chaxunTitle")
@@ -503,7 +501,6 @@ public class DataController {
                 listToJson(list, response);
             }
         }
-
     }
 
     @RequestMapping("/messageMine")
@@ -694,4 +691,9 @@ public class DataController {
         listToJson(mapList,response);
     }
 
+    @RequestMapping("/QRCode")
+    public String qrCode(HttpServletRequest request) {
+        request.setAttribute("QRCode","true");
+        return "message";
+    }
 }

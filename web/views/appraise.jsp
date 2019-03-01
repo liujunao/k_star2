@@ -191,7 +191,7 @@
 
             $("#submit").click(function () {
                 $.post(
-                    "/k_star2_war/kuaidi/appraise",
+                    "/kuaidi/appraise",
                     {
                         "grade1": flag1,
                         "grade2": flag2,

@@ -92,7 +92,12 @@
                     }
                 )
             })
+
+            $("#protocol").click(function () {
+                $("#myModalProtocol").modal("show");
+            })
         })
+
 
     </script>
 
@@ -301,10 +306,49 @@ background-size: cover; background: url(../statics/images/register.jpg) no-repea
                         <div class="col-sm-11">
                             <input type="submit" value="注册" class="btn btn-primary"
                                    style="width:240px;height:30px;background-color: blue;color: white"/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="#" style="color: blue;" id="protocol">注册协议</a>
                         </div>
                     </div>
                 </form>
             </center>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModalProtocol" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabelInform">K-star一站式快递服务系统注册协议：</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div>1.本系统所有用户均需为华科学生。注册时需提交学生号、学生证正面图片，后台与HUB系统数据核对无误后方可注册成功</div>
+                            <br/>
+                            <div>2.对于任务接收者：我们推荐帮助综合评分高的任务发布者取快递，这样服务质量会更有保障</div>
+                            <br/>
+                            <div>3.对于任务发布者，我们建议在确认任务接收者完成任务后，尽快支付赏金，否则将影响你的综合评分</div>
+                            <br/>
+                            <div>4.在任务进行期间，任务接受者需负责包裹的完整性。若包裹在快递公司运输过程中已经发生破损，请任务接收者第一时间告知任务发布者，并取消任务。若包裹在任务进行期间出现破损，任务发布者有权向任务接收者索要赔偿。本系统不对此类纠纷负责</div>
+                            <br/>
+                            <div>5.若包裹中为贵重物品，不建议用户使用本系统，请用户自行领取</div>
+                            <br/>
+                            <div>6.若发现任务接受者/发布者间任何一方存在蓄意欺诈、窃取包裹等恶意行为，请立刻向系统反馈。系统核实后将立刻其从社区中驱逐，并追究其法律责任</div>
+                            <br/>
+                            <div>7.本系统对该协议有最终解释权</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">若继续注册代表同意该协议</button>
+            </div>
         </div>
     </div>
 </div>

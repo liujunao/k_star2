@@ -21,7 +21,7 @@
         $(function () {
             var infoId = "<%=map.get("k_id")%>";
             $.post(
-                "/k_star2_war/kuaidi/forumAll",
+                "/kuaidi/forumAll",
                 {
                   "id": infoId
                 },
@@ -29,7 +29,7 @@
                     var list = "";
                     $.each($.parseJSON(data), function (num, content) {
                         list += "<tr>";
-                        list += "<td style='width: 55%' class='detail'><a href='/k_star2_war/kuaidi/forumDetail?id=" + content.k_reId + "'>" + content.k_reText + "</a></td>" +
+                        list += "<td style='width: 55%' class='detail'><a href='/kuaidi/forumDetail?id=" + content.k_reId + "'>" + content.k_reText + "</a></td>" +
                             "<td style='width: 10%'><a href='#'>" + content.k_infoName + "</a></td>" +
                             "<td style='width: 10%'>" + content.k_reMoney + "元</td>" +
                             "<td style='width: 10%'>" + status(content.k_reStatus) + "</td>" +

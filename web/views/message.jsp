@@ -1,4 +1,3 @@
-<%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: lenovo
@@ -23,7 +22,7 @@
         var id = "<%=map.get("k_id")%>";
         $(function () {
             $.post(
-                "/k_star2_war/kuaidi/puMessage",
+                "/kuaidi/puMessage",
                 {
                     "k_re_infoId": id
                 },
@@ -31,17 +30,18 @@
                     var list = "";
                     $.each($.parseJSON(data), function (num, content) {
                         list += "<tr>";
-                        list += "<td style='width: 60%'><a href='/k_star2_war/kuaidi/messageDetail?type=mine&id=" + content.k_reId + "&status=" + content.k_reStatus + "'>" + content.k_reText + "</a></td>"
-                             + "<td style='width: 10%'><a href='/k_star2_war/kuaidi/messageDelete?id=" + content.k_reId + "'><span class='glyphicon glyphicon-trash'></span></a>"
-                             + "<td style='width: 10%'>"+ status(content.k_reStatus) +"</td>"
-                             + "<td style='width: 20%'>" + content.k_reTime + "</td>";
+                        list += "<td style='width: 40%'><a href='/kuaidi/messageDetail?type=mine&id=" + content.k_reId + "&status=" + content.k_reStatus + "'>" + content.k_reText + "</a></td>"
+                            + "<td style='width: 10%'><a href='/kuaidi/messageDelete?id=" + content.k_reId + "'><span class='glyphicon glyphicon-trash'></span></a>"
+                            + "<td style='width: 10%'>" + status(content.k_reStatus) + "</td>"
+                            + "<td style='width: 20%'>" + content.k_reTime + "</td>"
+                            + "<td style='width: 20%'><a href='/kuaidi/QRCode'>付款二维码</a></td>";
                         list += "</tr>";
                         $("#myPublish").html(list);
                     })
                 }
             )
             $.post(
-                "/k_star2_war/kuaidi/messageMine",
+                "/kuaidi/messageMine",
                 {
                     "k_me_myId": id
                 },
@@ -52,7 +52,7 @@
                         var name = "";
                         var k_id = "";
                         if (content.k_me_myId == id) {
-                            if (content.k_me_otherUsername != null && content.k_me_otherUsername != "null" && content.k_me_otherUsername != undefined){
+                            if (content.k_me_otherUsername != null && content.k_me_otherUsername != "null" && content.k_me_otherUsername != undefined) {
                                 name = content.k_me_otherUsername;
                             }
                             context = content.k_meWarn;
@@ -63,22 +63,22 @@
                             k_id = content.k_me_myId;
                         }
                         list += "<tr>";
-                        list += "<td style='width: 60%'><a href='/k_star2_war/kuaidi/messageDetail?type=other&id=" + content.k_me_reId + "&status=" + content.k_meStatus + "'>" + context + "</a></td>"
-                             + "<td style='width: 15%'><a href='#'>" + name + "</a><td>"
-                             + "<td style='width: 15%'>" + status(content.k_meStatus) + "</td>";
+                        list += "<td style='width: 60%'><a href='/kuaidi/messageDetail?type=other&id=" + content.k_me_reId + "&status=" + content.k_meStatus + "'>" + context + "</a></td>"
+                            + "<td style='width: 15%'><a href='#'>" + name + "</a><td>"
+                            + "<td style='width: 15%'>" + status(content.k_meStatus) + "</td>";
                         list += "</tr>";
                         $("#myInform").html(list);
                     })
                 }
             )
             $.post(
-                "/k_star2_war//kuaidi/showMine",
+                "/kuaidi/showMine",
                 function (data) {
                     var mapList = "";
                     $.each($.parseJSON(data), function (name, content) {
                         mapList += "<tr>";
-                        mapList += "<td style='width: 60%'><a href='/k_star2_war/kuaidi/chaxunGd2?number=" + content.k_number + "'>" + content.k_context + "</a></td>"
-                            + "<td style='width: 10%'><a href='/k_star2_war/kuaidi/deleteGd2?number=" + content.k_number + "'><span class='glyphicon glyphicon-trash'></span></a></td>"
+                        mapList += "<td style='width: 60%'><a href='/kuaidi/chaxunGd2?number=" + content.k_number + "'>" + content.k_context + "</a></td>"
+                            + "<td style='width: 10%'><a href='/kuaidi/deleteGd2?number=" + content.k_number + "'><span class='glyphicon glyphicon-trash'></span></a></td>"
                             + "<td style='width: 10%'>" + content.k_type + "</td>"
                             + "<td style='width: 20%'>" + content.k_time + "</td>";
                         mapList += "</tr>";
@@ -161,6 +161,7 @@
         var mapDetail = "<%=request.getAttribute("mapDetail")%>";
         var moType = "<%=request.getAttribute("moType")%>";
         var gd2List = "<%=request.getAttribute("gd2List")%>";
+        var QRCode = "<%=request.getAttribute("QRCode")%>";
 
         $(function () {
             if (mapDetail != null && mapDetail != "null") {
@@ -171,8 +172,11 @@
                     $("#myModalInform").modal("show");
                 }
             }
-            if (gd2List != null && gd2List != "null"){
+            if (gd2List != null && gd2List != "null") {
                 $("#myModalQuery").modal("show");
+            }
+            if (QRCode == "true") {
+                $("#myModalQRCode").modal("show");
             }
         })
     </script>
@@ -180,72 +184,73 @@
 <body>
 <div style="width: 1349px; height: 600px; cursor: default; overflow: hidden; display: block; outline: none; margin: 0px auto; position: relative; z-index: 1;
         background-size: cover; background: url(${pageContext.request.contextPath}/statics/images/message.jpg) no-repeat 50% 50%;">
-<hr>
-<br>
-<center>
-    <div style="width: 80%;text-align: center;background-color: white;">
-        <div>
-            <center>
-                <table class="table table-bordered">
+    <hr>
+    <br>
+    <center>
+        <div style="width: 80%;text-align: center;background-color: white;">
+            <div>
+                <center>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th id="publish" class="active">我的发布</th>
+                            <th id="inform">通知消息</th>
+                            <th id="query">查询记录</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </center>
+            </div>
+            <br>
+            <div id="listPublish" style="width: 80%;text-align: center">
+                <table class="table">
                     <thead>
                     <tr>
-                        <th id="publish" class="active">我的发布</th>
-                        <th id="inform">通知消息</th>
-                        <th id="query">查询记录</th>
+                        <th style="width: 40%">标题</th>
+                        <th style="width: 10%">删除</th>
+                        <th style="width: 10%">领取状态</th>
+                        <th style="width: 20%">截至时间</th>
+                        <th style="width: 20%">付款二维码</th>
                     </tr>
                     </thead>
+                    <tbody id="myPublish">
+
+                    </tbody>
                 </table>
-            </center>
+            </div>
+
+            <div id="listInform" style="width: 80%;text-align: center;display: none">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th style="width: 60%">消息</th>
+                        <th style="width: 15%">消息来源</th>
+                        <th style="width: 15%">领取状态</th>
+                    </tr>
+                    </thead>
+                    <tbody id="myInform">
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="listQuery" style="width: 80%;text-align: center;display: none">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th style="width: 60%">消息</th>
+                        <th style="width: 10%">删除</th>
+                        <th style="width: 10%">快递公司</th>
+                        <th style="width: 20%">时间</th>
+                    </tr>
+                    </thead>
+                    <tbody id="myQuery">
+
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <br>
-        <div id="listPublish" style="width: 80%;text-align: center">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th style="width: 60%">标题</th>
-                    <th style="width: 10%">删除</th>
-                    <th style="width: 10%">领取状态</th>
-                    <th style="width: 20%">截至时间</th>
-                </tr>
-                </thead>
-                <tbody id="myPublish">
-
-                </tbody>
-            </table>
-        </div>
-
-        <div id="listInform" style="width: 80%;text-align: center;display: none">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th style="width: 60%">消息</th>
-                    <th style="width: 15%">消息来源</th>
-                    <th style="width: 15%">领取状态</th>
-                </tr>
-                </thead>
-                <tbody id="myInform">
-
-                </tbody>
-            </table>
-        </div>
-
-        <div id="listQuery" style="width: 80%;text-align: center;display: none">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th style="width: 60%">消息</th>
-                    <th style="width: 10%">删除</th>
-                    <th style="width: 10%">快递公司</th>
-                    <th style="width: 20%">时间</th>
-                </tr>
-                </thead>
-                <tbody id="myQuery">
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-</center>
+    </center>
 </div>
 <div class="modal fade" id="myModalPublish" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
@@ -409,12 +414,12 @@
                             List<Map<String, Object>> list = (List<Map<String, Object>>) request.getAttribute("gd2List");
                             if (list != null) {
                         %>
-                            <%
-                                for (int i = 0; i < list.size(); i++) {
-                                    Map<String, Object> mapList =  list.get(i);
-                            %>
+                        <%
+                            for (int i = 0; i < list.size(); i++) {
+                                Map<String, Object> mapList = list.get(i);
+                        %>
                         <tr>
-                        <td><%=mapList.get("k_time")%>&nbsp;</td>
+                            <td><%=mapList.get("k_time")%>&nbsp;</td>
                             <td>&nbsp;
                                 <div>
                                     <div style='color: #FF6600;'>&nbsp;&nbsp;|</div>
@@ -424,7 +429,8 @@
                                     <div style='color: #FF6600;'>&nbsp;&nbsp;|</div>
                                 </div>
                             </td>
-                            <td>&nbsp;<%=mapList.get("k_context")%></td>
+                            <td>&nbsp;<%=mapList.get("k_context")%>
+                            </td>
                         </tr>
                         <%
                                 }
@@ -440,6 +446,23 @@
     </div>
 </div>
 
+<!-- 弹出二维码图片 -->
+<div class="modal fade" id="myModalQRCode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <img src="/statics/images/QRCode.png" alt="" style="width:100%;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

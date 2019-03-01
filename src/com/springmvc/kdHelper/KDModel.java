@@ -32,4 +32,13 @@ public class KDModel {
     public void setContext(String context) {
         this.context = context;
     }
+
+    @Override
+    public String toString() {
+        return "KDModel{" +
+                "time='" + time + '\'' +
+                ", context='" + context + '\'' +
+                ", location='" + location + '\'' +
+                '}';
+    }
 }

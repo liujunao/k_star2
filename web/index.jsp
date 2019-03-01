@@ -6,10 +6,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/statics/css/bootstrap.min.css">--%>
     <script src="${pageContext.request.contextPath}/statics/js/jquery-3.2.1.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <%--<script src="${pageContext.request.contextPath}/statics/js/bootstrap.min.js"></script>--%>
 
     <script src="${pageContext.request.contextPath}/statics/js/alertCommon.js"></script>
 

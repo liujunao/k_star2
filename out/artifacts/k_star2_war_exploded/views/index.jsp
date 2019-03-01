@@ -11,7 +11,7 @@
         $(function () {
             $("#cli").click(function () {
                 $.post(
-                    "/k_star2_war/kuaidi/chaxunTitle",
+                    "/kuaidi/chaxunTitle",
                     {
                         "type":$("#type").val()
                     },function (data) {
@@ -30,7 +30,7 @@
                 )
 
                 $.post(
-                    "/k_star2_war/kuaidi/chaxun",
+                    "/kuaidi/chaxun",
                     {
                         "orderNumber": $("#orderNumber").val(),
                         "type":$("#type").val()

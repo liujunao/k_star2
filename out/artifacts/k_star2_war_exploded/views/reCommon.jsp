@@ -11,6 +11,8 @@
 <html>
 <head>
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <%--<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>--%>
+    <%--<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>--%>
     <script type="text/javascript" src="${pageContext.request.contextPath}/statics/js/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/statics/js/bootstrap.min.js"></script>
 
@@ -46,8 +48,9 @@
                 $("#ti").removeClass("active");
             })
 
+
             $.post(
-                "/k_star2_war/kuaidi/lookAppraise",
+                "/kuaidi/lookAppraise",
                 {
                     "id": "<%=map1.get("k_id")%>"
                 }, function (data) {
@@ -58,7 +61,7 @@
             )
             $("#appraiseDetail").click(function () {
                 $.post(
-                    "/k_star2_war/kuaidi/detailAppraise",
+                    "/kuaidi/detailAppraise",
                     {
                         "id": "<%=map1.get("k_id")%>"
                     }, function (data) {
@@ -108,48 +111,56 @@
     </script>
 
     <script>
+        $(function () {
+            $("#complaint").click(function () {
+                $("#myModalComplaint").modal("show");
+            })
+        })
+    </script>
+
+    <script>
         function appraise(num) {
             if (num == 0) {
-                return "<img src='/k_star2_war/statics/images/star.png'>" +
-                    "<img src='/k_star2_war/statics/images/star.png'>" +
-                    "<img src='/k_star2_war/statics/images/star.png'>" +
-                    "<img src='/k_star2_war/statics/images/star.png'>" +
-                    "<img src='/k_star2_war/statics/images/star.png'>";
+                return "<img src='/statics/images/star.png'>" +
+                    "<img src='/statics/images/star.png'>" +
+                    "<img src='/statics/images/star.png'>" +
+                    "<img src='/statics/images/star.png'>" +
+                    "<img src='/statics/images/star.png'>";
             }
             if (num == 1) {
-                return "<img src='/k_star2_war/statics/images/star_red.png'>" +
-                    "<img src='/k_star2_war/statics/images/star.png'>" +
-                    "<img src='/k_star2_war/statics/images/star.png'>" +
-                    "<img src='/k_star2_war/statics/images/star.png'>" +
-                    "<img src='/k_star2_war/statics/images/star.png'>";
+                return "<img src='/statics/images/star_red.png'>" +
+                    "<img src='/statics/images/star.png'>" +
+                    "<img src='/statics/images/star.png'>" +
+                    "<img src='/statics/images/star.png'>" +
+                    "<img src='/statics/images/star.png'>";
             }
             if (num == 2) {
-                return "<img src='/k_star2_war/statics/images/star_red.png'>" +
-                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
-                    "<img src='/k_star2_war/statics/images/star.png'>" +
-                    "<img src='/k_star2_war/statics/images/star.png'>" +
-                    "<img src='/k_star2_war/statics/images/star.png'>";
+                return "<img src='/statics/images/star_red.png'>" +
+                    "<img src='/statics/images/star_red.png'>" +
+                    "<img src='/statics/images/star.png'>" +
+                    "<img src='/statics/images/star.png'>" +
+                    "<img src='/statics/images/star.png'>";
             }
             if (num == 3) {
-                return "<img src='/k_star2_war/statics/images/star_red.png'>" +
-                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
-                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
-                    "<img src='/k_star2_war/statics/images/star.png'>" +
-                    "<img src='/k_star2_war/statics/images/star.png'>";
+                return "<img src='/statics/images/star_red.png'>" +
+                    "<img src='/statics/images/star_red.png'>" +
+                    "<img src='/statics/images/star_red.png'>" +
+                    "<img src='/statics/images/star.png'>" +
+                    "<img src='/statics/images/star.png'>";
             }
             if (num == 4) {
-                return "<img src='/k_star2_war/statics/images/star_red.png'>" +
-                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
-                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
-                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
-                    "<img src='/k_star2_war/statics/images/star.png'>";
+                return "<img src='/statics/images/star_red.png'>" +
+                    "<img src='/statics/images/star_red.png'>" +
+                    "<img src='/statics/images/star_red.png'>" +
+                    "<img src='/statics/images/star_red.png'>" +
+                    "<img src='/statics/images/star.png'>";
             }
             if (num == 5) {
-                return "<img src='/k_star2_war/statics/images/star_red.png'>" +
-                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
-                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
-                    "<img src='/k_star2_war/statics/images/star_red.png'>" +
-                    "<img src='/k_star2_war/statics/images/star_red.png'>";
+                return "<img src='/statics/images/star_red.png'>" +
+                    "<img src='/statics/images/star_red.png'>" +
+                    "<img src='/statics/images/star_red.png'>" +
+                    "<img src='/statics/images/star_red.png'>" +
+                    "<img src='/statics/images/star_red.png'>";
             }
         }
     </script>
@@ -212,9 +223,17 @@
                         </dt>
                         <dt><br></dt>
                         <dt>
-                            &nbsp;&nbsp;&nbsp;<a href="#" id="appraiseDetail"> <img src='${pageContext.request.contextPath}/statics/images/timg.jpg'
-                                                                                    style="width: 20px;height: 20px;color: #C0C0C0;">&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;<a href="#" id="appraiseDetail"> <img
+                                src='${pageContext.request.contextPath}/statics/images/timg.jpg'
+                                style="width: 20px;height: 20px;color: #C0C0C0;">&nbsp;&nbsp;&nbsp;
                             <span style="font-weight: 400;" id="appraise"></span></a>
+                        </dt>
+                        <dt><br></dt>
+                        <dt>
+                            &nbsp;&nbsp;&nbsp;<a href="#" id="complaint">
+                            <span class='glyphicon glyphicon-earphone' style='color: black;'></span>
+                            &nbsp;&nbsp;&nbsp;
+                            <span style="font-weight: 400;">投诉</span></a>
                         </dt>
                         <dt><br></dt>
                         <dt>&nbsp;&nbsp;&nbsp;
@@ -222,12 +241,12 @@
                                 <span class='glyphicon glyphicon-edit'
                                       style='color: #808080;width: 20px;height: 20px;font-weight: 400;text-align: left'></span>
                             </a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;
                             <a href='${pageContext.request.contextPath}/user/revisePassword?revise=page&action=null'>
                                 <span class='glyphicon glyphicon-asterisk'
                                       style='color: #808080;width: 20px;height: 20px;font-weight: 400;text-align: left'></span>
                             </a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="${pageContext.request.contextPath}/user/logout">
                                 <span class='glyphicon glyphicon-log-out'
                                       style='color: #808080;width: 20px;height: 20px;font-weight: 400;text-align: right'></span>
@@ -255,6 +274,26 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- 投诉 -->
+<div class="modal fade" id="myModalComplaint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabelIn">投诉信息</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="col-sm-12"/>
+                <br/>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">提交</button>
+        </div>
         </div>
     </div>
 </div>
